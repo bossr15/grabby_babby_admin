@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:grabby_babby_admin/core/styles/app_color.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
+import 'package:grabby_babby_admin/core/utils/utils.dart';
+import 'package:grabby_babby_admin/navigation/app_navigation.dart';
+import 'package:grabby_babby_admin/navigation/route_name.dart';
 
 import '../../../../../../core/widgets/listing_table/listing_cell.dart';
 import '../../../../../../core/widgets/listing_table/listing_column.dart';
@@ -59,67 +62,103 @@ class UsersTable extends StatelessWidget {
         ),
       ],
       rows: List.generate(25, (index) {
-        return ListingRow(cells: [
-          ListingCell(
-              child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircleAvatar(
-                radius: 16,
-                backgroundImage: AssetImage(AppImages.dummyUser),
-              ),
-              const SizedBox(width: 8),
-              Text('Alex Johnson'),
-            ],
-          )),
-          ListingCell(child: Text('B125')),
-          ListingCell(
-              child: Text(
-            'alex.joe@gmail.com',
-            style: TextStyle(
-              color: AppColors.darkBlue,
-              decoration: TextDecoration.underline,
-              decorationColor: AppColors.darkBlue,
-            ),
-          )),
-          ListingCell(child: Text('+1234567890')),
-          ListingCell(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-            child: Container(
-              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: AppColors.bgColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                  child: Text([
-                "Buyer",
-                "Business Seller",
-                "Seller"
-              ][Random().nextInt(3)])),
-            ),
-          )),
-          ListingCell(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-            child: Container(
-              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: statusColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
+        final accountType =
+            ["Buyer", "Business Seller", "Seller"][Random().nextInt(3)];
+        return ListingRow(
+            onTap: () {
+              AppNavigation.pushNamed(
+                context,
+                RouteName.userDetails,
+                extra: accountType,
+              );
+            },
+            cells: [
+              ListingCell(
+                  child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundImage: AssetImage(AppImages.dummyUser),
+                  ),
+                  const SizedBox(width: 8),
+                  Text('Alex Johnson'),
+                ],
+              )),
+              ListingCell(child: Text('B125')),
+              ListingCell(
                   child: Text(
-                status,
+                'alex.joe@gmail.com',
                 style: TextStyle(
-                  color: statusTextColor,
+                  color: AppColors.darkBlue,
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppColors.darkBlue,
                 ),
               )),
-            ),
-          )),
-          ListingCell(child: Text('Actions')),
-        ]);
+              ListingCell(child: Text('+1234567890')),
+              ListingCell(
+                  child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: AppColors.bgColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Center(child: Text(accountType)),
+                ),
+              )),
+              ListingCell(
+                  child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: statusColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Center(
+                      child: Text(
+                    status,
+                    style: TextStyle(
+                      color: statusTextColor,
+                    ),
+                  )),
+                ),
+              )),
+              ListingCell(
+                  child: InkWell(
+                onTap: () {
+                  AppNavigation.pushNamed(
+                    context,
+                    RouteName.userDetails,
+                    extra: accountType,
+                  );
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      gradient: appGradient,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "View Details",
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )),
+            ]);
       }),
       isLoading: false,
     );

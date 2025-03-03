@@ -18,6 +18,7 @@ class GBAdmin extends StatelessWidget {
         key: navigatorKey,
         title: 'Grabby Babby Admin',
         theme: ThemeData(
+          fontFamily: 'Archivo',
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),

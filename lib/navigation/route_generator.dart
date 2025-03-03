@@ -11,6 +11,7 @@ import '../presentation/view/notifications/notifications_screen.dart';
 import '../presentation/view/settings/settings_screen.dart';
 import '../presentation/view/support/support_screen.dart';
 import '../presentation/view/transaction_management/transaction_management.dart';
+import '../presentation/view/user_management/components/user_details/user_details.dart';
 import '../presentation/view/user_management/user_management.dart';
 import 'route_name.dart';
 import 'transition_route.dart' as troute;
@@ -43,6 +44,15 @@ class AppRouter {
             path: '/users',
             name: RouteName.users,
             pageBuilder: (context, state) => const UserManagement(),
+            routes: [
+              troute.TransitionRoute.fadeTransitionRoute(
+                path: '/user-details',
+                name: RouteName.userDetails,
+                pageBuilder: (context, state) => UserDetails(
+                  accountType: state.extra as String,
+                ),
+              ),
+            ],
           ),
           troute.TransitionRoute.fadeTransitionRoute(
             path: '/transaction',

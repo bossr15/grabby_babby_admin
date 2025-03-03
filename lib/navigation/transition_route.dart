@@ -6,6 +6,7 @@ class TransitionRoute {
     required String path,
     required String? name,
     required Widget Function(BuildContext, GoRouterState) pageBuilder,
+    List<RouteBase> routes = const <RouteBase>[],
   }) {
     return GoRoute(
       path: path,
@@ -21,6 +22,7 @@ class TransitionRoute {
           );
         },
       ),
+      routes: routes,
     );
   }
 }

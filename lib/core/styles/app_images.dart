@@ -19,4 +19,9 @@ class AppImages {
   static const businessSellers = '$baseDir/business_sellers.png';
   static const buyers = '$baseDir/buyers.png';
   static const sellers = '$baseDir/sellers.png';
+  static const coverImage = '$baseDir/cover.png';
+  static const productImage1 = '$baseDir/product1.png';
+  static const productImage2 = '$baseDir/product2.png';
+  static const productImage3 = '$baseDir/product3.png';
+  static const productImage4 = '$baseDir/product4.png';
 }
