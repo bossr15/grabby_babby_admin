@@ -7,6 +7,7 @@ import 'package:grabby_babby_admin/core/utils/utils.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/navigation/route_name.dart';
 
+import '../../../../../../core/widgets/dialogs/user_details_dialog.dart';
 import '../../../../../../core/widgets/listing_table/listing_cell.dart';
 import '../../../../../../core/widgets/listing_table/listing_column.dart';
 import '../../../../../../core/widgets/listing_table/listing_row.dart';
@@ -66,11 +67,18 @@ class UsersTable extends StatelessWidget {
             ["Buyer", "Business Seller", "Seller"][Random().nextInt(3)];
         return ListingRow(
             onTap: () {
-              AppNavigation.pushNamed(
-                context,
-                RouteName.userDetails,
-                extra: accountType,
-              );
+              if (status == "Active") {
+                AppNavigation.pushNamed(
+                  context,
+                  RouteName.userDetails,
+                  extra: accountType,
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => UserDetailsDialog(status: status),
+                );
+              }
             },
             cells: [
               ListingCell(
@@ -131,11 +139,18 @@ class UsersTable extends StatelessWidget {
               ListingCell(
                   child: InkWell(
                 onTap: () {
-                  AppNavigation.pushNamed(
-                    context,
-                    RouteName.userDetails,
-                    extra: accountType,
-                  );
+                  if (status == "Active") {
+                    AppNavigation.pushNamed(
+                      context,
+                      RouteName.userDetails,
+                      extra: accountType,
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => UserDetailsDialog(status: status),
+                    );
+                  }
                 },
                 child: Padding(
                   padding:

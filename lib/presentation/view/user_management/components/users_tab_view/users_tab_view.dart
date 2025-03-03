@@ -13,17 +13,20 @@ class UsersTabView extends StatelessWidget {
       controller: tabController,
       children: [
         UsersTable(
-            status: "Active",
-            statusColor: AppColors.green,
-            statusTextColor: AppColors.greenText),
+          status: "Active",
+          statusColor: AppColors.green,
+          statusTextColor: AppColors.greenText,
+        ),
         UsersTable(
-            status: "Pending",
-            statusColor: AppColors.yellow,
-            statusTextColor: AppColors.yellowText),
+          status: "Pending",
+          statusColor: AppColors.yellow,
+          statusTextColor: AppColors.yellowText,
+        ),
         UsersTable(
-            status: "Suspended",
-            statusColor: AppColors.red,
-            statusTextColor: AppColors.redText),
+          status: "Suspended",
+          statusColor: AppColors.red,
+          statusTextColor: AppColors.redText,
+        ),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../latest_orders.dart';
 import '../products_card.dart';
 import '../profile_card.dart';
 import '../sales_overtime_chart.dart';
@@ -48,6 +49,7 @@ class BusinessSeller extends StatelessWidget {
             ),
           ],
         ),
+        LatestOrders(),
       ],
     );
   }
