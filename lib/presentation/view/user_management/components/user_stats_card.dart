@@ -3,13 +3,14 @@ import 'package:grabby_babby_admin/core/utils/extension.dart';
 
 import '../../../../core/styles/app_color.dart';
 
-class DashboardStatsCard extends StatelessWidget {
-  const DashboardStatsCard(
-      {super.key,
-      required this.showDivider,
-      required this.image,
-      required this.title,
-      required this.value});
+class UserStatsCard extends StatelessWidget {
+  const UserStatsCard({
+    super.key,
+    required this.showDivider,
+    required this.image,
+    required this.title,
+    required this.value,
+  });
   final bool showDivider;
   final String image;
   final String title;

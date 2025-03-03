@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:grabby_babby_admin/core/utils/extension.dart';
 
 import 'components/dashboard_body.dart';
-import 'components/dashboard_stats.dart';
+import 'components/dashboard_card.dart';
+import 'components/dashboard_pending_accounts.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DashBoardStats(),
-        SizedBox(
-          height: context.height * 0.7,
-          width: context.width,
-          child: DashBoardBody(),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              DashboardCard(title: 'Total Earning', value: '\$41646'),
+              DashboardCard(title: 'Total Buyers', value: '\$1123'),
+              DashboardCard(title: 'Total Sellers', value: '\$134'),
+              DashboardCard(title: 'Suspended Users', value: '\$134'),
+              DashBoardPendingAccounts(requests: '235'),
+            ],
+          ),
+          DashBoardBody(),
+        ],
+      ),
     );
   }
 }
