@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../initializer.dart';
 import '../presentation/view/analytics/analytics_screen.dart';
 import '../presentation/view/app_orchestrator/app_orchestrator.dart';
 import '../presentation/view/auth/login/login_view.dart';
@@ -48,9 +49,14 @@ class AppRouter {
               troute.TransitionRoute.fadeTransitionRoute(
                 path: '/user-details',
                 name: RouteName.userDetails,
-                pageBuilder: (context, state) => UserDetails(
-                  accountType: state.extra as String,
-                ),
+                pageBuilder: (context, state) {
+                  final accountType = state.extra as String? ??
+                      localStorage.getString('accountType') ??
+                      "";
+                  return UserDetails(
+                    accountType: accountType,
+                  );
+                },
               ),
             ],
           ),

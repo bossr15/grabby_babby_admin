@@ -12,6 +12,7 @@ import '../../../../../../core/widgets/listing_table/listing_cell.dart';
 import '../../../../../../core/widgets/listing_table/listing_column.dart';
 import '../../../../../../core/widgets/listing_table/listing_row.dart';
 import '../../../../../../core/widgets/listing_table/listing_table.dart';
+import '../../../../../../initializer.dart';
 
 class UsersTable extends StatelessWidget {
   const UsersTable(
@@ -68,6 +69,7 @@ class UsersTable extends StatelessWidget {
         return ListingRow(
             onTap: () {
               if (status == "Active") {
+                localStorage.setString('accountType', accountType);
                 AppNavigation.pushNamed(
                   context,
                   RouteName.userDetails,
@@ -140,6 +142,7 @@ class UsersTable extends StatelessWidget {
                   child: InkWell(
                 onTap: () {
                   if (status == "Active") {
+                    localStorage.setString('accountType', accountType);
                     AppNavigation.pushNamed(
                       context,
                       RouteName.userDetails,

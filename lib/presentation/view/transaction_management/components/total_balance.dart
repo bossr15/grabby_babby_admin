@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/styles/app_color.dart';
+import '../../../../core/styles/app_images.dart';
 
 class TotalBalance extends StatelessWidget {
   const TotalBalance({super.key});
@@ -99,11 +100,7 @@ class TotalBalance extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            Icon(
-              Icons.arrow_upward,
-              size: 16,
-              color: AppColors.darkBlue,
-            ),
+            Image.asset(AppImages.arrowUp),
           ],
         ),
       ],
