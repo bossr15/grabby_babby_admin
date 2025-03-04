@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/styles/app_images.dart';
+import '../../../../../../initializer.dart';
 
 class ProfileImagePicker extends StatelessWidget {
   const ProfileImagePicker({super.key});
@@ -19,7 +20,9 @@ class ProfileImagePicker extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            imagePickerService.uploadImage();
+          },
           child: Container(
             width: 120,
             height: 120,

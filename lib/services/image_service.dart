@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
 class ImagePickRepository {
-  Future<List<String>> uploadImages() async {
+  Future<String> uploadImage() async {
     try {
       var uri = Uri.parse('');
       var request = http.MultipartRequest('POST', uri);
@@ -20,7 +20,7 @@ class ImagePickRepository {
 
         if (responseJson['status'] == 'success') {
           log('FILE UPLOADED');
-          return List<String>.from(responseJson['data']);
+          return responseJson['data'];
         } else {
           throw Exception(
               'Failed to upload images: ${responseJson['message']}');

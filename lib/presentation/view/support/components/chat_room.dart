@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
 
+import '../../../../initializer.dart';
 import 'message/my_message.dart';
 import 'message/other_message.dart';
 
@@ -91,7 +92,12 @@ class ChatRoom extends StatelessWidget {
               children: [
                 Image.asset(AppImages.emoji),
                 const SizedBox(width: 12),
-                Image.asset(AppImages.file),
+                InkWell(
+                  onTap: () {
+                    imagePickerService.uploadImage();
+                  },
+                  child: Image.asset(AppImages.file),
+                ),
                 const SizedBox(width: 12),
                 Container(
                   width: context.width * 0.4,
