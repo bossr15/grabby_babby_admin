@@ -9,7 +9,13 @@ class ContentHeader extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text('Content Moderation'),
+          title: Text(
+            'Content Moderation',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           subtitle: Text(
               'Review and manage inappropriate content submitted by users.'),
           trailing: SizedBox(

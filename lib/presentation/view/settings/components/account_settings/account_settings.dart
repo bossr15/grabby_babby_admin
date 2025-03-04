@@ -11,77 +11,79 @@ class AccountSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ProfileImagePicker(),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: SettingsTextField(
-                  label: 'Full name',
-                  hintText: 'Please enter your full name',
-                  onChanged: (value) {},
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const ProfileImagePicker(),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: SettingsTextField(
+                    label: 'Full name',
+                    hintText: 'Please enter your full name',
+                    onChanged: (value) {},
+                  ),
                 ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: SettingsTextField(
-                  label: 'Email',
-                  onChanged: (value) {},
-                  hintText: 'Please enter your email',
+                SizedBox(width: 24),
+                Expanded(
+                  child: SettingsTextField(
+                    label: 'Email',
+                    onChanged: (value) {},
+                    hintText: 'Please enter your email',
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: SettingsTextField(
-                  onChanged: (value) {},
-                  label: 'Username',
-                  hintText: 'Please enter your username',
+              ],
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: SettingsTextField(
+                    onChanged: (value) {},
+                    label: 'Username',
+                    hintText: 'Please enter your username',
+                  ),
                 ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: SettingsTextField(
-                  onChanged: (value) {},
-                  label: 'Phone number',
-                  hintText: 'Please enter your phone number',
-                  prefix: '+1',
+                SizedBox(width: 24),
+                Expanded(
+                  child: SettingsTextField(
+                    onChanged: (value) {},
+                    label: 'Phone number',
+                    hintText: 'Please enter your phone number',
+                    prefix: '+1',
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          SettingsTextField(
-            onChanged: (value) {},
-            label: 'Bio',
-            hintText: 'Write your Bio here e.g your hobbies, interests ETC',
-            maxLines: 5,
-          ),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              GbAdminButton(
-                label: 'Update Profile',
-                onPressed: () {},
-                backgroundColor: AppColors.darkBlue,
-                textColor: AppColors.white,
-              ),
-              SizedBox(width: 16),
-              GbAdminButton(
-                label: 'Reset',
-                onPressed: () {},
-                backgroundColor: AppColors.white,
-                textColor: AppColors.black,
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(height: 24),
+            SettingsTextField(
+              onChanged: (value) {},
+              label: 'Bio',
+              hintText: 'Write your Bio here e.g your hobbies, interests ETC',
+              maxLines: 5,
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                GbAdminButton(
+                  label: 'Update Profile',
+                  onPressed: () {},
+                  backgroundColor: AppColors.darkBlue,
+                  textColor: AppColors.white,
+                ),
+                SizedBox(width: 16),
+                GbAdminButton(
+                  label: 'Reset',
+                  onPressed: () {},
+                  backgroundColor: AppColors.white,
+                  textColor: AppColors.black,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

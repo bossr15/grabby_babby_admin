@@ -19,129 +19,131 @@ class LoginSecurity extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Security',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Security',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Divider(height: 16),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SecurityItem(
-                        label: 'Sign-in Email',
-                        value: 'Password',
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SecurityItem(
-                        label: 'email@gmail.com',
-                        value: 'Change password',
-                        valueColor: AppColors.darkBlue,
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                ],
-              ),
-              Divider(height: 16),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SecurityItem(
-                        label: '2-FA authentication',
-                        value: 'Phone number',
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        "Email",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                Divider(height: 16),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SecurityItem(
+                          label: 'Sign-in Email',
+                          value: 'Password',
                         ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      GbAdminSwitch(),
-                      SizedBox(height: 8),
-                      SecurityItem(
-                        label: '+223453453545',
-                        value: 'email@gmail.com',
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                ],
-              ),
-              Divider(height: 16),
-              SecurityItem(
-                label: 'Last sign in',
-                value: 'today at 18:34, Safari 198.123.23.23',
-              ),
-              const SizedBox(height: 24),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'Total active sessions (5)',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'View All',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.darkBlue,
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _buildSessionItem(
-                    'DESKTOP-6TIG6EC • Kyiv, Ukraine',
-                    'Chrome • Used right now',
-                  ),
-                  Divider(height: 16),
-                  _buildSessionItem(
-                    'iPhone 11 • Kyiv, Ukraine',
-                    'Chrome • 04/19/2022',
-                  ),
-                  Divider(height: 50),
-                  Center(
-                    child: GbAdminButton(
-                      label: "Reset all active sessions",
-                      onPressed: () {},
-                      backgroundColor: AppColors.darkBlue,
-                      textColor: Colors.white,
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ],
+                    Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SecurityItem(
+                          label: 'email@gmail.com',
+                          value: 'Change password',
+                          valueColor: AppColors.darkBlue,
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                Divider(height: 16),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SecurityItem(
+                          label: '2-FA authentication',
+                          value: 'Phone number',
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "Email",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        GbAdminSwitch(),
+                        SizedBox(height: 8),
+                        SecurityItem(
+                          label: '+223453453545',
+                          value: 'email@gmail.com',
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                Divider(height: 16),
+                SecurityItem(
+                  label: 'Last sign in',
+                  value: 'today at 18:34, Safari 198.123.23.23',
+                ),
+                const SizedBox(height: 24),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'Total active sessions (5)',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          'View All',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.darkBlue,
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSessionItem(
+                      'DESKTOP-6TIG6EC • Kyiv, Ukraine',
+                      'Chrome • Used right now',
+                    ),
+                    Divider(height: 16),
+                    _buildSessionItem(
+                      'iPhone 11 • Kyiv, Ukraine',
+                      'Chrome • 04/19/2022',
+                    ),
+                    Divider(height: 50),
+                    Center(
+                      child: GbAdminButton(
+                        label: "Reset all active sessions",
+                        onPressed: () {},
+                        backgroundColor: AppColors.darkBlue,
+                        textColor: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

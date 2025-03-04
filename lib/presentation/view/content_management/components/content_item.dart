@@ -18,7 +18,7 @@ class ContentItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(AppImages.dummyUser),
             ),
-            title: Text('Denise Nedry Reported review to D Game Heaven '),
+            title: Text('Denise Nedry Reported review to D Game Heaven'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
