@@ -24,4 +24,6 @@ class AppImages {
   static const productImage2 = '$baseDir/product2.png';
   static const productImage3 = '$baseDir/product3.png';
   static const productImage4 = '$baseDir/product4.png';
+  static const tick = '$baseDir/tick.png';
+  static const lock = '$baseDir/lock.png';
 }

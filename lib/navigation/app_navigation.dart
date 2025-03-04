@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppNavigation {
-  static final navigatorKey = GlobalKey<NavigatorState>();
   static void pushNamed(
     BuildContext context,
     String routeName, {

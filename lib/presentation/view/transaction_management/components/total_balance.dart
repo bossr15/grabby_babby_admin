@@ -8,48 +8,105 @@ class TotalBalance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 300,
       decoration: BoxDecoration(
         color: AppColors.white,
-        border: Border.all(color: AppColors.grey),
+        border: Border.all(color: AppColors.grey.withOpacity(0.2)),
         borderRadius: BorderRadius.circular(12),
       ),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Total Balance"),
+          const Text(
+            "Total Balance",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "\$240,399",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Text("All Accounts"),
+              Text(
+                "All Accounts",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
             ],
           ),
-          ...List.generate(3, (index) {
-            return Row(
-              children: [
-                Text("Recieved"),
-                Row(
-                  children: [
-                    Text(
-                      "\$250",
-                      style: TextStyle(
-                        color: AppColors.darkBlue,
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_upward,
-                      color: AppColors.darkBlue,
-                    ),
-                  ],
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 16),
+          _buildTransactionItem("\$250"),
+          const SizedBox(height: 12),
+          _buildTransactionItem("\$244"),
+          const SizedBox(height: 12),
+          _buildTransactionItem("\$344"),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 5,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.darkBlue),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                'View All',
+                style: TextStyle(
+                  color: AppColors.darkBlue,
+                  fontSize: 16,
                 ),
-              ],
-            );
-          }),
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTransactionItem(String amount) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          "Received",
+          style: TextStyle(
+            color: Colors.black87,
+            fontSize: 14,
+          ),
+        ),
+        Row(
+          children: [
+            Text(
+              amount,
+              style: TextStyle(
+                color: AppColors.darkBlue,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(width: 4),
+            Icon(
+              Icons.arrow_upward,
+              size: 16,
+              color: AppColors.darkBlue,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
