@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/navigation/route_name.dart';
 import '../../../../../core/styles/app_color.dart';
 import '../../../../../core/styles/app_images.dart';
+import '../../../../logic/home/side_panel/side_panel_cubit.dart';
 
 class GBAdminAppBar extends StatelessWidget {
   const GBAdminAppBar({super.key});
@@ -24,8 +27,15 @@ class GBAdminAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Image.asset(
-            AppImages.appBarNotification,
+          InkWell(
+            onTap: () {
+              context
+                  .read<SidePanelCubit>()
+                  .setSelectedIndex(5, context, RouteName.notifications);
+            },
+            child: Image.asset(
+              AppImages.appBarNotification,
+            ),
           ),
           const SizedBox(width: 16),
           Image.asset(
