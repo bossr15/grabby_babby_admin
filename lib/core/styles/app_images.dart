@@ -27,4 +27,5 @@ class AppImages {
   static const tick = '$baseDir/tick.png';
   static const lock = '$baseDir/lock.png';
   static const lighting = "$baseDir/lighting.png";
+  static const gallery = "$baseDir/gallery.png";
 }

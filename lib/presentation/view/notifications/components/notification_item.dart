@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/core/widgets/g_b_admin_button.dart';
 
 import '../../../../core/styles/app_color.dart';
 import '../../../../core/styles/app_images.dart';
@@ -35,46 +36,18 @@ class NotificationItem extends StatelessWidget {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      backgroundColor: AppColors.lightBlue,
-                    ),
-                    child: Text(
-                      "Approve",
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  GbAdminButton(
+                    label: "Approve",
+                    onPressed: () {},
+                    backgroundColor: AppColors.lightBlue,
+                    textColor: AppColors.white,
                   ),
                   const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      backgroundColor: AppColors.white,
-                    ),
-                    child: Text(
-                      "Decline",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  GbAdminButton(
+                    label: "Decline",
+                    onPressed: () {},
+                    backgroundColor: AppColors.white,
+                    textColor: AppColors.black,
                   ),
                 ],
               ),
