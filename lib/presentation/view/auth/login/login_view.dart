@@ -56,7 +56,7 @@ class LoginView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const Text(
-                            'AUSSIE\nCOLLECTIBLES',
+                            'AUSSIE\nCOLLECTABLES',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,

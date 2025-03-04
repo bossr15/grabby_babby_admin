@@ -16,7 +16,7 @@ class GBAdmin extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
         key: navigatorKey,
-        title: 'Grabby Babby Admin',
+        title: 'Aussie Collectables',
         theme: ThemeData(
           fontFamily: 'Archivo',
           dialogBackgroundColor: Colors.white,
