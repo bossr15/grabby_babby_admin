@@ -21,7 +21,7 @@ class _GbAdminSwitchState extends State<GbAdminSwitch> {
           isEnabled = value;
         });
       },
-      activeTrackColor: AppColors.darkBlue,
+      activeTrackColor: AppColors.lightBlue,
     );
   }
 }

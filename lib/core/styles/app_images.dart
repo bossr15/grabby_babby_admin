@@ -28,4 +28,8 @@ class AppImages {
   static const lock = '$baseDir/lock.png';
   static const lighting = "$baseDir/lighting.png";
   static const gallery = "$baseDir/gallery.png";
+  static const send = "$baseDir/send.png";
+  static const file = "$baseDir/file.png";
+  static const emoji = "$baseDir/emoji.png";
+  static const filter = "$baseDir/filter.png";
 }
