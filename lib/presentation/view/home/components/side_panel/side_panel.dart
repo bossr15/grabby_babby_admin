@@ -13,7 +13,7 @@ class SidePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDrawer = Scaffold.of(context).hasDrawer;
+    final isDrawer = Scaffold.of(context).hasDrawer;
     return Container(
       width: isDrawer ? null : 250,
       height: context.height,

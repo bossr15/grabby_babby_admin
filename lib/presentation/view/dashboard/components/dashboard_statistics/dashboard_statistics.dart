@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../../logic/dashboard/dashboard_cubit.dart';
 import 'components/dashboard_statistics_graph.dart';
 
 class DashboardStatistics extends StatelessWidget {
-  const DashboardStatistics({super.key});
+  const DashboardStatistics({super.key, required this.cubit});
+  final DashboardCubit cubit;
 
   @override
   Widget build(BuildContext context) {

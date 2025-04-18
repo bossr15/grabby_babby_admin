@@ -15,7 +15,6 @@ class GBAdmin extends StatelessWidget {
       providers: Initializer.blocProviders,
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
-        key: navigatorKey,
         title: 'Aussie Collectables',
         theme: ThemeData(
           fontFamily: 'Archivo',

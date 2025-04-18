@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:grabby_babby_admin/network/network_repository.dart';
 import 'package:grabby_babby_admin/presentation/logic/home/side_panel/side_panel_cubit.dart';
 
 import 'presentation/logic/auth/auth_cubit.dart';
@@ -25,3 +26,4 @@ class Initializer {
 
 final localStorage = LocalStorageService.instance;
 final imagePickerService = ImagePickRepository();
+final networkRepository = NetworkRepository();

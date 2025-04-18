@@ -7,6 +7,7 @@ import '../presentation/view/app_orchestrator/app_orchestrator.dart';
 import '../presentation/view/auth/login/login_view.dart';
 import '../presentation/view/content_management/content_screen.dart';
 import '../presentation/view/dashboard/dashboard.dart';
+import '../presentation/view/g_b_admin.dart';
 import '../presentation/view/home/home_page.dart';
 import '../presentation/view/notifications/notifications_screen.dart';
 import '../presentation/view/settings/settings_screen.dart';
@@ -18,16 +19,22 @@ import 'route_name.dart';
 import 'transition_route.dart' as troute;
 
 class AppRouter {
-  static final navigatorKey = GlobalKey<NavigatorState>();
   static final router = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       troute.TransitionRoute.fadeTransitionRoute(
         path: '/',
+        redirect: (context, state) {
+          final token = localStorage.getString("token");
+          if (token != null && token.isNotEmpty) return '/dashboard';
+          return '/login';
+        },
         name: RouteName.appOrchestrator,
         pageBuilder: (context, state) => const AppOrchestrator(),
       ),
       troute.TransitionRoute.fadeTransitionRoute(
         path: '/login',
+        shouldRedirect: false,
         name: RouteName.login,
         pageBuilder: (context, state) => const LoginView(),
       ),

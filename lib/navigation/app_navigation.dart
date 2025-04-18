@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../presentation/view/g_b_admin.dart';
 
 class AppNavigation {
+  static final appContext = navigatorKey.currentState!.context;
+
   static void pushNamed(
     BuildContext context,
     String routeName, {
     dynamic extra,
   }) {
-    context.goNamed(routeName, extra: extra);
+    appContext.goNamed(routeName, extra: extra);
   }
 
   static void pushReplacementNamed(
@@ -15,10 +18,10 @@ class AppNavigation {
     String routeName, {
     dynamic extra,
   }) {
-    context.pushReplacementNamed(routeName, extra: extra);
+    appContext.replaceNamed(routeName, extra: extra);
   }
 
   static void pop(BuildContext context) {
-    context.pop();
+    appContext.pop();
   }
 }

@@ -1,29 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:grabby_babby_admin/presentation/logic/dashboard/dashboard_cubit.dart';
 
+import '../../logic/dashboard/dashboard_state.dart';
 import 'components/dashboard_body.dart';
 import 'components/dashboard_card.dart';
-import 'components/dashboard_pending_accounts.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
+  static final dashBoardCubit = DashboardCubit();
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
+    return BlocBuilder<DashboardCubit, DashboardState>(
+      bloc: dashBoardCubit,
+      builder: (context, state) {
+        final headerStats = state.dashboardStats.headerStats;
+
+        return SingleChildScrollView(
+          child: Column(
             children: [
-              DashboardCard(title: 'Total Earning', value: '\$41646'),
-              DashboardCard(title: 'Total Buyers', value: '\$1123'),
-              DashboardCard(title: 'Total Sellers', value: '\$134'),
-              DashboardCard(title: 'Suspended Users', value: '\$134'),
-              DashBoardPendingAccounts(requests: '235'),
+              Row(
+                children: [
+                  DashboardCard(
+                      title: 'Total Earning',
+                      value:
+                          '\$${headerStats.totalEarnings.toStringAsFixed(2)}'),
+                  Gap(20),
+                  DashboardCard(
+                      title: 'Total Buyers',
+                      value: '${headerStats.buyerCounts}'),
+                  Gap(20),
+                  DashboardCard(
+                      title: 'Total Sellers',
+                      value: '${headerStats.sellerCounts}'),
+                  Gap(20),
+                  DashboardCard(
+                      title: 'Suspended Users',
+                      value: '${headerStats.suspendedCounts}'),
+                ],
+              ),
+              DashBoardBody(cubit: dashBoardCubit),
             ],
           ),
-          DashBoardBody(),
-        ],
-      ),
+        );
+      },
     );
   }
 }

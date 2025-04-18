@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import '../../../../core/styles/app_color.dart';
 import '../../../../core/styles/app_images.dart';
-import '../../../../navigation/route_name.dart';
 import '../../../logic/auth/auth_cubit.dart';
 import '../../../logic/auth/auth_state.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
+
+  static final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,122 +51,169 @@ class LoginView extends StatelessWidget {
                         color: AppColors.white,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text(
-                            'AUSSIE\nCOLLECTABLES',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.black,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Enter your Email and password to proceed',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.grey,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.darkBlue,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Text(
+                              'AUSSIE\nCOLLECTABLES',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.black,
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.darkBlue,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              prefixIcon: Image.asset(AppImages.tick),
-                              hintText: 'Email or Phone number',
+                              textAlign: TextAlign.center,
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            obscureText: state.isObscureText,
-                            decoration: InputDecoration(
-                              hintText: 'Password',
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.darkBlue,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.darkBlue,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              prefixIcon: Image.asset(AppImages.lock),
-                              suffixIcon: IconButton(
-                                onPressed: () => context
-                                    .read<AuthCubit>()
-                                    .toggleObscureText(),
-                                icon: Icon(
-                                  state.isObscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Forgot password?',
-                                style: TextStyle(
-                                  color: AppColors.darkBlue,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              AppNavigation.pushReplacementNamed(
-                                context,
-                                RouteName.dashboard,
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.darkBlue,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
+                            const SizedBox(height: 16),
+                            const Text(
                               'Login',
                               style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 16,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.black,
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Enter your Email and password to proceed',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.darkBlue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.darkBlue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                prefixIcon: Image.asset(AppImages.tick),
+                                hintText: 'Email or Phone number',
+                              ),
+                              onChanged: (val) {
+                                state.email = val;
+                              },
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Email cannot be empty";
+                                }
+                                if (value.isEmpty) {
+                                  return "Email cannot be empty";
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                final validate =
+                                    formKey.currentState!.validate();
+                                if (validate) {
+                                  context.read<AuthCubit>().login(context);
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              obscureText: state.isObscureText,
+                              onChanged: (val) {
+                                state.password = val;
+                              },
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Password cannot be empty";
+                                }
+                                if (value.isEmpty) {
+                                  return "Password cannot be empty";
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                final validate =
+                                    formKey.currentState!.validate();
+                                if (validate) {
+                                  context.read<AuthCubit>().login(context);
+                                }
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.darkBlue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.darkBlue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                prefixIcon: Image.asset(AppImages.lock),
+                                suffixIcon: IconButton(
+                                  onPressed: () => context
+                                      .read<AuthCubit>()
+                                      .toggleObscureText(),
+                                  icon: Icon(
+                                    state.isObscureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Forgot password?',
+                                  style: TextStyle(
+                                    color: AppColors.darkBlue,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                final validate =
+                                    formKey.currentState!.validate();
+                                if (validate) {
+                                  context.read<AuthCubit>().login(context);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.darkBlue,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: state.isLoading
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                          color: Colors.white))
+                                  : const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

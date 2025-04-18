@@ -14,6 +14,10 @@ class LocalStorageService {
     return storage.read(key);
   }
 
+  void remove(String key) {
+    storage.remove(key);
+  }
+
   void clear() {
     storage.erase();
   }

@@ -20,7 +20,9 @@ class SidePanelCubit extends Cubit<SidePanelState> {
     localStorage.setString('panelIndex', index.toString());
     emit(state.copyWith(selectedIndex: index));
     if (index == SidePanelItemList.sidePanelItems.length - 1) {
+      // this is when user logsOut
       emit(state.copyWith(selectedIndex: 0));
+      localStorage.clear();
     }
 
     AppNavigation.pushReplacementNamed(context, routeName);
