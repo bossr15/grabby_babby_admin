@@ -71,7 +71,6 @@ class UsersTable extends StatelessWidget {
               if (status == "Active") {
                 localStorage.setString('accountType', accountType);
                 AppNavigation.pushNamed(
-                  context,
                   RouteName.userDetails,
                   extra: accountType,
                 );
@@ -144,7 +143,6 @@ class UsersTable extends StatelessWidget {
                   if (status == "Active") {
                     localStorage.setString('accountType', accountType);
                     AppNavigation.pushNamed(
-                      context,
                       RouteName.userDetails,
                       extra: accountType,
                     );

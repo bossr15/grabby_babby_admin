@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:grabby_babby_admin/data/models/dashboard_model/dashboard_model.dart';
-import 'package:grabby_babby_admin/data/models/revenue/revenue_model.dart';
+import 'package:grabby_babby_admin/data/models/analytics_model/analytics_model.dart';
 import 'package:grabby_babby_admin/initializer.dart';
 
-class DashBoardRepository {
-  Future<Either<String, DashboardModel>> getDashboardStats(
+import '../../models/revenue/revenue_model.dart';
+
+class AnalyticsRepository {
+  Future<Either<String, AnalyticsModel>> getAnalytics(
       {Map<String, dynamic>? extraQuery}) async {
     final response = await networkRepository.get(
-        url: "/admin/dashboard", extraQuery: extraQuery);
+        url: "/admin/analytics-and-reporting", extraQuery: extraQuery);
     if (!response.failed) {
       final data = response.data["data"];
-      final parsedData = DashboardModel.fromJson(data);
+      final parsedData = AnalyticsModel.fromJson(data);
       return right(parsedData);
     }
     return left(response.message);

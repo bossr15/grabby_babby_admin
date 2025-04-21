@@ -10,43 +10,48 @@ import 'components/dashboard_card.dart';
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
-  static final dashBoardCubit = DashboardCubit();
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DashboardCubit, DashboardState>(
-      bloc: dashBoardCubit,
-      builder: (context, state) {
-        final headerStats = state.dashboardStats.headerStats;
-
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  DashboardCard(
-                      title: 'Total Earning',
-                      value:
-                          '\$${headerStats.totalEarnings.toStringAsFixed(2)}'),
-                  Gap(20),
-                  DashboardCard(
-                      title: 'Total Buyers',
-                      value: '${headerStats.buyerCounts}'),
-                  Gap(20),
-                  DashboardCard(
-                      title: 'Total Sellers',
-                      value: '${headerStats.sellerCounts}'),
-                  Gap(20),
-                  DashboardCard(
-                      title: 'Suspended Users',
-                      value: '${headerStats.suspendedCounts}'),
-                ],
-              ),
-              DashBoardBody(cubit: dashBoardCubit),
-            ],
-          ),
-        );
-      },
+    return BlocProvider<DashboardCubit>(
+      create: (context) => DashboardCubit(),
+      child: BlocBuilder<DashboardCubit, DashboardState>(
+        builder: (context, state) {
+          final headerStats = state.dashboardStats.headerStats;
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Gap(20),
+                Row(
+                  children: [
+                    DashboardCard(
+                        title: 'Total Earning',
+                        value:
+                            '\$${headerStats.totalEarnings.toStringAsFixed(2)}'),
+                    Gap(20),
+                    DashboardCard(
+                        title: 'Total Users',
+                        value: '${headerStats.totalUserCounts}'),
+                    Gap(20),
+                    DashboardCard(
+                        title: 'Total Buyers',
+                        value: '${headerStats.buyerCounts}'),
+                    Gap(20),
+                    DashboardCard(
+                        title: 'Total Sellers',
+                        value: '${headerStats.sellerCounts}'),
+                    Gap(20),
+                    DashboardCard(
+                        title: 'Suspended Users',
+                        value: '${headerStats.suspendedCounts}'),
+                  ],
+                ),
+                Gap(20),
+                const DashBoardBody(),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

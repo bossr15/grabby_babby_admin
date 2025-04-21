@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:grabby_babby_admin/presentation/logic/analytics/analytics_cubit.dart';
+import '../../../logic/analytics/analytics_state.dart';
 import '../../dashboard/components/dashboard_card.dart';
 
 class AnalyticsCards extends StatelessWidget {
@@ -6,23 +10,38 @@ class AnalyticsCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: const [
-            DashboardCard(title: 'Active Users', value: '127'),
-            DashboardCard(title: 'Account Created', value: '298'),
-            DashboardCard(title: 'Product Listing', value: '355'),
+    return BlocBuilder<AnalyticsCubit, AnalyticsState>(
+      builder: (context, state) {
+        final counts = state.analytics.counts;
+        return Column(
+          children: [
+            Row(
+              children: [
+                DashboardCard(
+                    title: 'Active Users', value: '${counts.activeUserCount}'),
+                Gap(10),
+                DashboardCard(
+                    title: 'Account Created',
+                    value: '${counts.totalUsersCount}'),
+                Gap(10),
+                DashboardCard(
+                    title: 'Product Listing', value: '${counts.productsCount}'),
+              ],
+            ),
+            Gap(20),
+            Row(
+              children: [
+                DashboardCard(
+                    title: 'Product Purchased',
+                    value: '${counts.productPurchaseCount}'),
+                Gap(10),
+                DashboardCard(
+                    title: 'Earnings', value: '\$${counts.totalEarnings}'),
+              ],
+            ),
           ],
-        ),
-        Row(
-          children: const [
-            DashboardCard(title: 'Product Purchased', value: '234'),
-            DashboardCard(title: 'Earnings', value: '\$1324'),
-            DashboardCard(title: 'Violated Content', value: '334'),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

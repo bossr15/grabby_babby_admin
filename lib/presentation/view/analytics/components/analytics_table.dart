@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/core/styles/app_color.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
+import 'package:grabby_babby_admin/presentation/logic/analytics/analytics_cubit.dart';
+
+import '../../../../core/widgets/app_indicator.dart';
+import '../../../logic/analytics/analytics_state.dart';
 
 class AnalyticsTable extends StatelessWidget {
   final String title;
   final String subtitle;
+  final bool isBuyer;
 
   const AnalyticsTable({
     super.key,
     required this.title,
     required this.subtitle,
+    this.isBuyer = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
+      constraints: BoxConstraints(maxHeight: context.height * 0.5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -44,18 +54,42 @@ class AnalyticsTable extends StatelessWidget {
           const SizedBox(height: 24),
           const Divider(),
           const SizedBox(height: 24),
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: 4,
-            separatorBuilder: (context, index) => const Divider(height: 32),
-            itemBuilder: (context, index) => _buildTableRow(),
+          BlocBuilder<AnalyticsCubit, AnalyticsState>(
+            builder: (context, state) {
+              final data =
+                  isBuyer ? state.analytics.buyers : state.analytics.sellers;
+              final isEmpty = data.isEmpty;
+              final isLoading = state.isLoading;
+              return isLoading
+                  ? AppIndicator(color: AppColors.darkBlue)
+                  : isEmpty
+                      ? Center(
+                          child: Text(
+                            "No Data Found",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 28),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.separated(
+                            itemCount: data.length,
+                            separatorBuilder: (context, index) =>
+                                const Divider(height: 32),
+                            itemBuilder: (context, index) {
+                              final item = data[index];
+                              return _buildTableRow(
+                                  item.fullName, item.orderCount);
+                            },
+                          ),
+                        );
+            },
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTableRow() {
+  Widget _buildTableRow(String name, int count) {
     return Row(
       children: [
         const CircleAvatar(
@@ -66,16 +100,16 @@ class AnalyticsTable extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                'Jesse Thomas',
+                name,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
         ),
-        const Text(
-          '23',
+        Text(
+          count.toString(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,

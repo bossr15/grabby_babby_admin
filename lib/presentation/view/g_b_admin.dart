@@ -4,8 +4,6 @@ import 'package:grabby_babby_admin/initializer.dart';
 
 import '../../navigation/route_generator.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
-
 class GBAdmin extends StatelessWidget {
   const GBAdmin({super.key});
 

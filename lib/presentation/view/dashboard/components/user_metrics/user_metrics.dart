@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
+import 'package:grabby_babby_admin/presentation/logic/dashboard/dashboard_state.dart';
 import '../../../../logic/dashboard/dashboard_cubit.dart';
 import 'components/user_metrics_chart.dart';
 
 class UserMetrics extends StatelessWidget {
-  const UserMetrics({super.key, required this.cubit});
-  final DashboardCubit cubit;
+  const UserMetrics({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +37,38 @@ class UserMetrics extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    'Apr 30 - May 30',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
+              BlocBuilder<DashboardCubit, DashboardState>(
+                  builder: (context, state) {
+                final cubit = context.read<DashboardCubit>();
+                return Row(
+                  children: [
+                    Text(
+                      DateHelpers.formatDateRange(
+                          state.startDate, state.endDate),
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Icon(Icons.calendar_today, size: 16, color: Colors.grey[600]),
-                ],
-              ),
+                    const SizedBox(width: 8),
+                    InkWell(
+                      onTap: () async {
+                        final pickedRange =
+                            await DateHelpers.showDateRange(context: context);
+                        if (pickedRange != null) {
+                          cubit.setDate(pickedRange);
+                        }
+                      },
+                      child: Icon(Icons.calendar_today,
+                          size: 16, color: Colors.grey[600]),
+                    ),
+                  ],
+                );
+              }),
             ],
           ),
           const SizedBox(height: 24),
-          const UserMetricsChart(),
+          UserMetricsChart(),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

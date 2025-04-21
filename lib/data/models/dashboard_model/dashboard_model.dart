@@ -38,11 +38,13 @@ class DashBoardUsersStats {
 
 class DashBoardHeaderStats {
   final int sellerCounts;
+  final int totalUserCounts;
   final int buyerCounts;
   final int suspendedCounts;
   final double totalEarnings;
 
   DashBoardHeaderStats({
+    this.totalUserCounts = 0,
     this.buyerCounts = 0,
     this.sellerCounts = 0,
     this.suspendedCounts = 0,
@@ -51,6 +53,7 @@ class DashBoardHeaderStats {
 
   factory DashBoardHeaderStats.fromJson(Map<String, dynamic> json) =>
       DashBoardHeaderStats(
+        totalUserCounts: json["totalUserCounts"],
         sellerCounts: json["totalSellerCounts"],
         buyerCounts: json["totalBuyersCounts"],
         suspendedCounts: json["suspendUsers"],

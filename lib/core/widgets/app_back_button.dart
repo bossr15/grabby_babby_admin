@@ -10,7 +10,7 @@ class AppBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        AppNavigation.pop(context);
+        AppNavigation.pop();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

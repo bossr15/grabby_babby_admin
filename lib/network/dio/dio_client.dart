@@ -10,7 +10,7 @@ class DioClient {
   DioClient() {
     _initializeDioClient();
   }
-  static const int maxRetries = 3;
+  static const int maxRetries = 1;
   static const int retryDelay = 1;
 
   final dio = Dio(

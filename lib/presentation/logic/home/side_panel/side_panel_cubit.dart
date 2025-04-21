@@ -25,6 +25,6 @@ class SidePanelCubit extends Cubit<SidePanelState> {
       localStorage.clear();
     }
 
-    AppNavigation.pushReplacementNamed(context, routeName);
+    AppNavigation.pushReplacementNamed(routeName);
   }
 }

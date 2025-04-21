@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/core/widgets/app_indicator.dart';
 import '../../../../core/styles/app_color.dart';
 import '../../../../core/styles/app_images.dart';
 import '../../../logic/auth/auth_cubit.dart';
@@ -201,9 +202,7 @@ class LoginView extends StatelessWidget {
                                 ),
                               ),
                               child: state.isLoading
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                          color: Colors.white))
+                                  ? AppIndicator()
                                   : const Text(
                                       'Login',
                                       style: TextStyle(

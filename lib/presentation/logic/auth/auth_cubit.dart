@@ -4,6 +4,7 @@ import 'package:grabby_babby_admin/data/repositories/auth_repository/auth_reposi
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/presentation/logic/auth/auth_state.dart';
 
+import '../../../core/utils/utils.dart';
 import '../../../navigation/route_name.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -20,10 +21,12 @@ class AuthCubit extends Cubit<AuthState> {
           (response) => response.fold(
             (error) {
               emit(state.copyWith(isLoading: false));
+              showCustomSnackbar(
+                  context: context, message: error, type: SnackbarType.error);
             },
             (data) {
               emit(state.copyWith(isLoading: false, user: data));
-              AppNavigation.pushReplacementNamed(context, RouteName.dashboard);
+              AppNavigation.pushReplacementNamed(RouteName.dashboard);
             },
           ),
         );

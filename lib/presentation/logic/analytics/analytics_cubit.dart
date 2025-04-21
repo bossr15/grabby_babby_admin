@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grabby_babby_admin/presentation/logic/dashboard/dashboard_state.dart';
+import 'package:grabby_babby_admin/data/repositories/analytics_repository/analytics_repository.dart';
+import 'package:grabby_babby_admin/presentation/logic/analytics/analytics_state.dart';
 
-import '../../../data/repositories/dashboard_repository/dashboard_repository.dart';
-
-class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit() : super(DashboardState.empty()) {
-    fetchDashboardStats();
-    fetchDashboardRevenue();
+class AnalyticsCubit extends Cubit<AnalyticsState> {
+  AnalyticsCubit() : super(AnalyticsState.empty()) {
+    fetchAnalytics();
+    fetchRevenue();
   }
 
-  final dashBoardRepository = DashBoardRepository();
+  final analyticsRepository = AnalyticsRepository();
 
-  void fetchDashboardStats() {
+  void fetchAnalytics() {
     emit(state.copyWith(isLoading: true));
     final extraQuery = {
       if (state.startDate != null)
         'startDate': state.startDate!.toIso8601String(),
       if (state.endDate != null) 'endDate': state.endDate!.toIso8601String(),
     };
-    dashBoardRepository.getDashboardStats(extraQuery: extraQuery).then(
+    analyticsRepository.getAnalytics(extraQuery: extraQuery).then(
           (response) => response.fold(
             (error) {
               emit(state.copyWith(isLoading: false));
             },
             (data) {
-              emit(state.copyWith(isLoading: false, dashboardStats: data));
+              emit(state.copyWith(isLoading: false, analytics: data));
             },
           ),
         );
   }
 
-  void fetchDashboardRevenue() {
+  void fetchRevenue() {
     emit(state.copyWith(isRevenueLoading: true));
-    dashBoardRepository
+    analyticsRepository
         .getRevenueStats(filter: state.revenueFilter.toLowerCase())
         .then(
           (response) => response.fold(
@@ -49,7 +48,7 @@ class DashboardCubit extends Cubit<DashboardState> {
 
   void setRevenueFilter(String filter) async {
     emit(state.copyWith(revenueFilter: filter));
-    fetchDashboardRevenue();
+    fetchRevenue();
   }
 
   void setDate(DateTimeRange pickedRange) async {
@@ -57,6 +56,6 @@ class DashboardCubit extends Cubit<DashboardState> {
       startDate: pickedRange.start,
       endDate: pickedRange.end,
     ));
-    fetchDashboardStats();
+    fetchAnalytics();
   }
 }

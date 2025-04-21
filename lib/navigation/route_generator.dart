@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 
 import '../initializer.dart';
 import '../presentation/view/analytics/analytics_screen.dart';
@@ -7,7 +8,6 @@ import '../presentation/view/app_orchestrator/app_orchestrator.dart';
 import '../presentation/view/auth/login/login_view.dart';
 import '../presentation/view/content_management/content_screen.dart';
 import '../presentation/view/dashboard/dashboard.dart';
-import '../presentation/view/g_b_admin.dart';
 import '../presentation/view/home/home_page.dart';
 import '../presentation/view/notifications/notifications_screen.dart';
 import '../presentation/view/settings/settings_screen.dart';
@@ -20,7 +20,7 @@ import 'transition_route.dart' as troute;
 
 class AppRouter {
   static final router = GoRouter(
-    navigatorKey: navigatorKey,
+    navigatorKey: AppNavigation.navigatorKey,
     routes: [
       troute.TransitionRoute.fadeTransitionRoute(
         path: '/',

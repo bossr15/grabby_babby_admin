@@ -11,6 +11,8 @@ import 'components/side_panel_item_widget.dart';
 class SidePanel extends StatelessWidget {
   const SidePanel({super.key});
 
+  static final cubit = SidePanelCubit();
+
   @override
   Widget build(BuildContext context) {
     final isDrawer = Scaffold.of(context).hasDrawer;
@@ -65,7 +67,7 @@ class SidePanel extends StatelessWidget {
             child: ListView.separated(
               separatorBuilder: (context, index) {
                 if (index == SidePanelItemList.sidePanelItems.length - 2 ||
-                    index == 5) {
+                    index == 4) {
                   return Divider(
                     endIndent: 10,
                     indent: 10,
@@ -79,17 +81,17 @@ class SidePanel extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = SidePanelItemList.sidePanelItems[index];
                 return BlocBuilder<SidePanelCubit, SidePanelState>(
+                    bloc: cubit,
                     builder: (context, state) {
-                  return SidePanelItemWidget(
-                    item: item,
-                    isSelected: state.selectedIndex == index,
-                    onTap: () {
-                      context
-                          .read<SidePanelCubit>()
-                          .setSelectedIndex(index, context, item.routeName);
-                    },
-                  );
-                });
+                      return SidePanelItemWidget(
+                        item: item,
+                        isSelected: state.selectedIndex == index,
+                        onTap: () {
+                          cubit.setSelectedIndex(
+                              index, context, item.routeName);
+                        },
+                      );
+                    });
               },
             ),
           ),
