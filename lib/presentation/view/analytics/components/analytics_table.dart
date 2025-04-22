@@ -71,14 +71,15 @@ class AnalyticsTable extends StatelessWidget {
                           ),
                         )
                       : Expanded(
-                          child: ListView.separated(
+                          child: ListView.builder(
                             itemCount: data.length,
-                            separatorBuilder: (context, index) =>
-                                const Divider(height: 32),
                             itemBuilder: (context, index) {
                               final item = data[index];
-                              return _buildTableRow(
-                                  item.fullName, item.orderCount);
+                              return Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: _buildTableRow(
+                                    item.fullName, item.orderCount),
+                              );
                             },
                           ),
                         );

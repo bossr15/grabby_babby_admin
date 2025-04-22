@@ -31,7 +31,7 @@ class GBAdminAppBar extends StatelessWidget {
             onTap: () {
               context
                   .read<SidePanelCubit>()
-                  .setSelectedIndex(5, context, RouteName.notifications);
+                  .setSelectedIndex(4, context, RouteName.notifications);
             },
             child: Image.asset(
               AppImages.appBarNotification,

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:grabby_babby_admin/core/styles/app_color.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
 
+import '../../../data/models/order_model/order_model.dart';
 import '../../styles/app_images.dart';
 
 class UserDetailsDialog extends StatelessWidget {
   const UserDetailsDialog({super.key, required this.status});
-  final String status;
+  final Status status;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class UserDetailsDialog extends StatelessWidget {
                 ),
               ),
             ),
-            if (status == "Suspended")
+            if (status == Status.suspend)
               Positioned(
                 top: 220,
                 right: 24,
@@ -182,7 +183,7 @@ class UserDetailsDialog extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              status == "Suspended" ? "Cancel" : "Decline",
+                              status == Status.suspend ? "Cancel" : "Decline",
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
@@ -205,7 +206,7 @@ class UserDetailsDialog extends StatelessWidget {
                               backgroundColor: AppColors.greenText,
                             ),
                             child: Text(
-                              status == "Suspended" ? "Save" : "Approve",
+                              status == Status.suspend ? "Save" : "Approve",
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,

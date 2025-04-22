@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+
+import '../order_model/order_model.dart';
+import '../paginate/paginate.dart';
+
 enum UserRole { buyer, seller, businessSeller, admin }
 
 String fromRole(UserRole role) {
@@ -28,6 +33,21 @@ UserRole toRole(String role) {
   }
 }
 
+class UserViewModel {
+  ScrollController scrollController;
+  bool isScrolling;
+  bool isLoading;
+  Paginate<UserModel> users;
+
+  UserViewModel({
+    this.isScrolling = false,
+    this.isLoading = false,
+    ScrollController? scrollController,
+    Paginate<UserModel>? users,
+  })  : users = Paginate<UserModel>.empty(),
+        scrollController = ScrollController();
+}
+
 class UserModel {
   int? id;
   String? email;
@@ -38,7 +58,7 @@ class UserModel {
   String? url;
   String? provider;
   bool? isVerifiedByAdmin;
-  String? status;
+  Status? status;
   String? businessName;
   String? businessProfile;
   DateTime? createdAt;
@@ -80,7 +100,7 @@ class UserModel {
       url: json['url'] as String?,
       provider: json['provider'] as String?,
       isVerifiedByAdmin: json['isVerifiedByAdmin'] as bool?,
-      status: json['status'] as String?,
+      status: toStatus(json['status']),
       businessName: json['businessName'] as String?,
       businessProfile: json['businessProfile'] as String?,
       createdAt: json['createdAt'] != null
@@ -104,7 +124,7 @@ class UserModel {
       'password': password,
       'role': role,
       'url': url,
-      'status': status,
+      'status': fromStatus(status ?? Status.pending),
       'businessName': businessName,
       'businessProfile': businessProfile,
       'ABN': abn,

@@ -1,122 +1,183 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/core/styles/app_color.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
+import 'package:grabby_babby_admin/presentation/logic/users_management/user_detail/user_detail_cubit.dart';
+
+import '../../../../../logic/users_management/user_detail/user_detail_state.dart';
 
 class SalesOvertimeChart extends StatelessWidget {
   const SalesOvertimeChart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Sales Overtime',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                children: [
-                  _buildLegendItem('Revenue', Colors.purple),
-                  const SizedBox(width: 16),
-                  _buildLegendItem('Order', Colors.blue),
-                ],
+    return BlocBuilder<UserDetailCubit, UserDetailState>(
+      builder: (context, state) {
+        final sales = state.sellerDetail.monthlySales;
+        final monthsMap = {
+          "January": 0,
+          "February": 1,
+          "March": 2,
+          "April": 3,
+          "May": 4,
+          "June": 5,
+          "July": 6,
+          "August": 7,
+          "September": 8,
+          "October": 9,
+          "November": 10,
+          "December": 11,
+        };
+
+        return Container(
+          constraints: BoxConstraints(maxHeight: context.height * 0.3),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 4,
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: 200,
-            child: LineChart(
-              LineChartData(
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: true,
-                  horizontalInterval: 5,
-                  getDrawingHorizontalLine: (value) {
-                    return FlLine(
-                      color: Colors.grey[200],
-                      strokeWidth: 1,
-                    );
-                  },
-                ),
-                titlesData: FlTitlesData(
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          '\$${value.toInt()}k',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        );
-                      },
-                      interval: 5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Sales Overtime',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        const months = [
-                          'Jun',
-                          'Jul',
-                          'Aug',
-                          'Sep',
-                          'Oct',
-                          'Nov',
-                          'Dec',
-                          'Jan'
-                        ];
-                        if (value.toInt() < months.length) {
-                          return Text(
-                            months[value.toInt()],
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
-                          );
-                        }
-                        return const Text('');
-                      },
-                    ),
+                  Row(
+                    children: [
+                      _buildLegendItem('Revenue', Colors.purple),
+                      const SizedBox(width: 16),
+                      _buildLegendItem('Order', Colors.blue),
+                    ],
                   ),
-                ),
-                borderData: FlBorderData(show: false),
-                lineBarsData: [
-                  _createLineData(Colors.purple, true),
-                  _createLineData(Colors.blue, false),
                 ],
               ),
-            ),
+              const SizedBox(height: 24),
+              SizedBox(
+                height: 200,
+                child: LineChart(
+                  LineChartData(
+                    lineTouchData: LineTouchData(
+                        touchTooltipData: LineTouchTooltipData(
+                      getTooltipColor: (touchedSpot) => AppColors.bgColor,
+                    )),
+                    gridData: FlGridData(
+                      show: true,
+                      horizontalInterval: 10000, // Adjust for revenue scale
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey[200],
+                          strokeWidth: 1,
+                        );
+                      },
+                    ),
+                    titlesData: FlTitlesData(
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 10000,
+                          getTitlesWidget: (value, meta) {
+                            return Text(
+                              '\$${(value ~/ 1000).toString()}k',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 1,
+                          getTitlesWidget: (value, meta) {
+                            const months = [
+                              'Jan',
+                              'Feb',
+                              'Mar',
+                              'Apr',
+                              'May',
+                              'Jun',
+                              'Jul',
+                              'Aug',
+                              'Sep',
+                              'Oct',
+                              'Nov',
+                              'Dec',
+                            ];
+
+                            return Text(
+                              months[value.toInt()],
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(show: false),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: sales.map((item) {
+                          final x = monthsMap[item.month]?.toDouble() ?? 0.0;
+                          return FlSpot(x, item.revenue.toDouble());
+                        }).toList(),
+                        isCurved: true,
+                        color: Colors.purple,
+                        barWidth: 2,
+                        isStrokeCapRound: true,
+                        dotData: FlDotData(show: false),
+                        belowBarData: BarAreaData(
+                          show: true,
+                          color: Colors.purple.withOpacity(0.1),
+                        ),
+                      ),
+                      LineChartBarData(
+                        spots: sales.map((item) {
+                          final x = monthsMap[item.month]?.toDouble() ?? 0.0;
+                          return FlSpot(x, item.sales.toDouble());
+                        }).toList(),
+                        isCurved: true,
+                        color: Colors.blue,
+                        barWidth: 2,
+                        isStrokeCapRound: true,
+                        dotData: FlDotData(show: false),
+                        belowBarData: BarAreaData(
+                          show: true,
+                          color: Colors.blue.withOpacity(0.1),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -140,41 +201,6 @@ class SalesOvertimeChart extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  LineChartBarData _createLineData(Color color, bool isRevenue) {
-    return LineChartBarData(
-      spots: isRevenue
-          ? [
-              const FlSpot(0, 5),
-              const FlSpot(1, 12),
-              const FlSpot(2, 8),
-              const FlSpot(3, 10),
-              const FlSpot(4, 7),
-              const FlSpot(5, 12),
-              const FlSpot(6, 8),
-              const FlSpot(7, 10),
-            ]
-          : [
-              const FlSpot(0, 2),
-              const FlSpot(1, 4),
-              const FlSpot(2, 6),
-              const FlSpot(3, 4),
-              const FlSpot(4, 8),
-              const FlSpot(5, 6),
-              const FlSpot(6, 10),
-              const FlSpot(7, 8),
-            ],
-      isCurved: true,
-      color: color,
-      barWidth: 2,
-      isStrokeCapRound: true,
-      dotData: FlDotData(show: false),
-      belowBarData: BarAreaData(
-        show: true,
-        color: color.withOpacity(0.1),
-      ),
     );
   }
 }

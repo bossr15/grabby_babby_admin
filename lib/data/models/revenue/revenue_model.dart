@@ -1,7 +1,7 @@
 import 'package:grabby_babby_admin/core/utils/utils.dart';
 
 class RevenueModel {
-  int totalRevenue;
+  double totalRevenue;
   List<RevenueAxis> revenueAxis;
 
   RevenueModel({required this.totalRevenue, required this.revenueAxis});
@@ -16,7 +16,7 @@ class RevenueModel {
 
 class RevenueAxis {
   String x;
-  int y;
+  double y;
 
   RevenueAxis({required this.x, required this.y});
 

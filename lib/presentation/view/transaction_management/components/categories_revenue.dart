@@ -1,98 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
+import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_cubit.dart';
+import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_state.dart';
 
 class CategoriesRevenue extends StatelessWidget {
   const CategoriesRevenue({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
-      ),
-      width: context.width * 0.6,
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Product Categories & Revenue Statics',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+    return BlocBuilder<TransactionCubit, TransactionState>(
+        builder: (context, state) {
+      final categories = state.transactions.stats;
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        ),
+        width: context.width * 0.6,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Product Categories & Revenue Statics',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              // Spacer(),
-              Text(
-                '*Compare to last month',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
+                // Spacer(),
+                Text(
+                  '*Compare to last month',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 12,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Wrap(
-            spacing: 16,
-            runSpacing: 16,
-            children: [
-              _buildCategoryCard(
-                'Category Name',
-                '\$2500.00',
-                Icons.games,
-                0.15,
-                isIncrease: true,
-              ),
-              _buildCategoryCard(
-                'Category Name',
-                '\$350.00',
-                Icons.download,
-                0.35,
-                isIncrease: false,
-              ),
-              _buildCategoryCard(
-                'Category Name',
-                '\$50.00',
-                Icons.person,
-                0.12,
-                isIncrease: true,
-              ),
-              _buildCategoryCard(
-                'Category Name',
-                '\$80.00',
-                Icons.diamond_outlined,
-                0.15,
-                isIncrease: false,
-              ),
-              _buildCategoryCard(
-                'Category Name',
-                '\$420.00',
-                Icons.account_balance_wallet,
-                0.25,
-                isIncrease: true,
-              ),
-              _buildCategoryCard(
-                'Category Name',
-                '\$650.00',
-                Icons.shopping_cart,
-                0.23,
-                isIncrease: true,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+              ],
+            ),
+            const SizedBox(height: 24),
+            Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: categories.map((category) {
+                  return _buildCategoryCard(
+                    category.categoryName,
+                    '\$${category.currentRevenue.toStringAsFixed(2)}',
+                    Icons.games,
+                    category.change,
+                    isIncrease: category.change > 0,
+                  );
+                }).toList()),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildCategoryCard(
-      String name, String amount, IconData icon, double percentage,
+      String name, String amount, IconData icon, int change,
       {bool isIncrease = true}) {
     return Container(
       width: 200,
@@ -141,7 +112,7 @@ class CategoriesRevenue extends StatelessWidget {
                       color: isIncrease ? Colors.green : Colors.red,
                     ),
                     Text(
-                      '${(percentage * 100).toStringAsFixed(1)}%',
+                      '$change%',
                       style: TextStyle(
                         fontSize: 12,
                         color: isIncrease ? Colors.green : Colors.red,

@@ -7,15 +7,19 @@ class AppNavigation {
   static void pushNamed(
     String routeName, {
     dynamic extra,
+    Map<String, String>? pathParameters,
   }) {
-    _appContext.goNamed(routeName, extra: extra);
+    _appContext.goNamed(routeName,
+        extra: extra, pathParameters: pathParameters ?? {});
   }
 
   static void pushReplacementNamed(
     String routeName, {
     dynamic extra,
+    Map<String, String>? pathParameters,
   }) {
-    _appContext.replaceNamed(routeName, extra: extra);
+    _appContext.replaceNamed(routeName,
+        extra: extra, pathParameters: pathParameters ?? {});
   }
 
   static void pop() {

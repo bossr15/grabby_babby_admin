@@ -54,13 +54,15 @@ class AppRouter {
             pageBuilder: (context, state) => const UserManagement(),
             routes: [
               troute.TransitionRoute.fadeTransitionRoute(
-                path: '/user-details',
+                path: '/user-details/:id',
                 name: RouteName.userDetails,
                 pageBuilder: (context, state) {
                   final accountType = state.extra as String? ??
                       localStorage.getString('accountType') ??
                       "";
+                  final userId = state.pathParameters['id']!;
                   return UserDetails(
+                    userId: userId,
                     accountType: accountType,
                   );
                 },

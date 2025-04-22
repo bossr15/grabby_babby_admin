@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
 
 import '../../../../../core/styles/app_color.dart';
 import 'users_table/users_table.dart';
@@ -13,17 +14,12 @@ class UsersTabView extends StatelessWidget {
       controller: tabController,
       children: [
         UsersTable(
-          status: "Active",
+          status: Status.all,
           statusColor: AppColors.green,
           statusTextColor: AppColors.greenText,
         ),
         UsersTable(
-          status: "Pending",
-          statusColor: AppColors.yellow,
-          statusTextColor: AppColors.yellowText,
-        ),
-        UsersTable(
-          status: "Suspended",
+          status: Status.suspend,
           statusColor: AppColors.red,
           statusTextColor: AppColors.redText,
         ),

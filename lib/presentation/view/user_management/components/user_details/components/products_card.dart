@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
+import 'package:grabby_babby_admin/presentation/logic/users_management/user_detail/user_detail_cubit.dart';
 
 import '../../../../../../core/styles/app_images.dart';
+import '../../../../../logic/users_management/user_detail/user_detail_state.dart';
 
 class PurchasedProductsCard extends StatelessWidget {
   const PurchasedProductsCard({super.key, required this.title});
@@ -8,85 +12,69 @@ class PurchasedProductsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
+    return BlocBuilder<UserDetailCubit, UserDetailState>(
+      builder: (context, state) {
+        final cubit = context.read<UserDetailCubit>();
+        final products = cubit.products;
+
+        return Container(
+          constraints: BoxConstraints(maxHeight: context.height * 0.6),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 4,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              products.isEmpty
+                  ? Center(child: Text('No products found'))
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            _buildCategorySection(products
+                                .map(
+                                  (product) => _ProductItem(
+                                    image: AppImages.productImage1,
+                                    name: product.name ?? "",
+                                    price: '\$${product.price ?? ""}',
+                                    state: product.state ?? "",
+                                    date: '${product.updatedAt}',
+                                  ),
+                                )
+                                .toList()),
+                          ],
+                        ),
+                      ),
+                    ),
+              const SizedBox(height: 24),
+            ],
           ),
-          const SizedBox(height: 16),
-          _buildCategorySection('Category A', [
-            _ProductItem(
-              image: AppImages.productImage1,
-              name: 'Fortnite Game',
-              price: '\$70',
-              state: 'NSW',
-              date: '12/01/2025',
-            ),
-            _ProductItem(
-              image: AppImages.productImage2,
-              name: 'Fortnite Game',
-              price: '\$70',
-              state: 'NSW',
-              date: '12/01/2025',
-            ),
-          ]),
-          const SizedBox(height: 24),
-          _buildCategorySection('Category B', [
-            _ProductItem(
-              image: AppImages.productImage3,
-              name: 'Fortnite Game',
-              price: '\$70',
-              state: 'NSW',
-              date: '12/01/2025',
-            ),
-          ]),
-          const SizedBox(height: 24),
-          _buildCategorySection('Category C', [
-            _ProductItem(
-              image: AppImages.productImage4,
-              name: 'Fortnite Game',
-              price: '\$70',
-              state: 'NSW',
-              date: '12/01/2025',
-            ),
-          ]),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildCategorySection(String title, List<Widget> items) {
+  Widget _buildCategorySection(List<Widget> items) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 12),
-        ...items,
-      ],
+      children: items,
     );
   }
 }

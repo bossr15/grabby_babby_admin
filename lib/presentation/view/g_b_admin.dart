@@ -18,6 +18,7 @@ class GBAdmin extends StatelessWidget {
           fontFamily: 'Archivo',
           dialogBackgroundColor: Colors.white,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          cardColor: Colors.white,
           useMaterial3: true,
         ),
       ),

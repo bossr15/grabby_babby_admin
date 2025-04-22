@@ -7,18 +7,19 @@ class DashboardState {
   String revenueFilter;
   bool isLoading;
   bool isRevenueLoading;
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime startDate;
+  DateTime endDate;
 
   DashboardState({
     required this.dashboardStats,
     required this.revenueModel,
     this.revenueFilter = 'Month',
-    this.endDate,
-    this.startDate,
+    DateTime? startDate,
+    DateTime? endDate,
     this.isLoading = false,
     this.isRevenueLoading = false,
-  });
+  })  : startDate = startDate ?? DateTime(2025, 1, 1),
+        endDate = endDate ?? DateTime(2025, 12, 31);
 
   factory DashboardState.empty() => DashboardState(
         revenueModel: RevenueModel(

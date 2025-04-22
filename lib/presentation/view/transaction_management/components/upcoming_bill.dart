@@ -1,82 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
+import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
-import '../../../../core/styles/app_color.dart';
+import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_cubit.dart';
+import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_state.dart';
 
 class UpcomingBill extends StatelessWidget {
   const UpcomingBill({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
-      ),
-      width: context.width * 0.6,
-      padding: const EdgeInsets.all(16),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Upcoming Bill',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      Text(
-                        'View All',
-                        style: TextStyle(color: AppColors.grey),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 12,
-                        color: AppColors.grey,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildBillItem(
-              'Fortnite',
-              'Store Name',
-              '14 May, 2022',
-              3,
-              '\$150',
-              context,
-            ),
-            const SizedBox(height: 16),
-            _buildBillItem(
-              'Fortnite',
-              'Store Name',
-              '14 May, 2022',
-              5,
-              '\$150',
-              context,
-            ),
-          ],
+    return BlocBuilder<TransactionCubit, TransactionState>(
+        builder: (context, state) {
+      final incomingOrdersProducts = state.transactions.incomingOrdersProducts;
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.withOpacity(0.2)),
         ),
-      ),
-    );
+        width: context.width * 0.6,
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Upcoming Bill',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Container(
+                constraints: BoxConstraints(
+                  maxHeight: context.height * 0.4,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: incomingOrdersProducts.map((product) {
+                      return Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: _buildBillItem(
+                          product.name ?? "",
+                          (product.userId ?? 0).toString(),
+                          DateHelpers.formatDate(
+                              DateHelpers.parseDate(product.createdAt ?? "")),
+                          '\$${product.price}',
+                          context,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   Widget _buildBillItem(
     String productName,
     String storeName,
     String date,
-    int remainingDays,
     String commission,
     BuildContext context,
   ) {
@@ -99,42 +93,13 @@ class UpcomingBill extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '$storeName · $date',
+                date,
                 style: TextStyle(
                   color: Colors.grey[600],
                   fontSize: 12,
                 ),
               ),
               const SizedBox(height: 8),
-              Stack(
-                children: [
-                  Container(
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: remainingDays / 7,
-                    child: Container(
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Remaining: $remainingDays days',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
-                ),
-              ),
             ],
           ),
         ),

@@ -12,6 +12,7 @@ class ListingTable extends StatelessWidget {
     super.key,
     required this.rows,
     required this.columns,
+    this.scrollController,
     this.rowHeight,
     this.isLoading = false,
   });
@@ -19,12 +20,14 @@ class ListingTable extends StatelessWidget {
   final List<ListingRow> rows;
   final List<ListingColumn> columns;
   final bool isLoading;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: DataTable2(
+        scrollController: scrollController,
         dataRowHeight: rowHeight ?? 50,
         showBottomBorder: true,
         showCheckboxColumn: false,

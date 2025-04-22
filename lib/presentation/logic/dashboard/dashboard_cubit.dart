@@ -15,9 +15,8 @@ class DashboardCubit extends Cubit<DashboardState> {
   void fetchDashboardStats() {
     emit(state.copyWith(isLoading: true));
     final extraQuery = {
-      if (state.startDate != null)
-        'startDate': state.startDate!.toIso8601String(),
-      if (state.endDate != null) 'endDate': state.endDate!.toIso8601String(),
+      'startDate': state.startDate.toIso8601String(),
+      'endDate': state.endDate.toIso8601String(),
     };
     dashBoardRepository.getDashboardStats(extraQuery: extraQuery).then(
           (response) => response.fold(

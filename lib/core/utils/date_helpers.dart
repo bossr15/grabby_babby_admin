@@ -37,6 +37,7 @@ class DateHelpers {
   }) async {
     final selectedDates = await showCalendarDatePicker2Dialog(
       context: context,
+      dialogBackgroundColor: Colors.white,
       config: CalendarDatePicker2WithActionButtonsConfig(
         calendarType: CalendarDatePicker2Type.range,
         selectedDayHighlightColor: AppColors.darkBlue,
@@ -44,7 +45,6 @@ class DateHelpers {
         controlsTextStyle: const TextStyle(color: Colors.black),
         dayTextStyle: const TextStyle(color: Colors.black),
       ),
-      // value: initialDateRange,
       dialogSize: const Size(325, 400),
       borderRadius: BorderRadius.circular(15),
     );

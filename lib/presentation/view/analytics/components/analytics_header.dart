@@ -27,13 +27,6 @@ class AnalyticsHeader extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.download),
-                    const SizedBox(width: 10),
-                    Text('Download'),
-                  ],
-                ),
               ],
             ),
             const SizedBox(height: 15),
