@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
-
-import '../../../../initializer.dart';
+import 'package:grabby_babby_admin/presentation/logic/support/support_cubit.dart';
+import 'package:grabby_babby_admin/presentation/logic/support/support_state.dart';
+import '../../../../core/styles/app_color.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../core/widgets/app_indicator.dart';
+import '../../../../core/widgets/jumping_dots.dart';
 import 'message/my_message.dart';
 import 'message/other_message.dart';
 
@@ -11,124 +16,133 @@ class ChatRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: Color(0xff2563eb).withOpacity(0.37),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: Row(
-              children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage(AppImages.dummyUser),
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        width: 10,
-                        height: 10,
-                        decoration: const BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Krystal Norton',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: 0),
-          Expanded(
-            child: ListView(
-              reverse: true,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              children: const [
-                OtherMessage(),
-                MyMessage(),
-                OtherMessage(),
-                MyMessage(),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AppImages.emoji),
-                const SizedBox(width: 12),
-                InkWell(
-                  onTap: () {
-                    imagePickerService.uploadImage();
-                  },
-                  child: Image.asset(AppImages.file),
-                ),
-                const SizedBox(width: 12),
-                Container(
-                  width: context.width * 0.4,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Row(
+    return BlocBuilder<SupportCubit, SupportState>(builder: (context, state) {
+      final cubit = context.read<SupportCubit>();
+      final isScrolling = state.isMessagesScrolling;
+      final isLoading = state.isMessagesLoading && !isScrolling;
+      final messages = state.messages.getCachedData();
+      final isEmpty = messages.isEmpty;
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: isLoading
+              ? [
+                  Expanded(
+                      child: Row(
                     children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Type your message...',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[500],
-                              fontSize: 14,
+                      Spacer(),
+                      JumpingDots(),
+                      Spacer(),
+                    ],
+                  ))
+                ]
+              : [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Color(0xff2563eb).withOpacity(0.37),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage: AssetImage(AppImages.dummyUser),
+                        ),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              state.selectedChat.user.fullName ?? "",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
                             ),
-                            border: InputBorder.none,
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 0),
+                  if (state.isMessagesScrolling)
+                    AppIndicator(color: AppColors.darkBlue),
+                  Expanded(
+                    child: isEmpty
+                        ? Center(
+                            child: Text("No Messages Found"),
+                          )
+                        : ListView.builder(
+                            reverse: true,
+                            controller: cubit.messagesScrollController,
+                            itemCount: messages.length,
+                            itemBuilder: (context, index) {
+                              final message = messages[index];
+                              bool isMe = message.senderId == cubit.userId;
+
+                              return isMe
+                                  ? MyMessage(message: message)
+                                  : OtherMessage(message: message);
+                            }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: context.width * 0.45,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  focusNode:
+                                      getFieldFocusNode(cubit.sendMessage),
+                                  textInputAction: TextInputAction.newline,
+                                  maxLines: null,
+                                  minLines: 1,
+                                  onChanged: (val) {
+                                    state.textController.text = val;
+                                  },
+                                  controller: state.textController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Type your message...',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey[500],
+                                      fontSize: 14,
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  cubit.sendMessage();
+                                },
+                                child: Image.asset(AppImages.send),
+                              )
+                            ],
                           ),
                         ),
-                      ),
-                      Image.asset(AppImages.send),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+                ],
+        ),
+      );
+    });
   }
 }

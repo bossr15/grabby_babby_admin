@@ -5,6 +5,7 @@ class GbAdminButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color backgroundColor;
   final Color textColor;
+  final Widget? widget;
 
   const GbAdminButton({
     super.key,
@@ -12,6 +13,7 @@ class GbAdminButton extends StatelessWidget {
     required this.onPressed,
     required this.backgroundColor,
     required this.textColor,
+    this.widget,
   });
 
   @override
@@ -25,14 +27,15 @@ class GbAdminButton extends StatelessWidget {
         ),
         backgroundColor: backgroundColor,
       ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: textColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
+      child: widget ??
+          Text(
+            label,
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/models/revenue/revenue_model.dart';
@@ -18,6 +19,23 @@ List<T> parseList<T>(
 ) {
   final parsedData = (data as List?)?.cast<Map<String, dynamic>>();
   return parsedData?.map(fromJson).toList().cast<T>() ?? [];
+}
+
+FocusNode getFieldFocusNode(void Function() callBack) {
+  return FocusNode(
+    onKeyEvent: (node, evt) {
+      if (!HardwareKeyboard.instance.isShiftPressed &&
+          HardwareKeyboard.instance
+              .isLogicalKeyPressed(LogicalKeyboardKey.enter)) {
+        if (evt is KeyDownEvent) {
+          callBack.call();
+        }
+        return KeyEventResult.handled;
+      } else {
+        return KeyEventResult.ignored;
+      }
+    },
+  );
 }
 
 enum SnackbarType { success, info, warning, error }

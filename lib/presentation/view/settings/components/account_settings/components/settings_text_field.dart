@@ -5,13 +5,17 @@ class SettingsTextField extends StatelessWidget {
   final String hintText;
   final String? prefix;
   final int maxLines;
+  final bool readOnly;
   final Function(String) onChanged;
+  final TextEditingController controller;
 
   const SettingsTextField({
     super.key,
     required this.label,
     required this.hintText,
     required this.onChanged,
+    required this.controller,
+    this.readOnly = false,
     this.prefix,
     this.maxLines = 1,
   });
@@ -30,8 +34,10 @@ class SettingsTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          controller: controller,
           maxLines: maxLines,
           onChanged: onChanged,
+          readOnly: readOnly,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(

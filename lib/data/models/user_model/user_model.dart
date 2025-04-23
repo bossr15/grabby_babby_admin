@@ -100,7 +100,7 @@ class UserModel {
       url: json['url'] as String?,
       provider: json['provider'] as String?,
       isVerifiedByAdmin: json['isVerifiedByAdmin'] as bool?,
-      status: toStatus(json['status']),
+      status: json['status'] != null ? toStatus(json['status']) : null,
       businessName: json['businessName'] as String?,
       businessProfile: json['businessProfile'] as String?,
       createdAt: json['createdAt'] != null

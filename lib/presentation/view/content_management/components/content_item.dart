@@ -1,11 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
+import 'package:grabby_babby_admin/data/models/notification_model/notification_model.dart';
 
 import '../../../../core/styles/app_images.dart';
 
 class ContentItem extends StatelessWidget {
-  const ContentItem({super.key});
+  const ContentItem({super.key, required this.notification});
+  final NotificationModel notification;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ContentItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(AppImages.dummyUser),
             ),
-            title: Text('Denise Nedry Reported review to D Game Heaven'),
+            title: Text('${notification.title}'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -35,7 +36,7 @@ class ContentItem extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                        '${notification.message}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -43,28 +44,29 @@ class ContentItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 5),
-                Text('Last Wednesday at 9:42 AM'),
+                Text(
+                    DateHelpers.formatStringDate(notification.createdAt ?? "")),
               ],
             ),
           ),
         ),
-        Expanded(
-          child: ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                [
-                  AppImages.productImage1,
-                  AppImages.productImage2,
-                  AppImages.productImage3,
-                  AppImages.productImage4
-                ][Random().nextInt(4)],
-              ),
-            ),
-            title: Text('Product Name'),
-            subtitle: Text('Lorem ipsum dolor sit amet...'),
-          ),
-        ),
+        // Expanded(
+        //   child: ListTile(
+        //     leading: ClipRRect(
+        //       borderRadius: BorderRadius.circular(12),
+        //       child: Image.asset(
+        //         [
+        //           AppImages.productImage1,
+        //           AppImages.productImage2,
+        //           AppImages.productImage3,
+        //           AppImages.productImage4
+        //         ][Random().nextInt(4)],
+        //       ),
+        //     ),
+        //     title: Text('Product Name'),
+        //     subtitle: Text('Lorem ipsum dolor sit amet...'),
+        //   ),
+        // ),
       ],
     );
   }

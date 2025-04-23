@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:get_storage/get_storage.dart';
+import 'package:grabby_babby_admin/data/models/user_model/user_model.dart';
 
 class LocalStorageService {
   static final instance = LocalStorageService._();
@@ -20,5 +23,11 @@ class LocalStorageService {
 
   void clear() {
     storage.erase();
+  }
+
+  UserModel getUser() {
+    final string = storage.read("user");
+    final json = jsonDecode(string);
+    return UserModel.fromJson(json);
   }
 }

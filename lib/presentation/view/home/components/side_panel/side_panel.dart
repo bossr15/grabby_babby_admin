@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/styles/app_color.dart';
 import '../../../../../core/styles/app_images.dart';
-import '../../../../../core/utils/extension.dart';
 import '../../../../logic/home/side_panel/side_panel_cubit.dart';
 import '../../../../logic/home/side_panel/side_panel_state.dart';
 import 'components/side_panel_item.dart';
@@ -16,7 +15,7 @@ class SidePanel extends StatelessWidget {
     final isDrawer = Scaffold.of(context).hasDrawer;
     return Container(
       width: isDrawer ? null : 350,
-      height: context.height,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: [

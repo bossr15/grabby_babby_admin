@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'account_settings/account_settings.dart';
 import 'login_security/login_security.dart';
-import 'notification_settings/notification_settings.dart';
 
 class SettingsTabView extends StatelessWidget {
   const SettingsTabView({super.key, required this.tabController});
@@ -15,7 +14,6 @@ class SettingsTabView extends StatelessWidget {
       children: [
         AccountSettings(),
         LoginSecurity(),
-        NotificationSettings(),
       ],
     );
   }

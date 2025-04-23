@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:grabby_babby_admin/data/models/dashboard_model/dashboard_model.dart';
 import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
@@ -29,6 +31,25 @@ class UserRepository {
         dataKey: "users",
       );
       return right(parsedData);
+    }
+    return left(response.message);
+  }
+
+  Future<Either<String, UserModel>> updateUser({
+    String? fullName,
+    String? url,
+    String? phoneNumber,
+  }) async {
+    final response =
+        await networkRepository.put(url: "/user/update-profile", data: {
+      'fullName': fullName,
+      'phoneNumber': phoneNumber,
+      'url': url,
+    });
+    if (!response.failed) {
+      final data = UserModel.fromJson(response.data["data"]);
+      localStorage.setString("user", jsonEncode(data.toJson()));
+      return right(data);
     }
     return left(response.message);
   }

@@ -57,6 +57,13 @@ class DateHelpers {
     return null;
   }
 
+  static String formatMessageDate(DateTime? date) {
+    final sendTime =
+        DateTime.parse(date?.toString() ?? DateTime.now().toString());
+    final formattedTime = DateFormat('hh:mm').format(sendTime);
+    return formattedTime;
+  }
+
   static String formatDateRange(DateTime? startDate, DateTime? endDate) {
     if (startDate == null || endDate == null) {
       return "Select Date Range";

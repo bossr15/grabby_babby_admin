@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/data/models/notification_model/notification_model.dart';
 import 'components/content_header.dart';
 import 'components/content_item.dart';
 
@@ -21,7 +22,8 @@ class ContentScreen extends StatelessWidget {
             ContentHeader(),
             Expanded(
                 child: ListView.separated(
-              itemBuilder: (context, index) => ContentItem(),
+              itemBuilder: (context, index) =>
+                  ContentItem(notification: NotificationModel()),
               separatorBuilder: (context, index) => const Divider(),
               itemCount: 12,
             ))

@@ -4,7 +4,8 @@ import '../../../../../../core/styles/app_images.dart';
 import '../../../../../../initializer.dart';
 
 class ProfileImagePicker extends StatelessWidget {
-  const ProfileImagePicker({super.key});
+  const ProfileImagePicker({super.key, this.image});
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,9 @@ class ProfileImagePicker extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(AppImages.gallery),
+                  image != null
+                      ? Image.network(image!)
+                      : Image.asset(AppImages.gallery),
                   const SizedBox(height: 8),
                   Text(
                     'Upload your\nphoto',

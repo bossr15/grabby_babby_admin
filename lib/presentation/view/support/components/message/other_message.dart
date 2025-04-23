@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/data/models/chat_model/message_model.dart';
 import '../../../../../core/styles/app_images.dart';
+import '../../../../../core/utils/date_helpers.dart';
 
 class OtherMessage extends StatelessWidget {
-  const OtherMessage({super.key});
+  const OtherMessage({super.key, required this.message});
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +36,8 @@ class OtherMessage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Thanks, you can purchase it.',
+                    Text(
+                      message.messageBody ?? "",
                       style: TextStyle(
                         color: Colors.black87,
                         fontSize: 14,
@@ -42,7 +45,7 @@ class OtherMessage extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '20:52',
+                      DateHelpers.formatMessageDate(message.sentAt),
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 12,

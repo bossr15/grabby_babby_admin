@@ -94,11 +94,16 @@ class Paginate<T> {
     int appendToPage = 1,
   }) {
     final currentPage = appendToPage;
-    final existingPageData = data.data[currentPage] ?? [];
+    final existingPageData = (data.data[currentPage] ?? []).cast<T>();
 
-    final updatedPageData = [item, ...existingPageData];
+    final List<T> updatedPageData = [item];
+    updatedPageData.addAll(existingPageData);
 
-    final updatedData = Map<int, List<T>>.from(data.data);
+    final updatedData = <int, List<T>>{};
+    data.data.forEach((key, value) {
+      updatedData[key] = value.cast<T>();
+    });
+
     updatedData[currentPage] = updatedPageData;
 
     return data.copyWith(

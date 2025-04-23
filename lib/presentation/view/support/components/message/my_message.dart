@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
+
+import '../../../../../data/models/chat_model/message_model.dart';
 
 class MyMessage extends StatelessWidget {
-  const MyMessage({super.key});
+  const MyMessage({super.key, required this.message});
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +28,8 @@ class MyMessage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text(
-                  'Hey Abiodun, I am looking for the best admin template.',
+                Text(
+                  message.messageBody ?? "",
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: 14,
@@ -33,7 +37,7 @@ class MyMessage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '20:54',
+                  DateHelpers.formatMessageDate(message.sentAt),
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/presentation/logic/settings/settings_cubit.dart';
 import 'package:grabby_babby_admin/presentation/view/settings/components/settings_tab_bar.dart';
 import 'package:grabby_babby_admin/presentation/view/settings/components/settings_tab_view.dart';
 
@@ -18,7 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -29,19 +31,22 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            SettingsTabBar(tabController: tabController),
-            Expanded(child: SettingsTabView(tabController: tabController)),
-          ],
+    return BlocProvider<SettingsCubit>(
+      create: (context) => SettingsCubit(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              SettingsTabBar(tabController: tabController),
+              Expanded(child: SettingsTabView(tabController: tabController)),
+            ],
+          ),
         ),
       ),
     );

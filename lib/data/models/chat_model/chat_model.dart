@@ -9,10 +9,13 @@ class ChatModel {
   ChatModel({required this.id, required this.lastMessage, required this.user});
 
   factory ChatModel.fromJson(Map<String, dynamic> json) {
+    final member = json["members"] != null && json["members"] is List
+        ? json["members"][0]["user"]
+        : UserModel();
     return ChatModel(
       id: json["id"],
-      lastMessage: MessageModel.fromJson(json["lastMessage"]),
-      user: UserModel.fromJson(json["user"]),
+      lastMessage: MessageModel.fromJson(json["lastMessage"]["messages"]),
+      user: UserModel.fromJson(member),
     );
   }
 }

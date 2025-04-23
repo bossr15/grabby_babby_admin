@@ -19,7 +19,6 @@ class SettingsTabBar extends StatelessWidget {
       tabs: [
         Tab(text: "Account Setting"),
         Tab(text: "Login & Security"),
-        Tab(text: "Notification Settings"),
       ],
     );
   }
