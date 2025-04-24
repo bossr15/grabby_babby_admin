@@ -15,6 +15,65 @@ class UsersTabBarActions extends StatelessWidget {
         final cubit = context.read<UserCubit>();
         return Row(
           children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: state.userType,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      size: 18,
+                      color: Colors.grey,
+                    ),
+                    items: ['All', 'Seller', 'Buyer'].map((String value) {
+                      final text = value == "All" ? "All Users" : "${value}s";
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          text,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        cubit.setUserType(newValue);
+                      }
+                    },
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                    dropdownColor: Colors.white,
+                  ),
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   mainAxisSize: MainAxisSize.min,
+                //   children: [
+                //     const Text(
+                //       'All Users',
+                //       style: TextStyle(
+                //         color: Colors.black87,
+                //         fontSize: 14,
+                //       ),
+                //     ),
+                //     const SizedBox(width: 12),
+                //     Icon(
+                //       Icons.arrow_drop_down,
+                //       color: Colors.grey.shade600,
+                //     ),
+                //   ],
+                // ),
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
               flex: 1,

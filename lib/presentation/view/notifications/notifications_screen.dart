@@ -11,57 +11,53 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NotificationCubit>(
-      create: (context) => NotificationCubit(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: EdgeInsets.all(16),
-          child: BlocBuilder<NotificationCubit, NotificationState>(
-              builder: (context, state) {
-            final cubit = context.read<NotificationCubit>();
-            final notifications = state.notifications.getCachedData();
-            final isLoading = state.isLoading && !state.isScrolling;
-            final isEmpty = notifications.isEmpty;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Notification",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-                SizedBox(height: 10),
-                Expanded(
-                    child: isLoading
-                        ? Row(
-                            children: [
-                              Spacer(),
-                              JumpingDots(),
-                              Spacer(),
-                            ],
-                          )
-                        : isEmpty
-                            ? Center(
-                                child: Text("No Notifications available"),
-                              )
-                            : ListView.separated(
-                                controller: cubit.scrollController,
-                                itemCount: notifications.length,
-                                separatorBuilder: (context, index) => Divider(),
-                                itemBuilder: (context, index) {
-                                  final notification = notifications[index];
-                                  return ContentItem(
-                                      notification: notification);
-                                },
-                              )),
-              ],
-            );
-          }),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(12),
         ),
+        padding: EdgeInsets.all(16),
+        child: BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+          final cubit = context.read<NotificationCubit>();
+          final notifications = state.notifications.getCachedData();
+          final isLoading = state.isLoading && !state.isScrolling;
+          final isEmpty = notifications.isEmpty;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Notifications",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                  child: isLoading
+                      ? Row(
+                          children: [
+                            Spacer(),
+                            JumpingDots(),
+                            Spacer(),
+                          ],
+                        )
+                      : isEmpty
+                          ? Center(
+                              child: Text("No Notifications available"),
+                            )
+                          : ListView.separated(
+                              controller: cubit.scrollController,
+                              itemCount: notifications.length,
+                              separatorBuilder: (context, index) => Divider(),
+                              itemBuilder: (context, index) {
+                                final notification = notifications[index];
+                                return ContentItem(notification: notification);
+                              },
+                            )),
+            ],
+          );
+        }),
       ),
     );
   }

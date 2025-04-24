@@ -8,6 +8,7 @@ class UserState {
   Map<Status, UserViewModel> users;
   int selectedIndex;
   String search;
+  String userType;
   DateTime? startDate;
   DateTime? endDate;
 
@@ -17,6 +18,7 @@ class UserState {
     this.selectedIndex = 0,
     this.endDate,
     this.search = "",
+    this.userType = "All",
     this.startDate,
   });
 
@@ -33,6 +35,7 @@ class UserState {
     Map<Status, UserViewModel>? users,
     int? selectedIndex,
     String? search,
+    String? userType,
     DateTime? startDate,
     DateTime? endDate,
   }) {
@@ -43,6 +46,7 @@ class UserState {
       search: search ?? this.search,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
+      userType: userType ?? this.userType,
     );
   }
 }

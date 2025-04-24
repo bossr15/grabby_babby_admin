@@ -63,7 +63,8 @@ class UserCubit extends Cubit<UserState> {
       if (state.startDate != null)
         'startDate': state.startDate!.toIso8601String(),
       if (state.endDate != null) 'endDate': state.endDate!.toIso8601String(),
-      if (state.search.isNotEmpty) 'search': state.search
+      if (state.search.isNotEmpty) 'search': state.search,
+      "userType": state.userType.toUpperCase(),
     };
     userRepository
         .getAllUsers(
@@ -102,5 +103,10 @@ class UserCubit extends Cubit<UserState> {
 
   void setSelectedIndex(int index) {
     emit(state.copyWith(selectedIndex: index));
+  }
+
+  void setUserType(String userType) {
+    emit(state.copyWith(userType: userType));
+    fetchData(refresh: true);
   }
 }

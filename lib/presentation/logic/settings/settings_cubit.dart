@@ -60,4 +60,8 @@ class SettingsCubit extends Cubit<SettingsState> {
     phoneNumber.text = user.phoneNumber ?? "";
     emit(state.copyWith(user: user, profileUrl: state.profileUrl));
   }
+
+  void setProfileUrl(String image) {
+    emit(state.copyWith(profileUrl: image));
+  }
 }

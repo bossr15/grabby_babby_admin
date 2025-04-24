@@ -26,6 +26,9 @@ class AccountSettings extends StatelessWidget {
                   image: state.profileUrl.isEmpty
                       ? state.user.url
                       : state.profileUrl,
+                  onImageChanged: (image) {
+                    cubit.setProfileUrl(image);
+                  },
                 ),
                 const SizedBox(height: 24),
                 Row(

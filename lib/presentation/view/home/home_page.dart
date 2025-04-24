@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
 import '../../../core/styles/app_color.dart';
 import '../../logic/home/side_panel/side_panel_cubit.dart';
+import '../../logic/notifications/notification_cubit.dart';
 import 'components/app_bar/g_b_admin_app_bar.dart';
 import 'components/side_panel/side_panel.dart';
 
@@ -14,8 +15,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSmallScreen = context.width < 1200;
 
-    return BlocProvider(
-      create: (context) => SidePanelCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SidePanelCubit()),
+        BlocProvider(create: (context) => NotificationCubit()),
+      ],
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
         appBar: isSmallScreen

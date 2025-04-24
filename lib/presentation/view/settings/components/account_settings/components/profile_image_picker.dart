@@ -4,8 +4,10 @@ import '../../../../../../core/styles/app_images.dart';
 import '../../../../../../initializer.dart';
 
 class ProfileImagePicker extends StatelessWidget {
-  const ProfileImagePicker({super.key, this.image});
+  const ProfileImagePicker(
+      {super.key, this.image, required this.onImageChanged});
   final String? image;
+  final Function(String) onImageChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,11 @@ class ProfileImagePicker extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         InkWell(
-          onTap: () {
-            imagePickerService.uploadImage();
+          onTap: () async {
+            final image = await imagePickerService.uploadImage();
+            if (image != null) {
+              onImageChanged(image);
+            }
           },
           child: Container(
             width: 120,
@@ -40,17 +45,19 @@ class ProfileImagePicker extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   image != null
-                      ? Image.network(image!)
+                      ? Image.network(
+                          "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png")
                       : Image.asset(AppImages.gallery),
                   const SizedBox(height: 8),
-                  Text(
-                    'Upload your\nphoto',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
+                  if (image == null)
+                    Text(
+                      'Upload your\nphoto',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
