@@ -20,7 +20,6 @@ class UpcomingBill extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.grey.withOpacity(0.2)),
         ),
-        width: context.width * 0.6,
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(

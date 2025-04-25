@@ -15,7 +15,6 @@ class TotalBalance extends StatelessWidget {
     return BlocBuilder<TransactionCubit, TransactionState>(
         builder: (context, state) {
       return Container(
-        width: 300,
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(color: AppColors.grey.withOpacity(0.2)),

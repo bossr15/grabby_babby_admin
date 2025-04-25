@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:grabby_babby_admin/navigation/app_navigation.dart';
+import 'package:grabby_babby_admin/navigation/route_name.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../core/constants/constants.dart';
 import '../network_response.dart';
@@ -10,7 +12,7 @@ class DioClient {
   DioClient() {
     _initializeDioClient();
   }
-  static const int maxRetries = 1;
+  static const int maxRetries = 2;
   static const int retryDelay = 1;
 
   final dio = Dio(
@@ -32,7 +34,10 @@ class DioClient {
           retries: maxRetries,
           retryInterval: const Duration(seconds: retryDelay),
           retryEvaluator: (error) async {
-            if (error.type == DioExceptionType.connectionError ||
+            if (error.response!.statusCode! == 401) {
+              AppNavigation.pushReplacementNamed(RouteName.login);
+              return false;
+            } else if (error.type == DioExceptionType.connectionError ||
                 error.type == DioExceptionType.connectionTimeout ||
                 (error.response?.statusCode != null &&
                     error.response!.statusCode! >= 500)) {

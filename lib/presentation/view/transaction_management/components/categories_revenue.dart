@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_cubit.dart';
 import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_state.dart';
 
@@ -18,7 +17,6 @@ class CategoriesRevenue extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.grey.withOpacity(0.2)),
         ),
-        width: context.width * 0.6,
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

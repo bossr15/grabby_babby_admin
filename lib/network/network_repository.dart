@@ -134,6 +134,7 @@ class NetworkRepository {
 
   NetworkResponse _handleResponse(Response response) {
     final body = response.data;
+
     if (response.statusCode == 200 || response.statusCode == 201) {
       return NetworkResponse(
         data: body,

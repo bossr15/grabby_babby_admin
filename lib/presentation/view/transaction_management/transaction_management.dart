@@ -31,29 +31,31 @@ class TransactionManagement extends StatelessWidget {
             return state.isLoading
                 ? AppIndicator(color: AppColors.darkBlue)
                 : SingleChildScrollView(
-                    child: Column(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                TotalBalance(),
-                                const SizedBox(height: 10),
-                                RecentTransactions(),
-                              ],
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              children: [
-                                UpcomingBill(),
-                                const SizedBox(height: 10),
-                                TransactionStatistics(),
-                                const SizedBox(height: 10),
-                                CategoriesRevenue(),
-                              ],
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            children: [
+                              TotalBalance(),
+                              const SizedBox(height: 10),
+                              RecentTransactions(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: [
+                              UpcomingBill(),
+                              const SizedBox(height: 10),
+                              TransactionStatistics(),
+                              const SizedBox(height: 10),
+                              CategoriesRevenue(),
+                            ],
+                          ),
                         ),
                       ],
                     ),

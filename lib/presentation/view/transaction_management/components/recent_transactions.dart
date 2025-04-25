@@ -31,7 +31,6 @@ class _RecentTransactionsState extends State<RecentTransactions>
     return BlocBuilder<TransactionCubit, TransactionState>(
         builder: (context, state) {
       return Container(
-        width: 300,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey.withOpacity(0.2)),
