@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static final _appContext = navigatorKey.currentState!.context;
+
   static void pushNamed(
     String routeName, {
     dynamic extra,

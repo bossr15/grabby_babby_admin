@@ -1,38 +1,98 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+<html translate="no">
+  <head>
+    <meta charset="UTF-8">
+    <base href="$FLUTTER_BASE_HREF">
+    <script src="flutter.js"></script>
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Communico">
+    <link rel="apple-touch-icon" href="logo.png">
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    <link rel="icon" type="image/png" href="logo.png">
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <!-- <base href="$FLUTTER_BASE_HREF"> -->
+    <title>Aussie Collectables</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Aussie Collectables Admin Dashboard">
+    <style id="splash-screen-style">
+      html {
+        height: 100%;
+      }
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Aussie Collectables">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+      body {
+        margin: 0;
+        min-height: 100%;
+        background-color: #F6F6F6; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Montserrat', sans-serif;
+      }
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="logo.png"/>
+      .logo {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 20px;
+        background-image: url('logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: discord-spin 7s infinite;
+      }
 
-  <title>Aussie Collectables</title>
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <script src="flutter_bootstrap.js" async></script>
-</body>
+      @keyframes discord-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        12% {
+          transform: rotate(360deg);
+        }
+        25% {
+          transform: rotate(360deg);
+        }
+        37% {
+          transform: rotate(720deg);
+        }
+        50% {
+          transform: rotate(720deg);
+        }
+        62% {
+          transform: rotate(1080deg);
+        }
+        75% {
+          transform: rotate(1080deg);
+        }
+        87% {
+          transform: rotate(1440deg);
+        }
+        100% {
+          transform: rotate(1440deg);
+        }
+      }
+
+      #container {
+        text-align: center;
+      }
+    </style>
+
+    <script id="splash-screen-script">
+      function removeSplashFromWeb() {
+        document.getElementById("splash")?.remove();
+        document.getElementById("splash-branding")?.remove();
+        document.body.style.background = "transparent";
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="logo"></div> 
+    </div>
+    <script>
+      {{flutter_build_config}}
+      _flutter.loader.load();
+    </script>
+  </body>
 </html>
