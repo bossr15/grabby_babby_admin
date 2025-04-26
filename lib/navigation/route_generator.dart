@@ -6,7 +6,6 @@ import '../initializer.dart';
 import '../presentation/view/analytics/analytics_screen.dart';
 import '../presentation/view/app_orchestrator/app_orchestrator.dart';
 import '../presentation/view/auth/login/login_view.dart';
-import '../presentation/view/content_management/content_screen.dart';
 import '../presentation/view/dashboard/dashboard.dart';
 import '../presentation/view/home/home_page.dart';
 import '../presentation/view/notifications/notifications_screen.dart';
@@ -79,11 +78,11 @@ class AppRouter {
             name: RouteName.analytics,
             pageBuilder: (context, state) => const AnalyticsScreen(),
           ),
-          troute.TransitionRoute.fadeTransitionRoute(
-            path: '/content',
-            name: RouteName.contentManagement,
-            pageBuilder: (context, state) => const ContentScreen(),
-          ),
+          // troute.TransitionRoute.fadeTransitionRoute(
+          //   path: '/content',
+          //   name: RouteName.contentManagement,
+          //   pageBuilder: (context, state) => const ContentScreen(),
+          // ),
           troute.TransitionRoute.fadeTransitionRoute(
             path: '/notifications',
             name: RouteName.notifications,

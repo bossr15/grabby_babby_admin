@@ -12,9 +12,8 @@ class SidePanelCubit extends Cubit<SidePanelState> {
   SidePanelCubit() : super(SidePanelState.initial()) {
     appSocket = SocketService();
     final user = localStorage.getUser();
-    final panelIndex = localStorage.getString('panelIndex');
-    emit(state.copyWith(
-        selectedIndex: int.parse(panelIndex ?? "0"), appUser: user));
+    final index = AppNavigation.getSidePanelIndexFromRoute();
+    emit(state.copyWith(selectedIndex: index, appUser: user));
   }
 
   void setSelectedIndex(
@@ -22,14 +21,12 @@ class SidePanelCubit extends Cubit<SidePanelState> {
     BuildContext context,
     String routeName,
   ) {
-    localStorage.setString('panelIndex', index.toString());
-    emit(state.copyWith(selectedIndex: index));
     if (index == SidePanelItemList.sidePanelItems.length - 1) {
       // this is when user logsOut
-      emit(state.copyWith(selectedIndex: 0));
       localStorage.clear();
     }
 
+    emit(state.copyWith(selectedIndex: index));
     AppNavigation.pushReplacementNamed(routeName);
   }
 

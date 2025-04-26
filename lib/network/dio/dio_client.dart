@@ -34,7 +34,8 @@ class DioClient {
           retries: maxRetries,
           retryInterval: const Duration(seconds: retryDelay),
           retryEvaluator: (error) async {
-            if (error.response!.statusCode! == 401) {
+            if (error.response?.statusCode != null &&
+                error.response!.statusCode == 401) {
               AppNavigation.pushReplacementNamed(RouteName.login);
               return false;
             } else if (error.type == DioExceptionType.connectionError ||
