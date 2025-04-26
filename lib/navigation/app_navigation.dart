@@ -29,7 +29,8 @@ class AppNavigation {
   }
 
   static String getCurrentPathFromBrowser() {
-    return html.window.location.pathname ?? "/dashboard";
+    final location = html.window.location.href.split('#')[1];
+    return location;
   }
 
   static int getSidePanelIndexFromRoute() {
