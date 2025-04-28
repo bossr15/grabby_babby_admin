@@ -12,8 +12,8 @@ class SidePanelCubit extends Cubit<SidePanelState> {
   SidePanelCubit() : super(SidePanelState.initial()) {
     appSocket = SocketService();
     final user = localStorage.getUser();
-    final index = AppNavigation.getSidePanelIndexFromRoute();
-    emit(state.copyWith(selectedIndex: index, appUser: user));
+    setRouteIndex();
+    emit(state.copyWith(appUser: user));
   }
 
   void setSelectedIndex(
@@ -32,6 +32,11 @@ class SidePanelCubit extends Cubit<SidePanelState> {
 
   void setUser(UserModel user) {
     emit(state.copyWith(appUser: user));
+  }
+
+  void setRouteIndex() {
+    final index = AppNavigation.getSidePanelIndexFromRoute();
+    emit(state.copyWith(selectedIndex: index));
   }
 
   @override

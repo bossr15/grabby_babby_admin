@@ -10,6 +10,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   final userRepository = UserRepository();
   final fullName = TextEditingController();
   final phoneNumber = TextEditingController();
+  final currentPassword = TextEditingController();
+  final newPassword = TextEditingController();
 
   SettingsCubit() : super(SettingsState.empty()) {
     setUser();
@@ -49,6 +51,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   void resetState() {
     fullName.clear();
     phoneNumber.clear();
+    currentPassword.clear();
+    newPassword.clear();
     state.profileUrl = "";
     setUser();
   }
@@ -63,5 +67,35 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   void setProfileUrl(String image) {
     emit(state.copyWith(profileUrl: image));
+  }
+
+  void updatePassword(BuildContext context) {
+    emit(state.copyWith(isPasswordLoading: true));
+    userRepository
+        .changePassword(
+          currentPassword: currentPassword.text,
+          newPassword: newPassword.text,
+        )
+        .then(
+          (response) => response.fold(
+            (error) {
+              emit(state.copyWith(isPasswordLoading: false));
+              showCustomSnackbar(
+                  context: context, message: error, type: SnackbarType.error);
+            },
+            (user) {
+              emit(state.copyWith(isPasswordLoading: false));
+              showCustomSnackbar(
+                  context: context,
+                  message: "Password updated successfully",
+                  type: SnackbarType.success);
+              resetState();
+            },
+          ),
+        );
+  }
+
+  void toggleIsChangeingPassword() {
+    emit(state.copyWith(isChangingPassword: !state.isChangingPassword));
   }
 }

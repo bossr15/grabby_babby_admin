@@ -16,22 +16,22 @@ class GBAdminAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ---------------------------------- //
+    // ** OPENING NOTIFICATION OVERLAY ** //
+    final notificationCubit = context.read<NotificationCubit>();
+    final sidePanelCubit = context.read<SidePanelCubit>();
+    _currentNotificationDialog = OverlayEntry(builder: (_) {
+      return NotificationDialog(
+        overlayEntry: _currentNotificationDialog,
+        sidePanelCubit: sidePanelCubit,
+        notificationCubit: notificationCubit,
+      );
+    });
+    // ** OPENING NOTIFICATION OVERLAY ** //
+    // ---------------------------------- //
+
     return BlocBuilder<SidePanelCubit, SidePanelState>(
       builder: (sidePanelContext, sidePanelState) {
-        // ---------------------------------- //
-        // ** OPENING NOTIFICATION OVERLAY ** //
-        final notificationCubit = context.read<NotificationCubit>();
-        final sidePanelCubit = context.read<SidePanelCubit>();
-        _currentNotificationDialog = OverlayEntry(builder: (_) {
-          return NotificationDialog(
-            overlayEntry: _currentNotificationDialog,
-            sidePanelCubit: sidePanelCubit,
-            notificationCubit: notificationCubit,
-          );
-        });
-        // ** OPENING NOTIFICATION OVERLAY ** //
-        // ---------------------------------- //
-
         return Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 24),

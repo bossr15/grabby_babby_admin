@@ -105,4 +105,17 @@ class UserRepository {
     }
     return left(response.message);
   }
+
+  Future<Either<String, bool>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final response = await networkRepository.put(
+        url: "/user/change-password",
+        data: {"currentPassword": currentPassword, "newPassword": newPassword});
+    if (!response.failed) {
+      return right(true);
+    }
+    return left(response.message);
+  }
 }
