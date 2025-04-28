@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/styles/app_color.dart';
 
@@ -15,10 +16,12 @@ class AuthTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final bool autofocus;
   final bool enabled;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AuthTextField({
     super.key,
     required this.hintText,
+    this.inputFormatters,
     this.prefixIcon,
     this.isPasswordField = false,
     this.validator,
@@ -62,6 +65,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
           obscureText: isObscured,
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
+          inputFormatters: widget.inputFormatters,
           autofocus: widget.autofocus,
           enabled: widget.enabled,
           onChanged: widget.onChanged,
@@ -69,6 +73,11 @@ class _AuthTextFieldState extends State<AuthTextField> {
           onFieldSubmitted: widget.onFieldSubmitted,
           decoration: InputDecoration(
             hintText: widget.hintText,
+            hintStyle: const TextStyle(
+              color: AppColors.grey,
+              fontSize: 14,
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 15),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: AppColors.darkBlue,

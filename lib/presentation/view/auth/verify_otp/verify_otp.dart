@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/utils.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/auth_layout.dart';
@@ -37,21 +40,24 @@ class VerifyOtp extends StatelessWidget {
               width: 55,
               child: Padding(
                 padding: const EdgeInsets.all(8),
-                child: Center(
-                  child: AuthTextField(
-                    hintText: " 0",
-                    onChanged: (String value) {
-                      if (value.isNotEmpty) {
-                        cubit.updateOTP(value, index, context);
-                      } else {
-                        cubit.removeDigit(index);
-                      }
-                      if (index == 5 && value.isNotEmpty) {
-                        FocusScope.of(context).unfocus();
-                      }
-                    },
-                    onFieldSubmitted: (value) {},
-                  ),
+                child: AuthTextField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(1),
+                  ],
+                  hintText: "${Random().nextInt(10)}",
+                  onChanged: (String value) {
+                    if (value.isNotEmpty) {
+                      cubit.updateOTP(value, index, context);
+                    } else {
+                      cubit.removeDigit(index, context);
+                    }
+                    if (index == 5 && value.isNotEmpty) {
+                      FocusScope.of(context).unfocus();
+                    }
+                  },
+                  onFieldSubmitted: (value) {},
                 ),
               ),
             ),

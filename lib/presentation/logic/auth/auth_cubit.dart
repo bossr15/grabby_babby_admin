@@ -26,9 +26,12 @@ class AuthCubit extends Cubit<AuthState> {
     return int.tryParse(otp.join()) ?? 0;
   }
 
-  void removeDigit(int index) {
+  void removeDigit(int index, BuildContext context) {
     if (index >= 0 && index < 6) {
       otp[index] = '';
+      if (index > 0) {
+        FocusScope.of(context).previousFocus();
+      }
     }
   }
 
