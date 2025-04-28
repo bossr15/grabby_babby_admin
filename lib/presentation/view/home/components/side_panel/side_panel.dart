@@ -60,26 +60,26 @@ class SidePanel extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 40),
-          Expanded(
-            child: ListView.separated(
-              separatorBuilder: (context, index) {
-                if (index == SidePanelItemList.sidePanelItems.length - 2 ||
-                    index == 4) {
-                  return Divider(
-                    endIndent: 10,
-                    indent: 10,
-                    color: AppColors.grey,
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-              padding: EdgeInsets.zero,
-              itemCount: SidePanelItemList.sidePanelItems.length,
-              itemBuilder: (context, index) {
-                final item = SidePanelItemList.sidePanelItems[index];
-                return BlocBuilder<SidePanelCubit, SidePanelState>(
-                    builder: (context, state) {
-                  final cubit = context.read<SidePanelCubit>();
+          BlocBuilder<SidePanelCubit, SidePanelState>(
+              builder: (context, state) {
+            final cubit = context.read<SidePanelCubit>();
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  if (index == SidePanelItemList.sidePanelItems.length - 2 ||
+                      index == 4) {
+                    return Divider(
+                      endIndent: 10,
+                      indent: 10,
+                      color: AppColors.grey,
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+                padding: EdgeInsets.zero,
+                itemCount: SidePanelItemList.sidePanelItems.length,
+                itemBuilder: (context, index) {
+                  final item = SidePanelItemList.sidePanelItems[index];
                   return SidePanelItemWidget(
                     item: item,
                     isSelected: state.selectedIndex == index,
@@ -87,10 +87,10 @@ class SidePanel extends StatelessWidget {
                       cubit.setSelectedIndex(index, context, item.routeName);
                     },
                   );
-                });
-              },
-            ),
-          ),
+                },
+              ),
+            );
+          }),
         ],
       ),
     );

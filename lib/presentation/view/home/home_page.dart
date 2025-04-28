@@ -21,7 +21,11 @@ class HomePage extends StatelessWidget {
         BlocProvider(create: (context) => NotificationCubit()),
       ],
       child: Builder(builder: (context) {
-        context.read<SidePanelCubit>().setRouteIndex();
+        final cubit = context.read<SidePanelCubit>();
+        Future.delayed(Duration(milliseconds: 500), () {
+          cubit.setRouteIndex();
+        });
+
         return Scaffold(
           backgroundColor: AppColors.bgColor,
           appBar: isSmallScreen
@@ -36,10 +40,10 @@ class HomePage extends StatelessWidget {
                   ),
                 )
               : null,
-          drawer: isSmallScreen ? const Drawer(child: SidePanel()) : null,
+          drawer: isSmallScreen ? Drawer(child: SidePanel()) : null,
           body: Row(
             children: [
-              if (!isSmallScreen) const SidePanel(),
+              if (!isSmallScreen) SidePanel(),
               Expanded(
                 child: Padding(
                   padding:
@@ -56,6 +60,7 @@ class HomePage extends StatelessWidget {
           ),
         );
       }),
+      // )
     );
   }
 }
