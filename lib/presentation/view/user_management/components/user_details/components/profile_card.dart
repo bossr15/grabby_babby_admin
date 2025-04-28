@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
-
-import '../../../../../../core/styles/app_color.dart';
 import '../../../../../../core/styles/app_images.dart';
-import '../../../../../../core/utils/utils.dart';
 import '../../../../../logic/users_management/user_detail/user_detail_cubit.dart';
 import '../../../../../logic/users_management/user_detail/user_detail_state.dart';
 
@@ -44,31 +41,6 @@ class ProfileCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      gradient: appGradient,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Edit",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Icon(
-                          Icons.edit,
-                          color: AppColors.white,
-                          size: 16,
-                        ),
-                      ],
                     ),
                   ),
                 ],

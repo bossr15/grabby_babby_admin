@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:grabby_babby_admin/core/styles/app_color.dart';
+import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
-
+import 'package:grabby_babby_admin/data/models/user_model/user_model.dart';
 import '../../../data/models/order_model/order_model.dart';
 import '../../styles/app_images.dart';
 
 class UserDetailsDialog extends StatelessWidget {
-  const UserDetailsDialog({super.key, required this.status});
+  const UserDetailsDialog(
+      {super.key,
+      required this.status,
+      required this.user,
+      required this.onApprove,
+      required this.onSuspend});
   final Status status;
+  final UserModel user;
+  final void Function() onApprove;
+  final void Function() onSuspend;
 
   @override
   Widget build(BuildContext context) {
@@ -49,26 +58,17 @@ class UserDetailsDialog extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
+                    border: Border.all(color: Colors.red.shade300),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'Suspended',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 14,
-                        ),
+                  child: Center(
+                    child: const Text(
+                      'Suspended',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
                       ),
-                      const SizedBox(width: 12),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.grey.shade600,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -94,11 +94,11 @@ class UserDetailsDialog extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Jenny Johns',
+                              user.fullName ?? "",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class UserDetailsDialog extends StatelessWidget {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              'ID #FT456',
+                              'ID #${user.id}',
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 14,
@@ -142,24 +142,29 @@ class UserDetailsDialog extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildDetailItem('Username:', 'Jenny Johns'),
                                   _buildDetailItem(
-                                      'Email:', 'Jeny.Johns@gmail.com'),
+                                      'Username:', '${user.fullName}'),
+                                  _buildDetailItem(
+                                      'Email:', user.email ?? "N/A"),
                                 ],
                               ),
+                              if (status != Status.suspend)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _buildDetailItem(
+                                        '${user.role} ID:', '${user.id}'),
+                                    _buildDetailItem('Phone Number:',
+                                        '${user.phoneCode ?? ""}${user.phoneNumber ?? "N/A"}'),
+                                  ],
+                                ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildDetailItem('Buyer ID:', 'FT456'),
                                   _buildDetailItem(
-                                      'Phone Number:', '+1-234-567-8901'),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildDetailItem(
-                                      'Registration Date:', '15-04-2017'),
+                                      'Registration Date:',
+                                      DateHelpers.formatDate(
+                                          user.createdAt ?? DateTime.now())),
                                 ],
                               ),
                             ],
@@ -173,17 +178,23 @@ class UserDetailsDialog extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              if (status == Status.suspend) {
+                                onApprove.call();
+                              } else {
+                                onSuspend.call();
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 20),
-                              backgroundColor: AppColors.redText,
+                              backgroundColor: status == Status.suspend
+                                  ? AppColors.greenText
+                                  : AppColors.redText,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             child: Text(
-                              status == Status.suspend ? "Cancel" : "Decline",
+                              status == Status.suspend ? "Approve" : "Suspend",
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
@@ -193,28 +204,6 @@ class UserDetailsDialog extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 16),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              backgroundColor: AppColors.greenText,
-                            ),
-                            child: Text(
-                              status == Status.suspend ? "Save" : "Approve",
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],

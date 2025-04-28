@@ -233,6 +233,8 @@ Status toStatus(String status) {
 
 Color getOrderChipColor(Status status) {
   switch (status) {
+    case Status.verified:
+      return AppColors.green;
     case Status.pending:
       return AppColors.darkBlue;
     case Status.inProgress:
@@ -240,6 +242,8 @@ Color getOrderChipColor(Status status) {
     case Status.completed:
       return AppColors.green;
     case Status.rejected:
+      return AppColors.red;
+    case Status.suspend:
       return AppColors.red;
     default:
       return AppColors.darkBlue;
@@ -258,5 +262,16 @@ String getOrderChipText(Status status) {
       return "Cancelled";
     default:
       return "Pending";
+  }
+}
+
+Color getOrderChipTextColor(Status status) {
+  switch (status) {
+    case Status.verified:
+      return AppColors.greenText;
+    case Status.suspend:
+      return AppColors.redText;
+    default:
+      return AppColors.greenText;
   }
 }

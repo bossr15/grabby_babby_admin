@@ -19,18 +19,13 @@ import '../../../../../../initializer.dart';
 import '../../../../../logic/users_management/user_cubit.dart';
 
 class UsersTable extends StatelessWidget {
-  const UsersTable(
-      {super.key,
-      required this.status,
-      required this.statusColor,
-      required this.statusTextColor});
+  const UsersTable({super.key, required this.status});
   final Status status;
-  final Color statusColor;
-  final Color statusTextColor;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+      final cubit = context.read<UserCubit>();
       final currentUser = state.users[status] ?? UserViewModel();
       final isScrolling = currentUser.isScrolling;
       final isLoading = currentUser.isLoading && !isScrolling;
@@ -87,7 +82,15 @@ class UsersTable extends StatelessWidget {
                 } else {
                   showDialog(
                     context: context,
-                    builder: (context) => UserDetailsDialog(status: status),
+                    builder: (context) => UserDetailsDialog(
+                      status: status,
+                      user: user,
+                      onApprove: () {
+                        cubit.updateUserStatus(
+                            id: user.id.toString(), status: Status.approved);
+                      },
+                      onSuspend: () {},
+                    ),
                   );
                 }
               },
@@ -137,57 +140,90 @@ class UsersTable extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: statusColor,
+                      color: getOrderChipColor(user.status!),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Center(
                         child: Text(
-                      fromStatus(status),
+                      fromStatus(user.status!),
                       style: TextStyle(
-                        color: statusTextColor,
+                        color: getOrderChipTextColor(user.status!),
                       ),
                     )),
                   ),
                 )),
                 ListingCell(
-                    child: InkWell(
-                  onTap: () {
-                    if (status == Status.all) {
-                      localStorage.setString(
-                          'accountType', user.role ?? "BUYER");
-                      AppNavigation.pushNamed(
-                        RouteName.userDetails,
-                        extra: user.role,
-                        pathParameters: {"id": user.id.toString()},
-                      );
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => UserDetailsDialog(status: status),
-                      );
-                    }
-                  },
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                    child: Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: appGradient,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "View Details",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 12,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => UserDetailsDialog(
+                                status: status,
+                                user: user,
+                                onApprove: () {
+                                  cubit.updateUserStatus(
+                                      id: user.id.toString(),
+                                      status: Status.verified);
+                                },
+                                onSuspend: () {
+                                  cubit.updateUserStatus(
+                                      id: user.id.toString(),
+                                      status: Status.suspend);
+                                },
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 8),
+                            child: CircleAvatar(
+                              radius: 30,
+                              backgroundColor:
+                                  AppColors.lightBlue.withOpacity(0.2),
+                              child: Icon(Icons.mode_edit_outlined,
+                                  color: AppColors.lightBlue, size: 20),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                )),
+                        if (status == Status.all)
+                          InkWell(
+                            onTap: () {
+                              localStorage.setString(
+                                  'accountType', user.role ?? "BUYER");
+                              AppNavigation.pushNamed(
+                                RouteName.userDetails,
+                                extra: user.role,
+                                pathParameters: {"id": user.id.toString()},
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 5),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  gradient: appGradient,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "View Details",
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    )),
               ]);
         }).toList(),
         isLoading: isLoading,

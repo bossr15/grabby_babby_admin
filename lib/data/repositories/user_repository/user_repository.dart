@@ -118,4 +118,15 @@ class UserRepository {
     }
     return left(response.message);
   }
+
+  Future<Either<String, bool>> updateUserStatus(
+      {required String id, required Status status}) async {
+    final response = await networkRepository.put(
+        url: "/user/update-user-status/$id",
+        data: {"status": fromStatus(status)});
+    if (!response.failed) {
+      return right(true);
+    }
+    return left(response.message);
+  }
 }

@@ -109,4 +109,16 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(userType: userType));
     fetchData(refresh: true);
   }
+
+  void updateUserStatus({
+    required String id,
+    required Status status,
+  }) {
+    userRepository.updateUserStatus(id: id, status: status).then(
+          (response) => response.fold(
+            (error) {},
+            (data) => fetchData(refresh: true),
+          ),
+        );
+  }
 }
