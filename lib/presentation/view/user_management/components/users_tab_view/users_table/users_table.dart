@@ -83,7 +83,6 @@ class UsersTable extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => UserDetailsDialog(
-                      status: status,
                       user: user,
                       onApprove: () {
                         cubit.updateUserStatus(
@@ -162,7 +161,6 @@ class UsersTable extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (context) => UserDetailsDialog(
-                                status: status,
                                 user: user,
                                 onApprove: () {
                                   cubit.updateUserStatus(

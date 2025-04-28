@@ -5,12 +5,15 @@ class AuthState {
   bool isLoading;
   String email;
   String password;
+  String confirmPassword;
   UserModel user;
+
   AuthState({
     this.isObscureText = false,
     this.isLoading = false,
     this.email = "",
     this.password = "",
+    this.confirmPassword = "",
     UserModel? user,
   }) : user = user ?? UserModel();
 
@@ -22,6 +25,7 @@ class AuthState {
     String? password,
     bool? isLoading,
     UserModel? user,
+    String? confirmPassword,
   }) {
     return AuthState(
       isObscureText: isObscureText ?? this.isObscureText,
@@ -29,6 +33,7 @@ class AuthState {
       email: email ?? this.email,
       password: this.password,
       user: user ?? this.user,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
     );
   }
 }

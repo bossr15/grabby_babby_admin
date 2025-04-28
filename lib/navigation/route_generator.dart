@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
+import 'package:grabby_babby_admin/presentation/view/auth/forget_password/forget_password.dart';
+import 'package:grabby_babby_admin/presentation/view/auth/new_password/new_password.dart';
 
 import '../initializer.dart';
 import '../presentation/view/analytics/analytics_screen.dart';
 import '../presentation/view/app_orchestrator/app_orchestrator.dart';
 import '../presentation/view/auth/login/login_view.dart';
+import '../presentation/view/auth/verify_otp/verify_otp.dart';
 import '../presentation/view/dashboard/dashboard.dart';
 import '../presentation/view/home/home_page.dart';
 import '../presentation/view/notifications/notifications_screen.dart';
@@ -36,6 +39,29 @@ class AppRouter {
         shouldRedirect: false,
         name: RouteName.login,
         pageBuilder: (context, state) => const LoginView(),
+      ),
+      troute.TransitionRoute.fadeTransitionRoute(
+        path: '/forget-password',
+        shouldRedirect: false,
+        name: RouteName.forgetPassword,
+        pageBuilder: (context, state) => const ForgetPassword(),
+        routes: [
+          troute.TransitionRoute.fadeTransitionRoute(
+            path: '/:email',
+            shouldRedirect: false,
+            name: RouteName.verifyOtp,
+            pageBuilder: (context, state) {
+              final email = state.pathParameters['email']!;
+              return VerifyOtp(email: email);
+            },
+          ),
+        ],
+      ),
+      troute.TransitionRoute.fadeTransitionRoute(
+        path: '/new-password',
+        shouldRedirect: false,
+        name: RouteName.newPassword,
+        pageBuilder: (context, state) => const NewPassword(),
       ),
       ShellRoute(
         builder: (context, state, child) {

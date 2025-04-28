@@ -3,17 +3,16 @@ import 'package:grabby_babby_admin/core/styles/app_color.dart';
 import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/data/models/user_model/user_model.dart';
+import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import '../../../data/models/order_model/order_model.dart';
 import '../../styles/app_images.dart';
 
 class UserDetailsDialog extends StatelessWidget {
   const UserDetailsDialog(
       {super.key,
-      required this.status,
       required this.user,
       required this.onApprove,
       required this.onSuspend});
-  final Status status;
   final UserModel user;
   final void Function() onApprove;
   final void Function() onSuspend;
@@ -50,7 +49,7 @@ class UserDetailsDialog extends StatelessWidget {
                 ),
               ),
             ),
-            if (status == Status.suspend)
+            if (user.status == Status.suspend)
               Positioned(
                 top: 220,
                 right: 24,
@@ -148,7 +147,7 @@ class UserDetailsDialog extends StatelessWidget {
                                       'Email:', user.email ?? "N/A"),
                                 ],
                               ),
-                              if (status != Status.suspend)
+                              if (user.status != Status.suspend)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -178,15 +177,16 @@ class UserDetailsDialog extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              if (status == Status.suspend) {
+                              if (user.status == Status.suspend) {
                                 onApprove.call();
                               } else {
                                 onSuspend.call();
                               }
+                              AppNavigation.pop();
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 20),
-                              backgroundColor: status == Status.suspend
+                              backgroundColor: user.status == Status.suspend
                                   ? AppColors.greenText
                                   : AppColors.redText,
                               shape: RoundedRectangleBorder(
@@ -194,7 +194,9 @@ class UserDetailsDialog extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              status == Status.suspend ? "Approve" : "Suspend",
+                              user.status == Status.suspend
+                                  ? "Approve"
+                                  : "Suspend",
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
