@@ -12,7 +12,6 @@ class SidePanelCubit extends Cubit<SidePanelState> {
   SidePanelCubit() : super(SidePanelState.initial()) {
     appSocket = SocketService();
     final user = localStorage.getUser();
-    setRouteIndex();
     emit(state.copyWith(appUser: user));
   }
 

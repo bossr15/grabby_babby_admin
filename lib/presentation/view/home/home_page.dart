@@ -20,39 +20,42 @@ class HomePage extends StatelessWidget {
         BlocProvider(create: (context) => SidePanelCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
       ],
-      child: Scaffold(
-        backgroundColor: AppColors.bgColor,
-        appBar: isSmallScreen
-            ? AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                leading: Builder(
-                  builder: (context) => IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
+      child: Builder(builder: (context) {
+        context.read<SidePanelCubit>().setRouteIndex();
+        return Scaffold(
+          backgroundColor: AppColors.bgColor,
+          appBar: isSmallScreen
+              ? AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  leading: Builder(
+                    builder: (context) => IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                    ),
+                  ),
+                )
+              : null,
+          drawer: isSmallScreen ? const Drawer(child: SidePanel()) : null,
+          body: Row(
+            children: [
+              if (!isSmallScreen) const SidePanel(),
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Column(
+                    children: [
+                      const GBAdminAppBar(),
+                      Expanded(child: child),
+                    ],
                   ),
                 ),
-              )
-            : null,
-        drawer: isSmallScreen ? const Drawer(child: SidePanel()) : null,
-        body: Row(
-          children: [
-            if (!isSmallScreen) const SidePanel(),
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Column(
-                  children: [
-                    const GBAdminAppBar(),
-                    Expanded(child: child),
-                  ],
-                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
