@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:universal_html/html.dart' as html;
@@ -29,13 +31,15 @@ class AppNavigation {
   }
 
   static String getCurrentPathFromBrowser() {
-    final location = html.window.location.href.split('#')[1];
-    return location;
+    final location = html.window.location.href;
+    final hashedPath = location.split('#');
+    final path = hashedPath.length > 1 ? hashedPath[1] : location;
+    return path;
   }
 
   static int getSidePanelIndexFromRoute() {
     final currentPath = getCurrentPathFromBrowser();
-
+    log("Current Path: $currentPath");
     if (currentPath.startsWith('/dashboard')) return 0;
     if (currentPath.startsWith('/users')) return 1;
     if (currentPath.startsWith('/transaction')) return 2;
