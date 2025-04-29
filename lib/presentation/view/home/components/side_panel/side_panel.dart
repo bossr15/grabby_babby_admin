@@ -67,7 +67,7 @@ class SidePanel extends StatelessWidget {
               child: ListView.separated(
                 separatorBuilder: (context, index) {
                   if (index == SidePanelItemList.sidePanelItems.length - 2 ||
-                      index == 4) {
+                      index == 6) {
                     return Divider(
                       endIndent: 10,
                       indent: 10,

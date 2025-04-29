@@ -38,6 +38,11 @@ class SidePanelItemList {
       routeName: RouteName.preferences,
     ),
     SidePanelItem(
+      title: 'Subscription Plans',
+      image: AppImages.subscriptionPlan,
+      routeName: RouteName.subscriptionPlan,
+    ),
+    SidePanelItem(
       title: 'Notifications',
       image: AppImages.notifications,
       routeName: RouteName.notifications,

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/data/repositories/preferences_repository/preferences_repository.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/presentation/logic/preferences/preferences_cubit.dart';
@@ -68,9 +69,10 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
               );
               emit(state.copyWith(isLoading: false, preference: data));
 
-              final hasBloc = context.read<PreferencesCubit?>();
-              if (hasBloc != null) {
-                hasBloc.getPreferences();
+              final preferencesCubit = context.getBloc<PreferencesCubit>();
+              if (preferencesCubit != null) {
+                print('PreferencesCubit is not null');
+                preferencesCubit.getPreferences();
               }
               AppNavigation.pop();
             },

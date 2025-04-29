@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:grabby_babby_admin/core/widgets/app_indicator.dart';
+import 'package:grabby_babby_admin/data/models/preferences_model/preferences_model.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/navigation/route_name.dart';
 
@@ -65,9 +66,13 @@ class PreferencesView extends StatelessWidget {
                       AppNavigation.pushNamed(RouteName.addPreferences);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.lightBlue,
+                      backgroundColor: AppColors.darkBlue,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
                       ),
                     ),
                     child: Row(
@@ -96,6 +101,11 @@ class PreferencesView extends StatelessWidget {
                         child: AppIndicator(color: AppColors.darkBlue),
                       );
                     }
+                    if (state.preferences.isEmpty) {
+                      return const Center(
+                        child: Text("No Notifications available"),
+                      );
+                    }
 
                     return ResponsiveGrid(
                       items: state.preferences,
@@ -115,7 +125,7 @@ class PreferencesView extends StatelessWidget {
 }
 
 class ResponsiveGrid extends StatelessWidget {
-  final List<dynamic> items;
+  final List<PreferencesModel> items;
   final Widget Function(BuildContext, dynamic) itemBuilder;
 
   const ResponsiveGrid({
@@ -158,7 +168,7 @@ class ResponsiveGrid extends StatelessWidget {
 }
 
 class PreferenceCard extends StatelessWidget {
-  final dynamic preference;
+  final PreferencesModel preference;
 
   const PreferenceCard({
     super.key,

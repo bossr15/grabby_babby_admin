@@ -20,6 +20,7 @@ class AppImages {
   static const buyers = '$baseDir/buyers.png';
   static const sellers = '$baseDir/sellers.png';
   static const preferences = '$baseDir/preferences.png';
+  static const subscriptionPlan = '$baseDir/subscription_plan.png';
   static const coverImage = '$baseDir/cover.png';
   static const productImage1 = '$baseDir/product1.png';
   static const productImage2 = '$baseDir/product2.png';

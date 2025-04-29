@@ -42,9 +42,10 @@ class AppNavigation {
     if (currentPath.startsWith('/transaction')) return 2;
     if (currentPath.startsWith('/analytics')) return 3;
     if (currentPath.startsWith('/preferences')) return 4;
-    if (currentPath.startsWith('/notifications')) return 5;
-    if (currentPath.startsWith('/settings')) return 6;
-    if (currentPath.startsWith('/support')) return 7;
+    if (currentPath.startsWith('/plans')) return 5;
+    if (currentPath.startsWith('/notifications')) return 6;
+    if (currentPath.startsWith('/settings')) return 7;
+    if (currentPath.startsWith('/support')) return 8;
 
     return 0;
   }

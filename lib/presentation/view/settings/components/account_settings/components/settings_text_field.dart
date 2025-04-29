@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SettingsTextField extends StatelessWidget {
   final String label;
@@ -9,12 +10,16 @@ class SettingsTextField extends StatelessWidget {
   final Function(String) onChanged;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
 
   const SettingsTextField({
     super.key,
     required this.label,
     required this.hintText,
     required this.onChanged,
+    this.inputFormatters,
+    this.keyboardType,
     this.validator,
     this.controller,
     this.readOnly = false,
@@ -36,6 +41,8 @@ class SettingsTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          inputFormatters: inputFormatters,
+          keyboardType: keyboardType,
           controller: controller,
           maxLines: maxLines,
           onChanged: onChanged,

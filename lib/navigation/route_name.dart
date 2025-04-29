@@ -9,6 +9,9 @@ class RouteName {
   static const userDetails = 'user-details';
   static const transactions = 'transactions';
   static const analytics = 'analytics';
+  static const subscriptionPlan = 'subscription-plan';
+  static const addSubscriptionPlan = 'add-subscription-plan';
+  static const editSubscriptionPlan = 'edit-subscription-plan';
   static const preferences = 'preferences';
   static const addPreferences = 'add-preferences';
   static const editPreferences = 'edit-preferences';

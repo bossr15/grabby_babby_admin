@@ -4,6 +4,9 @@ import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/forget_password/forget_password.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/new_password/new_password.dart';
 import 'package:grabby_babby_admin/presentation/view/preferences/preferences_view.dart';
+import 'package:grabby_babby_admin/presentation/view/subscription_plan/add_preferences/add_subscription_plan.dart';
+import 'package:grabby_babby_admin/presentation/view/subscription_plan/edit_preferences/edit_subscription_plan.dart';
+import 'package:grabby_babby_admin/presentation/view/subscription_plan/subscription_plan_view.dart';
 
 import '../initializer.dart';
 import '../presentation/view/analytics/analytics_screen.dart';
@@ -122,6 +125,25 @@ class AppRouter {
                 name: RouteName.editPreferences,
                 pageBuilder: (context, state) {
                   return EditPreferences(id: state.pathParameters['id']!);
+                },
+              ),
+            ],
+          ),
+          troute.TransitionRoute.fadeTransitionRoute(
+            path: '/plans',
+            name: RouteName.subscriptionPlan,
+            pageBuilder: (context, state) => const SubscriptionPlanView(),
+            routes: [
+              troute.TransitionRoute.fadeTransitionRoute(
+                path: '/addPlan',
+                name: RouteName.addSubscriptionPlan,
+                pageBuilder: (context, state) => const AddSubscriptionPlan(),
+              ),
+              troute.TransitionRoute.fadeTransitionRoute(
+                path: '/:id',
+                name: RouteName.editSubscriptionPlan,
+                pageBuilder: (context, state) {
+                  return EditSubscriptionPlan(id: state.pathParameters['id']!);
                 },
               ),
             ],
