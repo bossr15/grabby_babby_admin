@@ -21,11 +21,6 @@ class HomePage extends StatelessWidget {
         BlocProvider(create: (context) => NotificationCubit()),
       ],
       child: Builder(builder: (context) {
-        final cubit = context.read<SidePanelCubit>();
-        Future.delayed(Duration(milliseconds: 500), () {
-          cubit.setRouteIndex();
-        });
-
         return Scaffold(
           backgroundColor: AppColors.bgColor,
           appBar: isSmallScreen

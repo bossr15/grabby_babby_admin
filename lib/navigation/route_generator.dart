@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/forget_password/forget_password.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/new_password/new_password.dart';
+import 'package:grabby_babby_admin/presentation/view/preferences/preferences_view.dart';
 
 import '../initializer.dart';
 import '../presentation/view/analytics/analytics_screen.dart';
@@ -12,6 +13,8 @@ import '../presentation/view/auth/verify_otp/verify_otp.dart';
 import '../presentation/view/dashboard/dashboard.dart';
 import '../presentation/view/home/home_page.dart';
 import '../presentation/view/notifications/notifications_screen.dart';
+import '../presentation/view/preferences/add_preferences/add_preferences.dart';
+import '../presentation/view/preferences/edit_preferences/edit_preferences.dart';
 import '../presentation/view/settings/settings_screen.dart';
 import '../presentation/view/support/support_screen.dart';
 import '../presentation/view/transaction_management/transaction_management.dart';
@@ -104,11 +107,25 @@ class AppRouter {
             name: RouteName.analytics,
             pageBuilder: (context, state) => const AnalyticsScreen(),
           ),
-          // troute.TransitionRoute.fadeTransitionRoute(
-          //   path: '/content',
-          //   name: RouteName.contentManagement,
-          //   pageBuilder: (context, state) => const ContentScreen(),
-          // ),
+          troute.TransitionRoute.fadeTransitionRoute(
+            path: '/preferences',
+            name: RouteName.preferences,
+            pageBuilder: (context, state) => const PreferencesView(),
+            routes: [
+              troute.TransitionRoute.fadeTransitionRoute(
+                path: '/addPreferences',
+                name: RouteName.addPreferences,
+                pageBuilder: (context, state) => const AddPreferences(),
+              ),
+              troute.TransitionRoute.fadeTransitionRoute(
+                path: '/:id',
+                name: RouteName.editPreferences,
+                pageBuilder: (context, state) {
+                  return EditPreferences(id: state.pathParameters['id']!);
+                },
+              ),
+            ],
+          ),
           troute.TransitionRoute.fadeTransitionRoute(
             path: '/notifications',
             name: RouteName.notifications,

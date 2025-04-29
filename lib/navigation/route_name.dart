@@ -9,7 +9,9 @@ class RouteName {
   static const userDetails = 'user-details';
   static const transactions = 'transactions';
   static const analytics = 'analytics';
-  // static const  contentManagement = 'content-management';
+  static const preferences = 'preferences';
+  static const addPreferences = 'add-preferences';
+  static const editPreferences = 'edit-preferences';
   static const notifications = 'notifications';
   static const settings = 'settings';
   static const supportManagement = 'support-management';

@@ -14,6 +14,7 @@ class ImagePickRepository {
 
       var file = await _pickFile();
       if (file == null) return null;
+      log('File picked: ${file.filename}');
       request.files.add(file);
 
       var response = await request.send();
@@ -21,9 +22,11 @@ class ImagePickRepository {
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
         final responseJson = jsonDecode(responseBody);
-
-        log('FILE UPLOADED: ${responseJson['fileUrl']}');
-        return responseJson['fileUrl'] as String;
+        log('FILE UPLOADED: $responseJson');
+        if (responseJson["data"] is List) {
+          return responseJson['data'][0] as String;
+        }
+        return responseJson['data'];
       } else {
         final responseBody = await response.stream.bytesToString();
         log('Upload failed with status ${response.statusCode}: $responseBody');
@@ -59,7 +62,7 @@ class ImagePickRepository {
       }
 
       return http.MultipartFile.fromBytes(
-        'file',
+        'files',
         bytes,
         filename: file.name,
       );
@@ -94,7 +97,7 @@ class ImagePickRepository {
 
           if (file.bytes != null) {
             request.files.add(http.MultipartFile.fromBytes(
-              'file',
+              'files',
               file.bytes!,
               filename: file.name,
             ));

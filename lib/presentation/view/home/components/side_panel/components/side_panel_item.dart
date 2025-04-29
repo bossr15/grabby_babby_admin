@@ -32,11 +32,11 @@ class SidePanelItemList {
       image: AppImages.analytics,
       routeName: RouteName.analytics,
     ),
-    // SidePanelItem(
-    //   title: 'Content Moderation',
-    //   image: AppImages.contentManagement,
-    //   routeName: RouteName.contentManagement,
-    // ),
+    SidePanelItem(
+      title: 'Prefrences Management',
+      image: AppImages.preferences,
+      routeName: RouteName.preferences,
+    ),
     SidePanelItem(
       title: 'Notifications',
       image: AppImages.notifications,

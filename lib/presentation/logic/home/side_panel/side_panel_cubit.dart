@@ -12,6 +12,7 @@ class SidePanelCubit extends Cubit<SidePanelState> {
   SidePanelCubit() : super(SidePanelState.initial()) {
     appSocket = SocketService();
     final user = localStorage.getUser();
+    setRouteIndex();
     emit(state.copyWith(appUser: user));
   }
 
@@ -24,6 +25,7 @@ class SidePanelCubit extends Cubit<SidePanelState> {
       // this is when user logsOut
       localStorage.clear();
     }
+    emit(state.copyWith(selectedIndex: index));
     AppNavigation.pushReplacementNamed(routeName);
   }
 
