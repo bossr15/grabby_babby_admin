@@ -140,7 +140,7 @@ class _NotificationDialogState extends State<NotificationDialog>
                     _animationController.reverse().then((_) {
                       widget.overlayEntry.remove();
                       widget.sidePanelCubit.setSelectedIndex(
-                          4, context, RouteName.notifications);
+                          6, context, RouteName.notifications);
                     });
                   },
                   style: ElevatedButton.styleFrom(
