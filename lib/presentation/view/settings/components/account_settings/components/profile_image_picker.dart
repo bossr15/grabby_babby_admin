@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/styles/app_color.dart';
 import '../../../../../../core/styles/app_images.dart';
 import '../../../../../../initializer.dart';
 
@@ -19,49 +20,87 @@ class ProfileImagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
-        if (title != null)
-          Text(
-            title ?? 'Your Profile Picture',
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        if (title != null) const SizedBox(height: 8),
-        InkWell(
-          borderRadius: BorderRadius.circular(8),
-          onTap: () async {
-            try {
-              final image = await imagePickerService.uploadImage();
-              if (image != null) {
-                onImageChanged(image);
-              }
-            } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Failed to upload image: ${e.toString()}'),
-                  backgroundColor: Colors.red,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (title != null)
+              Text(
+                title ?? 'Your Profile Picture',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                 ),
-              );
-            }
-          },
-          child: Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
-                style: BorderStyle.solid,
               ),
-              color: Colors.grey[100],
+            if (title != null) const SizedBox(height: 8),
+            InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () async {
+                final image = await imagePickerService.uploadImage();
+                if (image != null) {
+                  onImageChanged(image);
+                }
+              },
+              child: Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.grey.withOpacity(0.3),
+                    style: BorderStyle.solid,
+                  ),
+                  color: Colors.grey[100],
+                ),
+                child: _buildImageContent(),
+              ),
             ),
-            child: _buildImageContent(),
-          ),
+          ],
         ),
+        if (image != null)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: InkWell(
+              onTap: () async {
+                final image = await imagePickerService.uploadImage();
+                if (image != null) {
+                  onImageChanged(image);
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.darkBlue.withOpacity(0.9),
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Icon(
+                      Icons.edit_outlined,
+                      color: AppColors.white,
+                      size: 16,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      'Edit',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
