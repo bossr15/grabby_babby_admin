@@ -14,7 +14,9 @@ class ChatModel {
         : UserModel();
     return ChatModel(
       id: json["id"],
-      lastMessage: MessageModel.fromJson(json["lastMessage"]["messages"]),
+      lastMessage: json["lastMessage"] != null
+          ? MessageModel.fromJson(json["lastMessage"]["messages"])
+          : MessageModel(),
       user: UserModel.fromJson(member),
     );
   }

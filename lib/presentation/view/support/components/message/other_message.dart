@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/data/models/chat_model/message_model.dart';
 import '../../../../../core/styles/app_images.dart';
 import '../../../../../core/utils/date_helpers.dart';
@@ -23,6 +24,7 @@ class OtherMessage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                constraints: BoxConstraints(maxWidth: context.width * 0.3),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.grey[100],

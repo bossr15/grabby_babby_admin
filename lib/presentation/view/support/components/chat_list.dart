@@ -123,9 +123,11 @@ class ChatList extends StatelessWidget {
         ),
         subtitle: Text(
           message,
+          maxLines: 1,
           style: TextStyle(
             color: Colors.grey[600],
             fontSize: 13,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         trailing: Column(

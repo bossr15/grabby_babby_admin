@@ -111,8 +111,8 @@ class ChatRoom extends StatelessWidget {
                                 child: TextField(
                                   focusNode:
                                       getFieldFocusNode(cubit.sendMessage),
-                                  textInputAction: TextInputAction.newline,
-                                  maxLines: null,
+                                  // textInputAction: TextInputAction.newline,
+                                  maxLines: 3,
                                   minLines: 1,
                                   onChanged: (val) {
                                     state.textController.text = val;

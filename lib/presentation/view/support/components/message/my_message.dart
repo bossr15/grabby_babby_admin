@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
 
 import '../../../../../data/models/chat_model/message_model.dart';
 
@@ -15,6 +16,7 @@ class MyMessage extends StatelessWidget {
         children: [
           Spacer(),
           Container(
+            constraints: BoxConstraints(maxWidth: context.width * 0.3),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Color(0xff2563eb).withOpacity(0.37),

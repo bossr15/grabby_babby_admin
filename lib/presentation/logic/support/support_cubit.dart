@@ -122,8 +122,8 @@ class SupportCubit extends Cubit<SupportState> {
   }
 
   void sendMessage() {
-    if (state.textController.text.isNotEmpty) {
-      final trimmedMessage = state.textController.text.trim();
+    final trimmedMessage = state.textController.text.trim();
+    if (trimmedMessage.isNotEmpty) {
       log("[sendMessage] Sending message: $trimmedMessage");
       final newMessage = MessageModel(
         messageBody: trimmedMessage,
