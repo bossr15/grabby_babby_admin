@@ -100,7 +100,7 @@ class SubscriptionPlanView extends StatelessWidget {
                     if (state.plans.isEmpty) {
                       return const Center(
                         child: Text(
-                          "No Subscription Plan available",
+                          "No Subscription Plans available",
                           style: TextStyle(
                             fontSize: 16,
                             color: AppColors.grey,
@@ -263,50 +263,56 @@ class SubscriptionCard extends StatelessWidget {
                   const SizedBox(height: 16),
                   Divider(color: AppColors.grey.withOpacity(0.5)),
                   const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Duration",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppColors.grey,
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Duration",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.grey,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "${preference.duration ?? 0} days",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.darkBlue,
+                            Expanded(
+                              child: Text(
+                                "${preference.duration ?? 0} days",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.darkBlue,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Price",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppColors.grey,
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Price",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.grey,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "\$${preference.price?.toStringAsFixed(2) ?? "0.00"}",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.greenText,
+                            Expanded(
+                              child: Text(
+                                "\$${preference.price?.toStringAsFixed(2) ?? "0.00"}",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.greenText,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

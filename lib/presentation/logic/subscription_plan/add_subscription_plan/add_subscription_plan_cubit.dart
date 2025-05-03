@@ -38,6 +38,11 @@ class AddSubscriptionPlanCubit extends Cubit<AddSubscriptionPlanState> {
     emit(state.copyWith(plan: state.plan));
   }
 
+  void setUserRole(String role) {
+    state.plan.role = role;
+    emit(state);
+  }
+
   void resetState() {
     emit(AddSubscriptionPlanState.initial());
   }

@@ -54,24 +54,6 @@ class UsersTabBarActions extends StatelessWidget {
                     dropdownColor: Colors.white,
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   mainAxisSize: MainAxisSize.min,
-                //   children: [
-                //     const Text(
-                //       'All Users',
-                //       style: TextStyle(
-                //         color: Colors.black87,
-                //         fontSize: 14,
-                //       ),
-                //     ),
-                //     const SizedBox(width: 12),
-                //     Icon(
-                //       Icons.arrow_drop_down,
-                //       color: Colors.grey.shade600,
-                //     ),
-                //   ],
-                // ),
               ),
             ),
             const SizedBox(width: 12),

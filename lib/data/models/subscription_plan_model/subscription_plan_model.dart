@@ -7,11 +7,13 @@ class SubscriptionPlanModel {
   String? stripePlanId;
   String? stripeProductId;
   bool? isActive;
+  String? role;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   SubscriptionPlanModel({
     this.id,
+    this.role = "BUYER",
     this.title,
     this.description,
     this.duration,
@@ -31,6 +33,7 @@ class SubscriptionPlanModel {
       duration: json['duration'] as int?,
       price: (json['price'] as num?)?.toDouble(),
       stripePlanId: json['stripePlanId'] as String?,
+      role: json['role'] as String?,
       stripeProductId: json['stripeProductId'] as String?,
       isActive: json['isActive'] as bool?,
       createdAt: json['createdAt'] != null
@@ -48,6 +51,7 @@ class SubscriptionPlanModel {
       'description': description,
       'duration': duration,
       'price': price,
+      'role': role,
       'stripePlanId': stripePlanId,
       'stripeProductId': stripeProductId,
       'isActive': isActive,
@@ -63,6 +67,7 @@ class SubscriptionPlanModel {
       'description': description,
       'duration': duration,
       'price': price,
+      'role': role,
       'stripePlanId': stripePlanId,
       'stripeProductId': stripeProductId,
       'isActive': isActive,

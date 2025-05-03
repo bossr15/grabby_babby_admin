@@ -116,9 +116,7 @@ class EditPreferences extends StatelessWidget {
                                           onPressed: () {
                                             if (formKey.currentState!
                                                     .validate() &&
-                                                state.preference.url != null &&
-                                                state.selectedPreferences
-                                                    .isNotEmpty) {
+                                                state.preference.url != null) {
                                               cubit.editPreferences(context);
                                             } else {
                                               showCustomSnackbar(

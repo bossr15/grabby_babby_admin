@@ -103,7 +103,7 @@ class PreferencesView extends StatelessWidget {
                     }
                     if (state.preferences.isEmpty) {
                       return const Center(
-                        child: Text("No Notifications available"),
+                        child: Text("No Preferences available"),
                       );
                     }
 
