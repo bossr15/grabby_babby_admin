@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:grabby_babby_admin/data/models/dashboard_model/dashboard_model.dart';
 import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
 import 'package:grabby_babby_admin/data/models/paginate/paginate.dart';
@@ -39,12 +40,14 @@ class UserRepository {
     String? fullName,
     String? url,
     String? phoneNumber,
+    String? deviceToken,
   }) async {
     final response =
         await networkRepository.put(url: "/user/update-profile", data: {
       'fullName': fullName,
       'phoneNumber': phoneNumber,
       'url': url,
+      'deviceToken': deviceToken
     });
     if (!response.failed) {
       final data = UserModel.fromJson(response.data["data"]);
@@ -52,6 +55,14 @@ class UserRepository {
       return right(data);
     }
     return left(response.message);
+  }
+
+  void updateFcmToken() async {
+    final fcm = FirebaseMessaging.instance;
+    updateUser(
+      fullName: localStorage.getUser().fullName,
+      deviceToken: await fcm.getToken(),
+    );
   }
 
   Future<Either<String, DashBoardHeaderStats>> getUserDashboardStats(

@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
+import 'package:grabby_babby_admin/data/repositories/user_repository/user_repository.dart';
 import '../../../initializer.dart';
 import '../../models/user_model/user_model.dart';
 
 class AuthRepository {
+  final userRepository = UserRepository();
+
   Future<Either<String, UserModel>> login({
     required String email,
     required String password,
@@ -18,6 +21,8 @@ class AuthRepository {
         return left("Invalid credentials!");
       }
       localStorage.setString("user", jsonEncode(data.toJson()));
+      userRepository.updateFcmToken();
+
       return right(data);
     }
     return left(response.message);

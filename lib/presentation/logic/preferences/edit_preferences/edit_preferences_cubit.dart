@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/data/repositories/preferences_repository/preferences_repository.dart';
@@ -38,7 +40,9 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
         },
         (data) {
           final prefs = data
-              .where((item) => item.id.toString() != preferencesId)
+              .where((item) =>
+                  item.id.toString() != preferencesId &&
+                  !state.selectedPreferences.contains(item))
               .toList();
           emit(state.copyWith(preferences: prefs, fetchingPreferences: false));
         },
@@ -87,6 +91,8 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
   }
 
   void addItem(PreferencesModel item) {
+    log("addItem: $item");
+    state.selectedPreferences.map((e) => log("E: ${e.name}"));
     if (state.selectedPreferences.contains(item)) {
       return;
     }

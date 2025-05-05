@@ -16,92 +16,95 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
-        return AuthLayout(
-          isLoading: state.isLoading,
-          title: "Login",
-          subTitle: "Enter your Email and password to proceed",
-          buttonText: "Login",
-          onPressed: () {
-            final validate = formKey.currentState!.validate();
-            if (validate) {
-              context.read<AuthCubit>().login(context);
-            }
-          },
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 24),
-                AuthTextField(
-                  hintText: "Email",
-                  onChanged: (val) {
-                    state.email = val;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return "Email cannot be empty";
-                    }
-                    if (value.isEmpty) {
-                      return "Email cannot be empty";
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (value) {
-                    final validate = formKey.currentState!.validate();
-                    if (validate) {
-                      context.read<AuthCubit>().login(context);
-                    }
-                  },
-                  prefixIcon: Image.asset(AppImages.tick),
-                ),
-                const SizedBox(height: 16),
-                AuthTextField(
-                  hintText: "Password",
-                  onChanged: (val) {
-                    state.password = val;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return "Password cannot be empty";
-                    }
-                    if (value.isEmpty) {
-                      return "Password cannot be empty";
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (value) {
-                    final validate = formKey.currentState!.validate();
-                    if (validate) {
-                      context.read<AuthCubit>().login(context);
-                    }
-                  },
-                  prefixIcon: Image.asset(AppImages.lock),
-                  isPasswordField: true,
-                ),
-                const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      AppNavigation.pushNamed(RouteName.forgetPassword);
+    return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          return AuthLayout(
+            isLoading: state.isLoading,
+            title: "Login",
+            subTitle: "Enter your Email and password to proceed",
+            buttonText: "Login",
+            onPressed: () {
+              final validate = formKey.currentState!.validate();
+              if (validate) {
+                context.read<AuthCubit>().login(context);
+              }
+            },
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 24),
+                  AuthTextField(
+                    hintText: "Email",
+                    onChanged: (val) {
+                      state.email = val;
                     },
-                    child: const Text(
-                      'Forgot password?',
-                      style: TextStyle(
-                        color: AppColors.darkBlue,
+                    validator: (value) {
+                      if (value == null) {
+                        return "Email cannot be empty";
+                      }
+                      if (value.isEmpty) {
+                        return "Email cannot be empty";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {
+                      final validate = formKey.currentState!.validate();
+                      if (validate) {
+                        context.read<AuthCubit>().login(context);
+                      }
+                    },
+                    prefixIcon: Image.asset(AppImages.tick),
+                  ),
+                  const SizedBox(height: 16),
+                  AuthTextField(
+                    hintText: "Password",
+                    onChanged: (val) {
+                      state.password = val;
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return "Password cannot be empty";
+                      }
+                      if (value.isEmpty) {
+                        return "Password cannot be empty";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {
+                      final validate = formKey.currentState!.validate();
+                      if (validate) {
+                        context.read<AuthCubit>().login(context);
+                      }
+                    },
+                    prefixIcon: Image.asset(AppImages.lock),
+                    isPasswordField: true,
+                  ),
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        AppNavigation.pushNamed(RouteName.forgetPassword);
+                      },
+                      child: const Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                          color: AppColors.darkBlue,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

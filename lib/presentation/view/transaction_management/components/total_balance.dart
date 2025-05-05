@@ -36,7 +36,7 @@ class TotalBalance extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${state.transactions.totalBalance}",
+                  "\$${state.transactions.totalBalance.toStringAsFixed(2)}",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

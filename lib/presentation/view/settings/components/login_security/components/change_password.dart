@@ -23,6 +23,7 @@ class ChangePassword extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
             const Text(
               'Change Password',
               style: TextStyle(
@@ -64,11 +65,13 @@ class ChangePassword extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(width: 16),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 30),
             Row(
               children: [
+                const SizedBox(width: 16),
                 GbAdminButton(
                   label: 'Update Password',
                   onPressed: () {

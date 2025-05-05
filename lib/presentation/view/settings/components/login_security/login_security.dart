@@ -57,11 +57,11 @@ class LoginSecurity extends StatelessWidget {
                       ),
                       Spacer(),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SecurityItem(
-                            label: '${state.user.email}',
-                            value: '${state.user.phoneNumber}',
+                            label: state.user.email ?? "",
+                            value: state.user.phoneNumber ?? "",
                           ),
                           InkWell(
                             onTap: () {

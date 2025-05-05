@@ -94,5 +94,30 @@
       {{flutter_build_config}}
       _flutter.loader.load();
     </script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+      import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyA7tGsrMXF6I0eSpDkTxVhgHIb-xlQpn_8",
+        authDomain: "grabby-babby.firebaseapp.com",
+        projectId: "grabby-babby",
+        storageBucket: "grabby-babby.firebasestorage.app",
+        messagingSenderId: "769541462349",
+        appId: "1:769541462349:web:fb5435881e88119db17f04",
+        measurementId: "G-0648XTZZBN"
+      };
+    
+      const app = initializeApp(firebaseConfig);
+      const messaging = getMessaging(app);
+      const analytics = getAnalytics(app);
+    </script> 
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/firebase-messaging-sw.js");
+        });
+      }
+    </script>
   </body>
 </html>

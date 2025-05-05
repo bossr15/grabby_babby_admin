@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
 import 'package:grabby_babby_admin/data/models/notification_model/notification_model.dart';
 
 import '../../../../core/styles/app_images.dart';
@@ -44,8 +43,8 @@ class ContentItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 5),
-                Text(
-                    DateHelpers.formatStringDate(notification.createdAt ?? "")),
+                // Text(
+                //     DateHelpers.formatStringDate(notification.createdAt ?? "")),
               ],
             ),
           ),

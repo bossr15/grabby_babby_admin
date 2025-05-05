@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
-import 'package:grabby_babby_admin/data/models/products_model/product_model.dart';
 import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_cubit.dart';
 import 'package:grabby_babby_admin/presentation/logic/transaction_management/transaction_state.dart';
 
@@ -83,12 +82,10 @@ class _RecentTransactionsState extends State<RecentTransactions>
                       itemCount: state.transactions.allTransactions.length,
                       itemBuilder: (context, index) {
                         final item = state.transactions.allTransactions[index];
-                        final product =
-                            item.order?.orderItems?.firstOrNull?.product ??
-                                ProductModel();
+                        final note = item.note;
                         final isBuyer = item.user?.role == "BUYER";
                         return _buildTransactionItem(
-                          product.name ?? "",
+                          note ?? "",
                           item.amount.toString(),
                           item.createdAt.toString(),
                           [
@@ -104,12 +101,10 @@ class _RecentTransactionsState extends State<RecentTransactions>
                       itemBuilder: (context, index) {
                         final item =
                             state.transactions.buyerTransactions[index];
-                        final product =
-                            item.order?.orderItems?.firstOrNull?.product ??
-                                ProductModel();
+                        final note = item.note;
                         final isBuyer = item.user?.role == "BUYER";
                         return _buildTransactionItem(
-                          product.name ?? "",
+                          note ?? "",
                           item.amount.toString(),
                           item.createdAt.toString(),
                           [
@@ -125,12 +120,10 @@ class _RecentTransactionsState extends State<RecentTransactions>
                       itemBuilder: (context, index) {
                         final item =
                             state.transactions.sellerTransactions[index];
-                        final product =
-                            item.order?.orderItems?.firstOrNull?.product ??
-                                ProductModel();
+                        final note = item.note;
                         final isBuyer = item.user?.role == "BUYER";
                         return _buildTransactionItem(
-                          product.name ?? "",
+                          note ?? "",
                           item.amount.toString(),
                           item.createdAt.toString(),
                           [

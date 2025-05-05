@@ -51,10 +51,13 @@ class GBAdminAppBar extends StatelessWidget {
               const Spacer(),
               BlocBuilder<NotificationCubit, NotificationState>(
                 builder: (notificationContext, notificationState) {
-                  final count =
-                      notificationState.notifications.getCachedData().length;
+                  final count = notificationState.notifications
+                      .getCachedData()
+                      .where((item) => item.isNew)
+                      .length;
                   return InkWell(
                     onTap: () {
+                      notificationCubit.markAsUnread();
                       Overlay.of(context).insert(_currentNotificationDialog);
                     },
                     child: Container(
