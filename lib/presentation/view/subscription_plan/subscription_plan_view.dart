@@ -60,8 +60,12 @@ class SubscriptionPlanView extends StatelessWidget {
                     ],
                   ),
                   ElevatedButton.icon(
-                    onPressed: () {
-                      AppNavigation.pushNamed(RouteName.addSubscriptionPlan);
+                    onPressed: () async {
+                      final result = await AppNavigation.pushNamedWithResult(
+                          RouteName.addSubscriptionPlan);
+                      if (result == true && context.mounted) {
+                        context.read<SubscriptionPlanCubit>().getPlans();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.darkBlue,
@@ -200,9 +204,13 @@ class SubscriptionCard extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {
-              AppNavigation.pushNamed(RouteName.editSubscriptionPlan,
+            onTap: () async {
+              final result = await AppNavigation.pushNamedWithResult(
+                  RouteName.editSubscriptionPlan,
                   pathParameters: {'id': preference.id?.toString() ?? ""});
+              if (result == true && context.mounted) {
+                context.read<SubscriptionPlanCubit>().getPlans();
+              }
             },
             splashColor: AppColors.lightBlue.withOpacity(0.3),
             highlightColor: AppColors.lightBlue.withOpacity(0.2),

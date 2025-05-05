@@ -1,11 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/core/utils/utils.dart';
 import 'package:grabby_babby_admin/data/models/preferences_model/preferences_model.dart';
 import 'package:grabby_babby_admin/data/repositories/preferences_repository/preferences_repository.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
-import '../preferences_cubit.dart';
 import 'add_preferences_state.dart';
 
 class AddPreferencesCubit extends Cubit<AddPreferencesState> {
@@ -50,12 +48,7 @@ class AddPreferencesCubit extends Cubit<AddPreferencesState> {
                 type: SnackbarType.success,
               );
               emit(state.copyWith(isLoading: false, preference: data));
-              final preferencesCubit = context.getBloc<PreferencesCubit>();
-              if (preferencesCubit != null) {
-                preferencesCubit.getPreferences();
-              }
-
-              AppNavigation.pop();
+              AppNavigation.pop<bool>(true);
             },
           ),
         );

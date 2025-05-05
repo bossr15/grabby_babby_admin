@@ -42,11 +42,10 @@ class EditSubscriptionPlanCubit extends Cubit<EditSubscriptionPlanState> {
             (data) {
               showCustomSnackbar(
                 context: context,
-                message: 'Preference updated successfully',
+                message: 'Plan updated successfully',
                 type: SnackbarType.success,
               );
-              emit(state.copyWith(isLoading: false, plan: data));
-              AppNavigation.pop();
+              AppNavigation.pop<bool>(true);
             },
           ),
         );

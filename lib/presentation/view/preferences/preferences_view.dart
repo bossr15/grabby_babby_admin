@@ -62,8 +62,12 @@ class PreferencesView extends StatelessWidget {
                   ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: () {
-                      AppNavigation.pushNamed(RouteName.addPreferences);
+                    onPressed: () async {
+                      final result = await AppNavigation.pushNamedWithResult(
+                          RouteName.addPreferences);
+                      if (result == true && context.mounted) {
+                        context.read<PreferencesCubit>().getPreferences();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.darkBlue,
@@ -192,9 +196,13 @@ class PreferenceCard extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {
-              AppNavigation.pushNamed(RouteName.editPreferences,
+            onTap: () async {
+              final result = await AppNavigation.pushNamedWithResult(
+                  RouteName.editPreferences,
                   pathParameters: {'id': preference.id?.toString() ?? ""});
+              if (result == true && context.mounted) {
+                context.read<PreferencesCubit>().getPreferences();
+              }
             },
             splashColor: AppColors.lightBlue.withOpacity(0.1),
             highlightColor: AppColors.lightBlue.withOpacity(0.05),

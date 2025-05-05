@@ -11,6 +11,27 @@ class AppNavigation {
     dynamic extra,
     Map<String, String>? pathParameters,
   }) {
+    _appContext.pushNamed(routeName,
+        extra: extra, pathParameters: pathParameters ?? {});
+  }
+
+  static Future<T?> pushNamedWithResult<T>(
+    String routeName, {
+    dynamic extra,
+    Map<String, String>? pathParameters,
+  }) async {
+    return _appContext.pushNamed<T>(
+      routeName,
+      extra: extra,
+      pathParameters: pathParameters ?? {},
+    );
+  }
+
+  static void popUntil(
+    String routeName, {
+    dynamic extra,
+    Map<String, String>? pathParameters,
+  }) {
     _appContext.goNamed(routeName,
         extra: extra, pathParameters: pathParameters ?? {});
   }
@@ -24,8 +45,8 @@ class AppNavigation {
         extra: extra, pathParameters: pathParameters ?? {});
   }
 
-  static void pop() {
-    _appContext.pop();
+  static void pop<T>([T? result]) {
+    _appContext.pop(result);
   }
 
   static String getCurrentPathFromBrowser() {
