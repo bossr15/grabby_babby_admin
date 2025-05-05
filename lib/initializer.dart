@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grabby_babby_admin/network/network_repository.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
+import 'presentation/logic/auth/auth_cubit.dart';
 import 'services/image_service.dart';
 import 'services/local_storage_service.dart';
 import 'services/notification_service.dart';
@@ -29,6 +31,12 @@ class Initializer {
           ?.register('/firebase-messaging-sw.js');
     }
   }
+
+  static final blocProviders = [
+    BlocProvider<AuthCubit>(
+      create: (BuildContext context) => AuthCubit(),
+    ),
+  ];
 
   static Widget responsiveWrapper(BuildContext context, Widget widget) {
     return ResponsiveWrapper.builder(
