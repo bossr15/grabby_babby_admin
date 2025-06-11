@@ -28,11 +28,14 @@ class PreferencesMultiselect extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 28),
               child: MultiDropdown<PreferencesModel>(
-                items: items
-                    .map((item) => DropdownItem<PreferencesModel>(
-                        label: item.name ?? "", value: item))
-                    .toList(),
-                enabled: true,
+                items: items.map(
+                  (item) {
+                    return DropdownItem<PreferencesModel>(
+                      label: item.name ?? "",
+                      value: item,
+                    );
+                  },
+                ).toList(),
                 itemBuilder: (item, index, onTap) {
                   return ListTile(
                     title: Text(item.label),

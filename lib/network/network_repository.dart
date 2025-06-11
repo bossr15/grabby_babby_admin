@@ -1,7 +1,10 @@
+import 'package:universal_html/html.dart' as html;
+import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:grabby_babby_admin/initializer.dart';
 
 import 'dio/dio_client.dart';
 import 'network_monitor.dart';
@@ -132,18 +135,46 @@ class NetworkRepository {
         url: url,
       );
 
-  NetworkResponse _handleResponse(Response response) {
-    final body = response.data;
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return NetworkResponse(
-        data: body,
-        message: body["message"] ?? "",
+  Future<NetworkResponse> downloadFile({required String url}) async {
+    try {
+      final token = localStorage.getString("token");
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          "Authorization": "Bearer $token",
+          "Accept": "text/csv",
+        },
       );
+      if (response.statusCode == 200) {
+        final blob = html.Blob([response.bodyBytes], 'text/csv');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        html.AnchorElement(href: url)
+          ..setAttribute("download", "SellerOrderList.csv")
+          ..click();
+        html.Url.revokeObjectUrl(url);
+        return NetworkResponse(
+            data: blob, message: "File downloaded successfully");
+      } else {
+        return NetworkResponse(failed: true, message: "Something went wrong");
+      }
+    } catch (e) {
+      log("Error downloading file: $e");
+      return NetworkResponse(failed: true, message: "Something went wrong");
     }
-    throw NetworkResponse(
-      failed: true,
-      message: body["message"] ?? "Something went wrong",
+  }
+}
+
+NetworkResponse _handleResponse(Response response) {
+  final body = response.data;
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    return NetworkResponse(
+      data: body,
+      message: body["message"] ?? "",
     );
   }
+  throw NetworkResponse(
+    failed: true,
+    message: body["message"] ?? "Something went wrong",
+  );
 }

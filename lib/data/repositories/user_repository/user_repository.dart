@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:grabby_babby_admin/core/constants/constants.dart';
 import 'package:grabby_babby_admin/data/models/dashboard_model/dashboard_model.dart';
 import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
 import 'package:grabby_babby_admin/data/models/paginate/paginate.dart';
@@ -85,6 +86,15 @@ class UserRepository {
       final data = response.data["data"];
       final parsedData = SellerDetailModel.fromJson(data);
       return right(parsedData);
+    }
+    return left(response.message);
+  }
+
+  Future<Either<String, bool>> getSellerOrderCsv({required String id}) async {
+    final response = await networkRepository.downloadFile(
+        url: "$apiUrl/admin/get-seller-order-csv/$id");
+    if (!response.failed) {
+      return right(true);
     }
     return left(response.message);
   }

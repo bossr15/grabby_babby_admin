@@ -42,7 +42,7 @@ class GBAdminAppBar extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Hello ${sidePanelState.appUser.fullName} 👋',
+                'Hello ${sidePanelState.appUser.fullName} 👋🏼',
                 style: TextStyle(
                   fontSize: 24,
                   color: AppColors.black,

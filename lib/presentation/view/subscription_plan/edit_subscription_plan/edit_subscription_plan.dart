@@ -241,7 +241,7 @@ class EditSubscriptionPlan extends StatelessWidget {
                                           onPressed: () {
                                             if (formKey.currentState!
                                                 .validate()) {
-                                              cubit.editPreferences(context);
+                                              cubit.editPlan(context);
                                             }
                                           },
                                           widget: state.isLoading

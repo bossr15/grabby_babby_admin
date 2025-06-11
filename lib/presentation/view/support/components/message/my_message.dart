@@ -19,7 +19,7 @@ class MyMessage extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: context.width * 0.3),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Color(0xff2563eb).withOpacity(0.37),
+              color: Color(0xff365BE5).withOpacity(0.15),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(0),

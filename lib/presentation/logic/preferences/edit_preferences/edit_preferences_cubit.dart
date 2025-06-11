@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/data/repositories/preferences_repository/preferences_repository.dart';
@@ -69,7 +67,10 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
                 message: 'Preference updated successfully',
                 type: SnackbarType.success,
               );
-              emit(state.copyWith(isLoading: false, preference: data));
+              emit(state.copyWith(
+                isLoading: false,
+                preference: data,
+              ));
               AppNavigation.pop<bool>(true);
             },
           ),
@@ -91,8 +92,6 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
   }
 
   void addItem(PreferencesModel item) {
-    log("addItem: $item");
-    state.selectedPreferences.map((e) => log("E: ${e.name}"));
     if (state.selectedPreferences.contains(item)) {
       return;
     }

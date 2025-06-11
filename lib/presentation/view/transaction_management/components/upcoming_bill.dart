@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
@@ -43,10 +44,12 @@ class UpcomingBill extends StatelessWidget {
                 ),
                 child: SingleChildScrollView(
                   child: Column(
-                    children: incomingOrdersProducts.map((product) {
+                    children:
+                        incomingOrdersProducts.mapIndexed((index, product) {
                       return Padding(
                         padding: const EdgeInsets.all(12),
                         child: _buildBillItem(
+                          index,
                           product.name ?? "",
                           (product.userId ?? 0).toString(),
                           DateHelpers.formatDate(
@@ -67,6 +70,7 @@ class UpcomingBill extends StatelessWidget {
   }
 
   Widget _buildBillItem(
+    int index,
     String productName,
     String storeName,
     String date,
@@ -75,40 +79,66 @@ class UpcomingBill extends StatelessWidget {
   ) {
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(AppImages.productImage1),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        Column(
+          children: [
+            if (index == 0)
               Text(
-                productName,
+                "Product Name",
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                date,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
+            Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(AppImages.productImage1),
                 ),
-              ),
-              const SizedBox(height: 8),
-            ],
-          ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        productName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        date,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
         const SizedBox(width: 12),
-        Text(
-          commission,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-          ),
+        Column(
+          children: [
+            if (index == 0)
+              Text(
+                "Your Comission",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            Text(
+              commission,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
       ],
     );

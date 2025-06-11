@@ -93,6 +93,8 @@ class LoginView extends StatelessWidget {
                       'Forgot password?',
                       style: TextStyle(
                         color: AppColors.darkBlue,
+                        decorationColor: AppColors.darkBlue,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),

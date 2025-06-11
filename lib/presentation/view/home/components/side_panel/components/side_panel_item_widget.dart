@@ -20,7 +20,7 @@ class SidePanelItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        gradient: isSelected ? appGradient : null,
+        gradient: isSelected ? appGradient2 : null,
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(

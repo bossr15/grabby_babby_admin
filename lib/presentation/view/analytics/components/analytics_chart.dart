@@ -36,7 +36,8 @@ class AnalyticsChart extends StatelessWidget {
                     'Revenue',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
                     ),
                   ),
                   Align(
@@ -45,7 +46,7 @@ class AnalyticsChart extends StatelessWidget {
                       child: DropdownButton<String>(
                         value: state.revenueFilter,
                         icon: const Icon(
-                          Icons.filter_list,
+                          Icons.arrow_drop_down,
                           size: 18,
                           color: Colors.grey,
                         ),
@@ -54,7 +55,10 @@ class AnalyticsChart extends StatelessWidget {
                             value: value,
                             child: Text(
                               value,
-                              style: const TextStyle(color: Colors.grey),
+                              style: const TextStyle(
+                                color: Color(0xff0F2552),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           );
                         }).toList(),

@@ -39,6 +39,7 @@ class UserDetails extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Color(0xff3d3d3d),
                       ),
                     ),
                   ],

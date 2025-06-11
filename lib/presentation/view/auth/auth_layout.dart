@@ -92,24 +92,29 @@ class AuthLayout extends StatelessWidget {
                       ),
                       child,
                       const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: onPressed,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.darkBlue,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 35),
+                        child: ElevatedButton(
+                          onPressed: onPressed,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.darkBlue,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
-                        child: isLoading
-                            ? AppIndicator()
-                            : Text(
-                                buttonText,
-                                style: TextStyle(
-                                  color: AppColors.white,
-                                  fontSize: 16,
+                          child: isLoading
+                              ? AppIndicator()
+                              : Text(
+                                  buttonText,
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Inter',
+                                  ),
                                 ),
-                              ),
+                        ),
                       ),
                     ],
                   ),

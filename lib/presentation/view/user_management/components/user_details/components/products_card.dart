@@ -38,7 +38,8 @@ class PurchasedProductsCard extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff3d3d3d),
                 ),
               ),
               const SizedBox(height: 16),

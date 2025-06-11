@@ -64,7 +64,7 @@ class UserCubit extends Cubit<UserState> {
         'startDate': state.startDate!.toIso8601String(),
       if (state.endDate != null) 'endDate': state.endDate!.toIso8601String(),
       if (state.search.isNotEmpty) 'search': state.search,
-      "userType": state.userType.toUpperCase(),
+      "userType": state.userType.toUpperCase().split(" ").join(""),
     };
     userRepository
         .getAllUsers(

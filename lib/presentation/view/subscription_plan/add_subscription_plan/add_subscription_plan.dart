@@ -209,7 +209,7 @@ class AddSubscriptionPlan extends StatelessWidget {
                                     label: 'Add Plan',
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
-                                        cubit.addPreferences(context);
+                                        cubit.addPlan(context);
                                       }
                                     },
                                     widget:

@@ -27,7 +27,7 @@ class CategoriesRevenue extends StatelessWidget {
                 const Text(
                   'Product Categories & Revenue Statics',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

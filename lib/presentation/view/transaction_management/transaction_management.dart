@@ -49,11 +49,11 @@ class TransactionManagement extends StatelessWidget {
                           flex: 2,
                           child: Column(
                             children: [
-                              UpcomingBill(),
+                              const UpcomingBill(),
                               const SizedBox(height: 10),
-                              TransactionStatistics(),
+                              const TransactionStatistics(),
                               const SizedBox(height: 10),
-                              CategoriesRevenue(),
+                              const CategoriesRevenue(),
                             ],
                           ),
                         ),

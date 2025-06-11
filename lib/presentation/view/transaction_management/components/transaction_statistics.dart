@@ -26,33 +26,27 @@ class TransactionStatistics extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                'Statistics',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 24),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Statistics',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: DropdownButtonHideUnderline(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(color: Colors.grey.withOpacity(0.3)),
-                        ),
                         child: DropdownButton<String>(
                           value: state.transactionType,
                           icon: const Icon(
                             Icons.arrow_drop_down,
-                            size: 18,
-                            color: Colors.grey,
+                            size: 25,
+                            color: Colors.black,
                           ),
                           items: ['weekly', 'monthly', 'yearly']
                               .map((String value) {
@@ -60,7 +54,11 @@ class TransactionStatistics extends StatelessWidget {
                               value: value,
                               child: Text(
                                 "${value[0].toUpperCase()}${value.substring(1)} Comparison", // Capitalize the first letter
-                                style: const TextStyle(color: Colors.grey),
+                                style: const TextStyle(
+                                  color: Color(0xff191919),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             );
                           }).toList(),
@@ -77,6 +75,16 @@ class TransactionStatistics extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                  Spacer(),
+                  _buildLegendItem(
+                    'This ${state.transactionType.split("ly")[0]}',
+                    AppColors.darkBlue,
+                  ),
+                  const SizedBox(width: 24),
+                  _buildLegendItem(
+                    'Last ${state.transactionType.split("ly")[0]}',
+                    Colors.grey[300]!,
                   ),
                 ],
               ),
@@ -164,14 +172,6 @@ class TransactionStatistics extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildLegendItem('This week', Colors.blue),
-                  const SizedBox(width: 24),
-                  _buildLegendItem('Last week', Colors.grey[300]!),
-                ],
-              ),
             ],
           ),
         );
@@ -208,7 +208,7 @@ class TransactionStatistics extends StatelessWidget {
           height: 12,
           decoration: BoxDecoration(
             color: color,
-            shape: BoxShape.circle,
+            shape: BoxShape.rectangle,
           ),
         ),
         const SizedBox(width: 8),

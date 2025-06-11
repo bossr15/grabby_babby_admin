@@ -48,22 +48,10 @@ class UsersTable extends StatelessWidget {
             title: Text('Phone'),
           ),
           ListingColumn(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Account Type'),
-                Icon(Icons.arrow_drop_down),
-              ],
-            ),
+            title: Text('Account Type'),
           ),
           ListingColumn(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Status'),
-                Icon(Icons.arrow_drop_down),
-              ],
-            ),
+            title: Text('Status'),
           ),
           ListingColumn(
             title: Text('Actions'),
@@ -139,7 +127,7 @@ class UsersTable extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: getOrderChipColor(user.status!),
+                      color: getStatusChipColor(user.status!),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Center(

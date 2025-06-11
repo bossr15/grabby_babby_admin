@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
+import 'package:grabby_babby_admin/core/utils/utils.dart';
 import 'package:grabby_babby_admin/presentation/logic/notifications/notification_cubit.dart';
 
 import '../../../../../core/styles/app_color.dart';
@@ -132,29 +133,31 @@ class _NotificationDialogState extends State<NotificationDialog>
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               child: SizedBox(
                 width: context.width * 0.2,
-                child: ElevatedButton(
-                  onPressed: () {
+                child: InkWell(
+                  onTap: () {
                     _animationController.reverse().then((_) {
                       widget.overlayEntry.remove();
                       widget.sidePanelCubit.setSelectedIndex(
                           6, context, RouteName.notifications);
                     });
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.darkBlue,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: appGradient2,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                  ),
-                  child: Text(
-                    isEmpty ? "Go to Notifications" : 'View All',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 16,
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Center(
+                      child: Text(
+                        isEmpty ? "Go to Notifications" : 'View All',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),

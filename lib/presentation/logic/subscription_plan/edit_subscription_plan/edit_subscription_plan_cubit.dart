@@ -27,7 +27,7 @@ class EditSubscriptionPlanCubit extends Cubit<EditSubscriptionPlanState> {
         );
   }
 
-  void editPreferences(BuildContext context) {
+  void editPlan(BuildContext context) {
     emit(state.copyWith(isLoading: true));
     planRepository.updatePlan(subscription: state.plan).then(
           (plan) => plan.fold(
@@ -45,6 +45,7 @@ class EditSubscriptionPlanCubit extends Cubit<EditSubscriptionPlanState> {
                 message: 'Plan updated successfully',
                 type: SnackbarType.success,
               );
+              emit(state.copyWith(isLoading: false, plan: data));
               AppNavigation.pop<bool>(true);
             },
           ),

@@ -5,7 +5,6 @@ class PreferencesModel {
   String? name;
   String? url;
   List<PreferencesModel>? subPreferences;
-
   PreferencesModel({
     this.id,
     this.name,
@@ -35,7 +34,7 @@ class PreferencesModel {
         "subPreferences": subPreferences?.map((x) => x.toUpdateJson()).toList(),
       };
 
-  copyWith({
+  PreferencesModel copyWith({
     int? id,
     String? name,
     String? url,

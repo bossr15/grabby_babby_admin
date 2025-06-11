@@ -9,7 +9,7 @@ class AddSubscriptionPlanCubit extends Cubit<AddSubscriptionPlanState> {
   final planRepository = SubscriptionPlanRepository();
   AddSubscriptionPlanCubit() : super(AddSubscriptionPlanState.initial());
 
-  void addPreferences(BuildContext context) {
+  void addPlan(BuildContext context) {
     emit(state.copyWith(isLoading: true));
     planRepository.addPlan(subscription: state.plan).then(
           (preferences) => preferences.fold(
@@ -27,6 +27,7 @@ class AddSubscriptionPlanCubit extends Cubit<AddSubscriptionPlanState> {
                 message: 'Plan added successfully',
                 type: SnackbarType.success,
               );
+              emit(state.copyWith(isLoading: false, plan: data));
               AppNavigation.pop<bool>(true);
             },
           ),

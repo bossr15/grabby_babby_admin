@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/data/models/products_model/product_model.dart';
 import 'package:grabby_babby_admin/data/models/user_model/user_model.dart';
@@ -37,6 +39,17 @@ class UserDetailCubit extends Cubit<UserDetailState> {
             (data) {
               emit(state.copyWith(isLoading: false, buyerDetail: data));
             },
+          ),
+        );
+  }
+
+  void getSellerOrderCsv() {
+    userRepository.getSellerOrderCsv(id: userId).then(
+          (response) => response.fold(
+            (error) {
+              log("Error: $error");
+            },
+            (success) {},
           ),
         );
   }

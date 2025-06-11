@@ -231,7 +231,7 @@ Status toStatus(String status) {
   }
 }
 
-Color getOrderChipColor(Status status) {
+Color getStatusChipColor(Status status) {
   switch (status) {
     case Status.verified:
       return AppColors.green;
@@ -250,7 +250,7 @@ Color getOrderChipColor(Status status) {
   }
 }
 
-String getOrderChipText(Status status) {
+String getStatusChipText(Status status) {
   switch (status) {
     case Status.pending:
       return "Pending";

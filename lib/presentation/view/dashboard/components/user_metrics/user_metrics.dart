@@ -71,8 +71,9 @@ class UserMetrics extends StatelessWidget {
           UserMetricsChart(),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SizedBox(width: 24),
               userMetricsItem('Total Registered Users', Colors.blue[200]!),
               const SizedBox(width: 24),
               userMetricsItem('Total Service Providers', Colors.green[200]!),

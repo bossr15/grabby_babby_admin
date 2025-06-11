@@ -30,7 +30,10 @@ class NotificationsScreen extends StatelessWidget {
             children: [
               Text(
                 "Notifications",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 30,
+                    color: Color(0xff434343)),
               ),
               SizedBox(height: 10),
               Expanded(

@@ -97,7 +97,11 @@ class _AuthTextFieldState extends State<AuthTextField> {
                       _obscureTextNotifier.value = !_obscureTextNotifier.value;
                     },
                     icon: Icon(
-                      isObscured ? Icons.visibility_off : Icons.visibility,
+                      isObscured
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      color: Color(0xff666666),
+                      size: 20,
                     ),
                   )
                 : null,

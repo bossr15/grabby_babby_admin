@@ -32,7 +32,8 @@ class UsersTabBarActions extends StatelessWidget {
                       size: 18,
                       color: Colors.grey,
                     ),
-                    items: ['All', 'Seller', 'Buyer'].map((String value) {
+                    items: ['All', 'Seller', 'Business Seller', 'Buyer']
+                        .map((String value) {
                       final text = value == "All" ? "All Users" : "${value}s";
                       return DropdownMenuItem<String>(
                         value: value,

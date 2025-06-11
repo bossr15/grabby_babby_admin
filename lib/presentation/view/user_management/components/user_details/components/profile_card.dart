@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
 import 'package:grabby_babby_admin/core/utils/extension.dart';
 import '../../../../../../core/styles/app_images.dart';
+import '../../../../../../data/models/order_model/order_model.dart';
 import '../../../../../logic/users_management/user_detail/user_detail_cubit.dart';
 import '../../../../../logic/users_management/user_detail/user_detail_state.dart';
 
@@ -40,7 +41,8 @@ class ProfileCard extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff3d3d3d),
                     ),
                   ),
                 ],
@@ -48,6 +50,7 @@ class ProfileCard extends StatelessWidget {
               const SizedBox(height: 16),
               Stack(
                 clipBehavior: Clip.none,
+                alignment: Alignment.bottomLeft,
                 children: [
                   Container(
                     height: 200,
@@ -61,50 +64,92 @@ class ProfileCard extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: -30,
+                    bottom: -50,
                     left: 20,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 4),
-                      ),
-                      child: const CircleAvatar(
-                        radius: 40,
-                        backgroundImage: AssetImage(AppImages.dummyUser),
-                      ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 45,
+                          child: const CircleAvatar(
+                            radius: 40,
+                            backgroundImage: AssetImage(AppImages.dummyUser),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.fullName ?? "",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'ID #${user.id?.toString() ?? ""}',
+                              style: TextStyle(
+                                color: Color(0xff7F7F7F),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
-              Text(
-                user.fullName ?? "",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              const SizedBox(height: 70),
+              Expanded(
+                  child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'Information',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 35, vertical: 10),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: getStatusChipColor(user.status!),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Center(
+                                child: Text(
+                              fromStatus(user.status!),
+                              style: TextStyle(
+                                color: getOrderChipTextColor(user.status!),
+                              ),
+                            )),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    _buildInfoRow('Username', user.fullName ?? ""),
+                    _buildInfoRow(
+                        'Registration Date',
+                        DateHelpers.formatDate(
+                            user.createdAt ?? DateTime.now())),
+                    _buildInfoRow('Phone Number', user.phoneNumber ?? ""),
+                    _buildInfoRow('Email', user.email ?? ""),
+                  ],
                 ),
-              ),
-              Text(
-                'ID #${user.id?.toString() ?? ""}',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'Information',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildInfoRow('Username', user.fullName ?? ""),
-              _buildInfoRow('Registration Date',
-                  DateHelpers.formatDate(user.createdAt ?? DateTime.now())),
-              _buildInfoRow('Phone Number', user.phoneNumber ?? ""),
-              _buildInfoRow('Email', user.email ?? ""),
+              ))
             ],
           ),
         );

@@ -13,6 +13,15 @@ LinearGradient appGradient = LinearGradient(
   end: Alignment.centerLeft,
 );
 
+LinearGradient appGradient2 = LinearGradient(
+  colors: [
+    Color(0xff6F8BFF),
+    Color(0xff365BE5),
+  ],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);
+
 List<T> parseList<T>(
   data,
   T Function(Map<String, dynamic>) fromJson,
