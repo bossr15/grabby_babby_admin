@@ -52,12 +52,13 @@ class LatestOrders extends StatelessWidget {
                       child: Text(
                         "Export",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                           color: AppColors.black,
                         ),
                       ),
-                    )
+                    ),
+                    SizedBox(width: 30),
                   ],
                 ),
                 Expanded(

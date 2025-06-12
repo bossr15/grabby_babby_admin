@@ -16,115 +16,118 @@ class SubscriptionPlanView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SubscriptionPlanCubit(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.grey.withOpacity(0.2),
-                spreadRadius: 4,
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Subscription Plans',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.darkBlue,
+      child: Builder(builder: (context) {
+        final cubit = context.read<SubscriptionPlanCubit>();
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.grey.withOpacity(0.2),
+                  spreadRadius: 4,
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Subscription Plans',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.darkBlue,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Explore and manage all subscription plans',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      final result = await AppNavigation.pushNamedWithResult(
-                          RouteName.addSubscriptionPlan);
-                      if (result == true && context.mounted) {
-                        context.read<SubscriptionPlanCubit>().getPlans();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.add,
-                      color: AppColors.white,
-                    ),
-                    label: const Text(
-                      'Add Plan',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child:
-                    BlocBuilder<SubscriptionPlanCubit, SubscriptionPlanState>(
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return const Center(
-                        child: AppIndicator(color: AppColors.darkBlue),
-                      );
-                    }
-                    if (state.plans.isEmpty) {
-                      return const Center(
-                        child: Text(
-                          "No Subscription Plans available",
+                        const SizedBox(height: 8),
+                        Text(
+                          'Explore and manage all subscription plans',
                           style: TextStyle(
                             fontSize: 16,
                             color: AppColors.grey,
                           ),
                         ),
-                      );
-                    }
-                    return ResponsiveGrid(
-                      items: state.plans,
-                      itemBuilder: (context, plan) {
-                        return SubscriptionCard(preference: plan);
+                      ],
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final result = await AppNavigation.pushNamedWithResult(
+                            RouteName.addSubscriptionPlan);
+                        if (result == true && context.mounted) {
+                          cubit.getPlans();
+                        }
                       },
-                    );
-                  },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.darkBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      icon: const Icon(
+                        Icons.add,
+                        color: AppColors.white,
+                      ),
+                      label: const Text(
+                        'Add Plan',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 24),
+                Expanded(
+                  child:
+                      BlocBuilder<SubscriptionPlanCubit, SubscriptionPlanState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(
+                          child: AppIndicator(color: AppColors.darkBlue),
+                        );
+                      }
+                      if (state.plans.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            "No Subscription Plans available",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppColors.grey,
+                            ),
+                          ),
+                        );
+                      }
+                      return ResponsiveGrid(
+                        items: state.plans,
+                        itemBuilder: (context, plan) {
+                          return SubscriptionCard(preference: plan);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

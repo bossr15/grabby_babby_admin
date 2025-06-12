@@ -10,9 +10,7 @@ class PreferencesCubit extends Cubit<PreferencesState> {
 
   void getPreferences() {
     emit(state.copyWith(isLoading: true));
-    preferencesRepository.getPreferences(extraQuery: {
-      "isParent": true,
-    }).then(
+    preferencesRepository.getPreferences(extraQuery: {"isParent": true}).then(
       (preferences) => preferences.fold(
         (error) {
           emit(state.copyWith(isLoading: false));

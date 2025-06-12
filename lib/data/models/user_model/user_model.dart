@@ -14,7 +14,7 @@ String fromRole(UserRole role) {
     case UserRole.seller:
       return "SELLER";
     case UserRole.businessSeller:
-      return "BUSINESSSELLER";
+      return "BUSINESS SELLER";
   }
 }
 
@@ -133,4 +133,6 @@ class UserModel {
       'phoneCode': phoneCode,
     };
   }
+
+  String get roleName => fromRole(toRole(role ?? "BUYER"));
 }

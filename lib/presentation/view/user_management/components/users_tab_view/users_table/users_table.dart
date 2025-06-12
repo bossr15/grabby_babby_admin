@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/styles/app_color.dart';
 import 'package:grabby_babby_admin/core/styles/app_images.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/core/utils/utils.dart';
 import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
 import 'package:grabby_babby_admin/navigation/app_navigation.dart';
@@ -117,7 +118,7 @@ class UsersTable extends StatelessWidget {
                       color: AppColors.bgColor,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Center(child: Text(user.role ?? "BUYER")),
+                    child: Center(child: Text(user.roleName.capitalizeFirst)),
                   ),
                 )),
                 ListingCell(

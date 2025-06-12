@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../styles/app_color.dart';
@@ -30,6 +31,7 @@ class ListingTable extends StatelessWidget {
         scrollController: scrollController,
         dataRowHeight: rowHeight ?? 50,
         showBottomBorder: true,
+        minWidth: context.width < 600 ? 1000 : null,
         showCheckboxColumn: false,
         border: TableBorder.all(width: 0, color: Colors.transparent),
         headingRowHeight: 50,

@@ -31,16 +31,14 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
   }
 
   void getPreferences() {
-    preferencesRepository.getPreferences(extraQuery: {"isParent": "true"}).then(
+    preferencesRepository.getPreferences(extraQuery: {"isParent": true}).then(
       (preferences) => preferences.fold(
         (error) {
           emit(state.copyWith(fetchingPreferences: false));
         },
         (data) {
           final prefs = data
-              .where((item) =>
-                  item.id.toString() != preferencesId &&
-                  !state.selectedPreferences.contains(item))
+              .where((item) => item.id.toString() != preferencesId)
               .toList();
           emit(state.copyWith(preferences: prefs, fetchingPreferences: false));
         },
@@ -86,12 +84,13 @@ class EditPreferencesCubit extends Cubit<EditPreferencesState> {
     getPreferencesById();
   }
 
-  void removeItem(PreferencesModel item) {
+  void removeItem(ChildPreferences item) {
     state.selectedPreferences.remove(item);
     emit(state.copyWith(selectedPreferences: state.selectedPreferences));
   }
 
-  void addItem(PreferencesModel item) {
+  void addItem(PreferencesModel pref) {
+    final item = ChildPreferences(id: pref.id, child: pref);
     if (state.selectedPreferences.contains(item)) {
       return;
     }

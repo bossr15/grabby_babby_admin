@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/widgets/app_indicator.dart';
 import 'package:grabby_babby_admin/presentation/logic/settings/settings_cubit.dart';
@@ -60,6 +61,10 @@ class AccountSettings extends StatelessWidget {
                     Expanded(
                       child: SettingsTextField(
                         controller: cubit.phoneNumber,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         onChanged: (value) {},
                         label: 'Phone number',
                         hintText: 'Please enter your phone number',

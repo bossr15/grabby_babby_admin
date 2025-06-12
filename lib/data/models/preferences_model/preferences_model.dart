@@ -4,7 +4,7 @@ class PreferencesModel {
   int? id;
   String? name;
   String? url;
-  List<PreferencesModel>? subPreferences;
+  List<ChildPreferences>? subPreferences;
   PreferencesModel({
     this.id,
     this.name,
@@ -17,28 +17,28 @@ class PreferencesModel {
         id: json["id"],
         name: json["name"],
         url: json["url"],
-        subPreferences:
-            parseList(json["subPreferences"], PreferencesModel.fromJson),
+        subPreferences: parseList(
+            json["childParentPreferences"], ChildPreferences.fromJson),
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "url": url,
-        "subPreferences": subPreferences?.map((x) => x.toUpdateJson()).toList(),
+        "subPreferences": subPreferences?.map((x) => x.toJson()).toList(),
       };
 
   Map<String, dynamic> toUpdateJson() => {
         "id": id,
         "name": name,
         "url": url,
-        "subPreferences": subPreferences?.map((x) => x.toUpdateJson()).toList(),
+        "subPreferences": subPreferences?.map((x) => x.toJson()).toList(),
       };
 
   PreferencesModel copyWith({
     int? id,
     String? name,
     String? url,
-    List<PreferencesModel>? subPreferences,
+    List<ChildPreferences>? subPreferences,
   }) {
     return PreferencesModel(
       id: id ?? this.id,
@@ -47,4 +47,29 @@ class PreferencesModel {
       subPreferences: subPreferences ?? this.subPreferences,
     );
   }
+}
+
+class ChildPreferences {
+  int? id;
+  int? parentId;
+  int? childId;
+  PreferencesModel? child;
+  ChildPreferences({
+    this.id,
+    this.parentId,
+    this.childId,
+    this.child,
+  });
+
+  factory ChildPreferences.fromJson(Map<String, dynamic> json) =>
+      ChildPreferences(
+        id: json["id"],
+        parentId: json["parentId"],
+        childId: json["childId"],
+        child: json["child"] != null && json["child"] is Map
+            ? PreferencesModel.fromJson(json["child"])
+            : null,
+      );
+
+  Map<String, dynamic> toJson() => {"id": id};
 }

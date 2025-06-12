@@ -81,6 +81,10 @@ class AddSubscriptionPlan extends StatelessWidget {
                                                     val.isEmpty) {
                                                   return 'Please enter plan title';
                                                 }
+                                                if (val.length < 5 ||
+                                                    val.length > 50) {
+                                                  return 'Title must be between 5 and 50 characters';
+                                                }
                                                 return null;
                                               },
                                               label: 'Title',

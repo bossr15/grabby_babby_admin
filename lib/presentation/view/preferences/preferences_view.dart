@@ -17,113 +17,119 @@ class PreferencesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PreferencesCubit(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.grey.withOpacity(0.1),
-                spreadRadius: 2,
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Your Preferences',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.darkBlue,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Manage category preferences across the platform',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final result = await AppNavigation.pushNamedWithResult(
-                          RouteName.addPreferences);
-                      if (result == true && context.mounted) {
-                        context.read<PreferencesCubit>().getPreferences();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: Row(
+      child: Builder(builder: (context) {
+        final cubit = context.read<PreferencesCubit>();
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.grey.withOpacity(0.1),
+                  spreadRadius: 2,
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.add,
-                          color: AppColors.white,
-                        ),
-                        Gap(8),
                         const Text(
-                          'Add Preferences',
-                          style: TextStyle(color: AppColors.white),
+                          'Your Preferences',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.darkBlue,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Manage category preferences across the platform',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.grey,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Gap(10),
-                ],
-              ),
-              Gap(24),
-              Expanded(
-                child: BlocBuilder<PreferencesCubit, PreferencesState>(
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return const Center(
-                        child: AppIndicator(color: AppColors.darkBlue),
-                      );
-                    }
-                    if (state.preferences.isEmpty) {
-                      return const Center(
-                        child: Text("No Preferences available"),
-                      );
-                    }
-
-                    return ResponsiveGrid(
-                      items: state.preferences,
-                      itemBuilder: (context, preference) {
-                        return PreferenceCard(preference: preference);
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final result = await AppNavigation.pushNamedWithResult(
+                            RouteName.addPreferences);
+                        if (result == true && context.mounted) {
+                          cubit.getPreferences();
+                        }
                       },
-                    );
-                  },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.darkBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.add,
+                            color: AppColors.white,
+                          ),
+                          Gap(8),
+                          const Text(
+                            'Add Preferences',
+                            style: TextStyle(color: AppColors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Gap(10),
+                  ],
                 ),
-              ),
-            ],
+                Gap(24),
+                Expanded(
+                  child: BlocBuilder<PreferencesCubit, PreferencesState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(
+                          child: AppIndicator(color: AppColors.darkBlue),
+                        );
+                      }
+                      if (state.preferences.isEmpty) {
+                        return const Center(
+                          child: Text("No Preferences available"),
+                        );
+                      }
+
+                      return ResponsiveGrid(
+                        items: state.preferences,
+                        itemBuilder: (context, preference) {
+                          return PreferenceCard(
+                            preference: preference,
+                            cubit: cubit,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
@@ -173,10 +179,12 @@ class ResponsiveGrid extends StatelessWidget {
 
 class PreferenceCard extends StatelessWidget {
   final PreferencesModel preference;
+  final PreferencesCubit cubit;
 
   const PreferenceCard({
     super.key,
     required this.preference,
+    required this.cubit,
   });
 
   @override
@@ -201,7 +209,7 @@ class PreferenceCard extends StatelessWidget {
                   RouteName.editPreferences,
                   pathParameters: {'id': preference.id?.toString() ?? ""});
               if (result == true && context.mounted) {
-                context.read<PreferencesCubit>().getPreferences();
+                cubit.getPreferences();
               }
             },
             splashColor: AppColors.lightBlue.withOpacity(0.1),

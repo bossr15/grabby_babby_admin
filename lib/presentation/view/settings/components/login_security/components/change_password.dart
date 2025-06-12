@@ -58,8 +58,8 @@ class ChangePassword extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your new password';
-                      } else if (value.length < 6) {
-                        return 'Password must be at least 6 characters long';
+                      } else if (value.length < 5) {
+                        return 'Password must be at least 5 characters long';
                       }
                       return null;
                     },

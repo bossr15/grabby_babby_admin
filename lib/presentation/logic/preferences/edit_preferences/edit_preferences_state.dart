@@ -3,7 +3,7 @@ import 'package:grabby_babby_admin/data/models/preferences_model/preferences_mod
 class EditPreferencesState {
   PreferencesModel preference;
   List<PreferencesModel> preferences;
-  List<PreferencesModel> selectedPreferences;
+  List<ChildPreferences> selectedPreferences;
   bool isLoading;
   bool fetchingPreferences;
   EditPreferencesState({
@@ -21,7 +21,7 @@ class EditPreferencesState {
       {PreferencesModel? preference,
       bool? isLoading,
       bool? fetchingPreferences,
-      List<PreferencesModel>? selectedPreferences,
+      List<ChildPreferences>? selectedPreferences,
       List<PreferencesModel>? preferences}) {
     return EditPreferencesState(
       selectedPreferences: selectedPreferences ?? this.selectedPreferences,

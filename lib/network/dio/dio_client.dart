@@ -41,7 +41,8 @@ class DioClient {
             } else if (error.type == DioExceptionType.connectionError ||
                 error.type == DioExceptionType.connectionTimeout ||
                 (error.response?.statusCode != null &&
-                    error.response!.statusCode! >= 500)) {
+                        error.response!.statusCode! >= 500) &&
+                    error.requestOptions.method != "GET") {
               return true;
             }
             return false;

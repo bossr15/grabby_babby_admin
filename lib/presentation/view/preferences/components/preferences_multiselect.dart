@@ -13,9 +13,9 @@ class PreferencesMultiselect extends StatelessWidget {
     required this.selectedItems,
   });
   final void Function(PreferencesModel) onAdd;
-  final void Function(PreferencesModel) onDelete;
+  final void Function(ChildPreferences) onDelete;
   final List<PreferencesModel> items;
-  final List<PreferencesModel> selectedItems;
+  final List<ChildPreferences> selectedItems;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class PreferencesMultiselect extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       child: Chip(
                         color: WidgetStatePropertyAll(AppColors.darkBlue),
-                        label: Text(item.name ?? "",
+                        label: Text(item.child?.name ?? "",
                             style: TextStyle(color: AppColors.white)),
                         deleteIcon: Icon(
                           Icons.cancel_outlined,
