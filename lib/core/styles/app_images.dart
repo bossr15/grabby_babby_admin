@@ -35,4 +35,5 @@ class AppImages {
   static const emoji = "$baseDir/emoji.png";
   static const filter = "$baseDir/filter.png";
   static const arrowUp = "$baseDir/arrow_upward.png";
+  static const waveHand = "$baseDir/wave_hand.png";
 }

@@ -42,12 +42,14 @@ class GBAdminAppBar extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Hello ${sidePanelState.appUser.fullName} 👋🏼',
+                'Hello ${sidePanelState.appUser.fullName}',
                 style: TextStyle(
                   fontSize: 24,
                   color: AppColors.black,
                 ),
               ),
+              SizedBox(width: 5),
+              Image.asset(AppImages.waveHand),
               const Spacer(),
               BlocBuilder<NotificationCubit, NotificationState>(
                 builder: (notificationContext, notificationState) {

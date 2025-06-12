@@ -61,12 +61,15 @@ class DashboardStatisticsGraph extends StatelessWidget {
                                   final index = value.toInt();
                                   if (index >= 0 &&
                                       index < revenueList.length) {
-                                    return Text(
-                                      revenueList[index]
-                                          .x, // Show the date as x-axis label
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: 12,
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 5, bottom: 2),
+                                      child: Text(
+                                        revenueList[index].x,
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     );
                                   }

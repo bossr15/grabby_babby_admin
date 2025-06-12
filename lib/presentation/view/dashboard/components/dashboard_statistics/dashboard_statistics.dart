@@ -100,7 +100,7 @@ class DashboardStatistics extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               const DashboardStatisticsGraph(),
-              const SizedBox(height: 24),
+              const SizedBox(height: 14),
             ],
           ),
         );
