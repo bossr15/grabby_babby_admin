@@ -45,6 +45,7 @@ class UserRepository {
   }) async {
     final response =
         await networkRepository.put(url: "/user/update-profile", data: {
+      "id": localStorage.getUser().id,
       'fullName': fullName,
       'phoneNumber': phoneNumber,
       'url': url,
