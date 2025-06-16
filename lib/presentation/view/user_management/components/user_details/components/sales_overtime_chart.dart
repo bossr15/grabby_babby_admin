@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/styles/app_color.dart';
-import 'package:grabby_babby_admin/core/utils/extension.dart';
 import 'package:grabby_babby_admin/presentation/logic/users_management/user_detail/user_detail_cubit.dart';
 
 import '../../../../../logic/users_management/user_detail/user_detail_state.dart';
@@ -31,7 +30,6 @@ class SalesOvertimeChart extends StatelessWidget {
         };
 
         return Container(
-          constraints: BoxConstraints(maxHeight: context.height * 0.3),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,

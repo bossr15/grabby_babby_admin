@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/utils/date_helpers.dart';
-import 'package:grabby_babby_admin/core/utils/extension.dart';
 import '../../../../../../core/styles/app_images.dart';
 import '../../../../../../data/models/order_model/order_model.dart';
 import '../../../../../logic/users_management/user_detail/user_detail_cubit.dart';
@@ -18,7 +17,6 @@ class ProfileCard extends StatelessWidget {
         final cubit = context.read<UserDetailCubit>();
         final user = cubit.user;
         return Container(
-          constraints: BoxConstraints(maxHeight: context.height * 0.6),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -34,18 +32,13 @@ class ProfileCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff3d3d3d),
-                    ),
-                  ),
-                ],
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff3d3d3d),
+                ),
               ),
               const SizedBox(height: 16),
               Stack(
@@ -104,52 +97,42 @@ class ProfileCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 70),
-              Expanded(
-                  child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Information',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 35, vertical: 10),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: getStatusChipColor(user.status!),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Center(
-                                child: Text(
-                              fromStatus(user.status!),
-                              style: TextStyle(
-                                color: getOrderChipTextColor(user.status!),
-                              ),
-                            )),
-                          ),
-                        )
-                      ],
+              Row(
+                children: [
+                  const Text(
+                    'Information',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 16),
-                    _buildInfoRow('Username', user.fullName ?? ""),
-                    _buildInfoRow(
-                        'Registration Date',
-                        DateHelpers.formatDate(
-                            user.createdAt ?? DateTime.now())),
-                    _buildInfoRow('Phone Number', user.phoneNumber ?? ""),
-                    _buildInfoRow('Email', user.email ?? ""),
-                  ],
-                ),
-              ))
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 35, vertical: 10),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: getStatusChipColor(user.status!),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Center(
+                          child: Text(
+                        fromStatus(user.status!),
+                        style: TextStyle(
+                          color: getOrderChipTextColor(user.status!),
+                        ),
+                      )),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 16),
+              _buildInfoRow('Username', user.fullName ?? ""),
+              _buildInfoRow('Registration Date',
+                  DateHelpers.formatDate(user.createdAt ?? DateTime.now())),
+              _buildInfoRow('Phone Number', user.phoneNumber ?? ""),
+              _buildInfoRow('Email', user.email ?? "")
             ],
           ),
         );

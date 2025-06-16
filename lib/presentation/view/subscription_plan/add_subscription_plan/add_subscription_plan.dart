@@ -83,7 +83,7 @@ class AddSubscriptionPlan extends StatelessWidget {
                                                 }
                                                 if (val.length < 5 ||
                                                     val.length > 50) {
-                                                  return 'Title must be between 5 and 50 characters';
+                                                  return 'Title must be between 5 to 50 characters';
                                                 }
                                                 return null;
                                               },

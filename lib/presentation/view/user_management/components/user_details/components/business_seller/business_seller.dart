@@ -16,16 +16,10 @@ class BusinessSeller extends StatelessWidget {
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 29,
           children: [
-            Expanded(
-              flex: 2,
-              child: ProfileCard(title: 'Seller Profile'),
-            ),
-            const SizedBox(width: 24),
-            Expanded(
-              flex: 3,
-              child: PurchasedProductsCard(title: 'Listed Products'),
-            ),
+            Expanded(child: ProfileCard(title: 'Seller Profile')),
+            Expanded(child: PurchasedProductsCard(title: 'Listed Products')),
           ],
         ),
         const SizedBox(height: 24),
