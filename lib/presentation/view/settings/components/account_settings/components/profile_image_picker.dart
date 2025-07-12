@@ -38,9 +38,9 @@ class ProfileImagePicker extends StatelessWidget {
             InkWell(
               borderRadius: BorderRadius.circular(8),
               onTap: () async {
-                final image = await imagePickerService.uploadImage();
-                if (image != null) {
-                  onImageChanged(image);
+                final image = await imagePickerService.uploadImage(context);
+                if (image.isNotEmpty) {
+                  onImageChanged(image.first);
                 }
               },
               child: Container(
@@ -65,9 +65,9 @@ class ProfileImagePicker extends StatelessWidget {
             right: 0,
             child: InkWell(
               onTap: () async {
-                final image = await imagePickerService.uploadImage();
-                if (image != null) {
-                  onImageChanged(image);
+                final image = await imagePickerService.uploadImage(context);
+                if (image.isNotEmpty) {
+                  onImageChanged(image.first);
                 }
               },
               child: Container(
@@ -132,7 +132,6 @@ class ProfileImagePicker extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // Network image with error handling
             Image.network(
               image!,
               width: size,
@@ -180,7 +179,6 @@ class ProfileImagePicker extends StatelessWidget {
                 );
               },
             ),
-            // Overlay for hover effect
             Positioned.fill(
               child: Material(
                 color: Colors.transparent,

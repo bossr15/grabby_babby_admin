@@ -48,20 +48,21 @@ class SettingsCubit extends Cubit<SettingsState> {
         );
   }
 
-  void resetState() {
+  void resetState(BuildContext context) {
     fullName.clear();
     phoneNumber.clear();
     currentPassword.clear();
     newPassword.clear();
     state.profileUrl = "";
-    setUser();
+    setUser(context: context);
   }
 
-  void setUser() {
+  void setUser({BuildContext? context}) {
     final user = localStorage.getUser();
     fullName.text = user.fullName ?? "";
     state.profileUrl = user.url ?? "";
     phoneNumber.text = user.phoneNumber ?? "";
+    if (context != null) context.read<SidePanelCubit>().setUser(user);
     emit(state.copyWith(user: user, profileUrl: state.profileUrl));
   }
 
@@ -89,7 +90,7 @@ class SettingsCubit extends Cubit<SettingsState> {
                   context: context,
                   message: "Password updated successfully",
                   type: SnackbarType.success);
-              resetState();
+              resetState(context);
             },
           ),
         );

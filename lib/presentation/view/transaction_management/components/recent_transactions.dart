@@ -174,11 +174,16 @@ class _RecentTransactionsState extends State<RecentTransactions>
               children: [
                 Row(
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black,
+                    SizedBox(
+                      width: 300,
+                      child: Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 8),

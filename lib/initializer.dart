@@ -57,7 +57,7 @@ class Initializer {
 }
 
 final localStorage = LocalStorageService.instance;
-final imagePickerService = ImagePickRepository();
+final imagePickerService = ImageService();
 final networkRepository = NetworkRepository();
 final notificationService = NotificationService();
 late SocketService appSocket;

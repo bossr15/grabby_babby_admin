@@ -17,7 +17,11 @@ class UserMetricsChart extends StatelessWidget {
         final userMetrics = cubit.state.dashboardStats;
         final buyerMetrics = userMetrics.buyerStats;
         final sellerMetrics = userMetrics.sellerStats;
-        final dates = buyerMetrics.map((e) => DateTime.parse(e.date)).toList();
+        final dates = sellerMetrics.isNotEmpty
+            ? sellerMetrics.map((e) => DateTime.parse(e.date)).toList()
+            : buyerMetrics.isNotEmpty
+                ? buyerMetrics.map((e) => DateTime.parse(e.date)).toList()
+                : [];
         final isEmpty = buyerMetrics.isEmpty && sellerMetrics.isEmpty;
         final isLoading = cubit.state.isLoading;
 
@@ -93,46 +97,48 @@ class UserMetricsChart extends StatelessWidget {
                         ),
                         borderData: FlBorderData(show: false),
                         lineBarsData: [
-                          LineChartBarData(
-                            spots: buyerMetrics.map((data) {
-                              final date = DateTime.parse(data.date);
-                              final daysSinceStart = date
-                                  .difference(dates.first)
-                                  .inDays
-                                  .toDouble();
-                              return FlSpot(
-                                  daysSinceStart, data.usersCreated.toDouble());
-                            }).toList(),
-                            isCurved: true,
-                            color: Colors.blue[200],
-                            barWidth: 2,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(
-                              show: true,
-                              color: Colors.blue[200]?.withOpacity(0.3),
+                          if (buyerMetrics.isNotEmpty)
+                            LineChartBarData(
+                              spots: buyerMetrics.map((data) {
+                                final date = DateTime.parse(data.date);
+                                final daysSinceStart = date
+                                    .difference(dates.first)
+                                    .inDays
+                                    .toDouble();
+                                return FlSpot(daysSinceStart,
+                                    data.usersCreated.toDouble());
+                              }).toList(),
+                              isCurved: true,
+                              color: Colors.blue[200],
+                              barWidth: 2,
+                              isStrokeCapRound: true,
+                              dotData: FlDotData(show: false),
+                              belowBarData: BarAreaData(
+                                show: true,
+                                color: Colors.blue[200]?.withOpacity(0.3),
+                              ),
                             ),
-                          ),
-                          LineChartBarData(
-                            spots: sellerMetrics.map((data) {
-                              final date = DateTime.parse(data.date);
-                              final daysSinceStart = date
-                                  .difference(dates.first)
-                                  .inDays
-                                  .toDouble();
-                              return FlSpot(
-                                  daysSinceStart, data.usersCreated.toDouble());
-                            }).toList(),
-                            isCurved: true,
-                            color: Colors.green[200],
-                            barWidth: 2,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(
-                              show: true,
-                              color: Colors.green[200]?.withOpacity(0.3),
+                          if (sellerMetrics.isNotEmpty)
+                            LineChartBarData(
+                              spots: sellerMetrics.map((data) {
+                                final date = DateTime.parse(data.date);
+                                final daysSinceStart = date
+                                    .difference(dates.first)
+                                    .inDays
+                                    .toDouble();
+                                return FlSpot(daysSinceStart,
+                                    data.usersCreated.toDouble());
+                              }).toList(),
+                              isCurved: true,
+                              color: Colors.green[200],
+                              barWidth: 2,
+                              isStrokeCapRound: true,
+                              dotData: FlDotData(show: false),
+                              belowBarData: BarAreaData(
+                                show: true,
+                                color: Colors.green[200]?.withOpacity(0.3),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),

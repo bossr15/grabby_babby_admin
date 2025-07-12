@@ -1,126 +1,78 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart' as http;
+import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-import '../core/constants/constants.dart';
+class ImageService {
+  final picker = ImagePicker();
 
-class ImagePickRepository {
-  static const url = "$apiUrl/bucket/upload-file";
-  Future<String?> uploadImage() async {
-    try {
-      var uri = Uri.parse(url);
-      var request = http.MultipartRequest('POST', uri);
-
-      var file = await _pickFile();
-      if (file == null) return null;
-      log('File picked: ${file.filename}');
-      request.files.add(file);
-
-      var response = await request.send();
-
-      if (response.statusCode == 200) {
-        final responseBody = await response.stream.bytesToString();
-        final responseJson = jsonDecode(responseBody);
-        log('FILE UPLOADED: $responseJson');
-        if (responseJson["data"] is List) {
-          return responseJson['data'][0] as String;
-        }
-        return responseJson['data'];
-      } else {
-        final responseBody = await response.stream.bytesToString();
-        log('Upload failed with status ${response.statusCode}: $responseBody');
-        return null;
-      }
-    } catch (e) {
-      log('Error uploading file: $e');
-      return null;
-    }
+  Future<XFile?> getImage(ImageSource source) async {
+    return await picker.pickImage(source: source);
   }
 
-  Future<http.MultipartFile?> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'jpeg',
-        'png',
-        'gif',
-        'pdf',
-        'doc',
-        'docx',
-        'xlsx'
-      ],
+  Future<List<XFile>?> getImages() async {
+    final files = await picker.pickMultiImage();
+    return files.isNotEmpty ? files : null;
+  }
+
+  Future<Either<XFile, List<XFile>>?> showOptions(
+    BuildContext context, {
+    bool isMulti = false,
+  }) async {
+    if (isMulti) {
+      final files = await getImages();
+      return Right(files ?? []);
+    }
+
+    final file = await getImage(ImageSource.gallery);
+    return file != null ? Left(file) : null;
+  }
+
+  Future<List<String>> uploadImage(
+    BuildContext context, {
+    bool isMulti = false,
+  }) async {
+    final result = await showOptions(context, isMulti: isMulti);
+    if (result == null) return [];
+
+    List<String> urls = [];
+
+    if (result.isLeft()) {
+      final file = result.fold((l) => l, (_) => null);
+      if (file != null) {
+        final url = await getImageUrl(file);
+        urls.add(url);
+      }
+    } else {
+      final files = result.fold((_) => null, (r) => r);
+      if (files != null) {
+        for (final file in files) {
+          final url = await getImageUrl(file);
+          urls.add(url);
+        }
+      }
+    }
+
+    return urls;
+  }
+
+  Future<String> getImageUrl(XFile file) async {
+    final path = "images/${DateTime.now().millisecondsSinceEpoch}_${file.name}";
+    final ref = FirebaseStorage.instance.ref().child(path);
+
+    UploadTask uploadTask;
+
+    final bytes = await file.readAsBytes();
+    uploadTask = ref.putData(
+      bytes,
+      SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': file.name},
+      ),
     );
 
-    if (result != null) {
-      var file = result.files.single;
-      var bytes = file.bytes;
-
-      if (bytes == null) {
-        throw Exception('Could not read file bytes');
-      }
-
-      return http.MultipartFile.fromBytes(
-        'files',
-        bytes,
-        filename: file.name,
-      );
-    } else {
-      return null;
-    }
-  }
-
-  // Optional: Add a method to upload multiple files if needed
-  Future<List<String>> uploadMultipleImages() async {
-    try {
-      List<String> uploadedUrls = [];
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: [
-          'jpg',
-          'jpeg',
-          'png',
-          'gif',
-          'pdf',
-          'doc',
-          'docx',
-          'xlsx'
-        ],
-      );
-
-      if (result != null) {
-        for (var file in result.files) {
-          var uri = Uri.parse(url);
-          var request = http.MultipartRequest('POST', uri);
-
-          if (file.bytes != null) {
-            request.files.add(http.MultipartFile.fromBytes(
-              'files',
-              file.bytes!,
-              filename: file.name,
-            ));
-
-            var response = await request.send();
-
-            if (response.statusCode == 200) {
-              final responseBody = await response.stream.bytesToString();
-              final responseJson = jsonDecode(responseBody);
-              uploadedUrls.add(responseJson['fileUrl']);
-            } else {
-              throw Exception(
-                  'Failed to upload file ${file.name}. Status Code: ${response.statusCode}');
-            }
-          }
-        }
-        return uploadedUrls;
-      } else {
-        throw Exception('No files selected');
-      }
-    } catch (e) {
-      log('Error uploading multiple files: $e');
-      rethrow;
-    }
+    final snapshot = await uploadTask.whenComplete(() {});
+    final downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }

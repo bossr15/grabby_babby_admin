@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grabby_babby_admin/navigation/route_name.dart';
 import '../../../../../core/styles/app_color.dart';
 import '../../../../../core/styles/app_images.dart';
 import '../../../../logic/home/side_panel/side_panel_cubit.dart';
@@ -29,36 +30,44 @@ class SidePanel extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 24),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Image.asset(AppImages.logo),
-                const SizedBox(width: 12),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Builder(builder: (context) {
+            final cubit = context.read<SidePanelCubit>();
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InkWell(
+                onTap: () {
+                  cubit.setSelectedIndex(0, context, RouteName.dashboard);
+                },
+                child: Row(
                   children: [
-                    Text(
-                      'Aussie',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black,
-                      ),
-                    ),
-                    Text(
-                      'Collectable',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black,
-                      ),
+                    Image.asset(AppImages.logo),
+                    const SizedBox(width: 12),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Aussie',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.black,
+                          ),
+                        ),
+                        Text(
+                          'Collectable',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }),
           const SizedBox(height: 40),
           BlocBuilder<SidePanelCubit, SidePanelState>(
               builder: (context, state) {

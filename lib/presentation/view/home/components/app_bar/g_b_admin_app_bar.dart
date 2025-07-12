@@ -81,7 +81,12 @@ class GBAdminAppBar extends StatelessWidget {
                 },
               ),
               const SizedBox(width: 16),
-              Image.asset(AppImages.dummyUser),
+              CircleAvatar(
+                radius: 24,
+                backgroundImage: NetworkImage(
+                  sidePanelState.appUser.url ?? "",
+                ),
+              ),
             ],
           ),
         );

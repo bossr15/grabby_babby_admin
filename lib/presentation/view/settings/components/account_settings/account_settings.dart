@@ -91,7 +91,7 @@ class AccountSettings extends StatelessWidget {
                     GbAdminButton(
                       label: 'Reset',
                       onPressed: () {
-                        cubit.resetState();
+                        cubit.resetState(context);
                       },
                       backgroundColor: AppColors.white,
                       textColor: AppColors.black,
