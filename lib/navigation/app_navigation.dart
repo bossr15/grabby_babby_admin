@@ -60,13 +60,14 @@ class AppNavigation {
     final currentPath = getCurrentPathFromBrowser();
     if (currentPath.startsWith('/dashboard')) return 0;
     if (currentPath.startsWith('/users')) return 1;
-    if (currentPath.startsWith('/transaction')) return 2;
-    if (currentPath.startsWith('/analytics')) return 3;
-    if (currentPath.startsWith('/preferences')) return 4;
-    if (currentPath.startsWith('/plans')) return 5;
-    if (currentPath.startsWith('/notifications')) return 6;
-    if (currentPath.startsWith('/settings')) return 7;
-    if (currentPath.startsWith('/support')) return 8;
+    if (currentPath.startsWith('/products')) return 2;
+    if (currentPath.startsWith('/transaction')) return 3;
+    if (currentPath.startsWith('/analytics')) return 4;
+    if (currentPath.startsWith('/preferences')) return 5;
+    if (currentPath.startsWith('/plans')) return 6;
+    if (currentPath.startsWith('/notifications')) return 7;
+    if (currentPath.startsWith('/settings')) return 8;
+    if (currentPath.startsWith('/support')) return 9;
 
     return 0;
   }

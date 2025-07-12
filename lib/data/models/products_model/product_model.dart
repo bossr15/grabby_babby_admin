@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
+
 import '../../../core/utils/utils.dart';
+import '../paginate/paginate.dart';
 
 class ProductModel {
   int? id;
@@ -10,7 +14,7 @@ class ProductModel {
   int? quantity;
   double? gst;
   double? discount;
-  String? status;
+  Status? status;
   String? productType;
   int? userId;
   double? postage;
@@ -55,7 +59,7 @@ class ProductModel {
       quantity: json['quantity'],
       gst: json['GST']?.toDouble(),
       discount: json['discount']?.toDouble(),
-      status: json['status'],
+      status: toStatus(json['status']),
       productType: json['productType'],
       userId: json['userId'],
       postage: json['postage']?.toDouble(),
@@ -94,7 +98,7 @@ class ProductModel {
     int? quantity,
     double? gst,
     double? discount,
-    String? status,
+    Status? status,
     String? productType,
     int? userId,
     double? postage,
@@ -245,4 +249,19 @@ class ProductMetaData {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+}
+
+class ProductViewModel {
+  ScrollController scrollController;
+  bool isScrolling;
+  bool isLoading;
+  Paginate<ProductModel> products;
+
+  ProductViewModel({
+    this.isScrolling = false,
+    this.isLoading = false,
+    ScrollController? scrollController,
+    Paginate<ProductModel>? products,
+  })  : products = Paginate<ProductModel>.empty(),
+        scrollController = ScrollController();
 }

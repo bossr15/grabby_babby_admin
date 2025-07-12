@@ -7,6 +7,7 @@ class RouteName {
   static const dashboard = 'dashboard';
   static const users = 'users';
   static const userDetails = 'user-details';
+  static const products = 'products';
   static const transactions = 'transactions';
   static const analytics = 'analytics';
   static const subscriptionPlan = 'subscription-plan';

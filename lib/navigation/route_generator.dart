@@ -4,6 +4,7 @@ import 'package:grabby_babby_admin/navigation/app_navigation.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/forget_password/forget_password.dart';
 import 'package:grabby_babby_admin/presentation/view/auth/new_password/new_password.dart';
 import 'package:grabby_babby_admin/presentation/view/preferences/preferences_view.dart';
+import 'package:grabby_babby_admin/presentation/view/product_management/product_management.dart';
 import 'package:grabby_babby_admin/presentation/view/subscription_plan/add_subscription_plan/add_subscription_plan.dart';
 import 'package:grabby_babby_admin/presentation/view/subscription_plan/edit_subscription_plan/edit_subscription_plan.dart';
 import 'package:grabby_babby_admin/presentation/view/subscription_plan/subscription_plan_view.dart';
@@ -99,6 +100,11 @@ class AppRouter {
                 },
               ),
             ],
+          ),
+          troute.TransitionRoute.fadeTransitionRoute(
+            path: '/products',
+            name: RouteName.products,
+            pageBuilder: (context, state) => const ProductManagement(),
           ),
           troute.TransitionRoute.fadeTransitionRoute(
             path: '/transaction',

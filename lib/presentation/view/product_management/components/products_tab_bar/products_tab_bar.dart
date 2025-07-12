@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grabby_babby_admin/core/styles/app_color.dart';
-import 'package:grabby_babby_admin/presentation/logic/users_management/user_state.dart';
+import 'package:grabby_babby_admin/presentation/logic/product_management/product_cubit.dart';
+import '../../../../logic/product_management/product_state.dart';
+import 'components/products_tab_bar_actions.dart';
 
-import '../../../../logic/users_management/user_cubit.dart';
-import 'components/users_tab_bar_actions.dart';
-
-class UsersTabBar extends StatelessWidget {
-  const UsersTabBar({super.key, required this.tabController});
+class ProductsTabBar extends StatelessWidget {
+  const ProductsTabBar({super.key, required this.tabController});
   final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
-      final cubit = context.read<UserCubit>();
+    return BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
+      final cubit = context.read<ProductCubit>();
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
@@ -68,7 +67,7 @@ class UsersTabBar extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                         child: Center(
                           child: Text(
-                            'All Users',
+                            'Pending Products',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -93,7 +92,7 @@ class UsersTabBar extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                         child: Center(
                           child: Text(
-                            'Suspended Users',
+                            'Approved Products',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -104,7 +103,7 @@ class UsersTabBar extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 50),
-            Expanded(child: UsersTabBarActions()),
+            Expanded(child: ProductsTabBarActions()),
           ],
         ),
       );

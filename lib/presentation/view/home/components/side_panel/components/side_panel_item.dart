@@ -23,6 +23,11 @@ class SidePanelItemList {
       routeName: RouteName.users,
     ),
     SidePanelItem(
+      title: 'Product Management',
+      image: AppImages.users,
+      routeName: RouteName.products,
+    ),
+    SidePanelItem(
       title: 'Transaction Management',
       image: AppImages.transactions,
       routeName: RouteName.transactions,

@@ -236,10 +236,12 @@ Color getStatusChipColor(Status status) {
     case Status.verified:
       return AppColors.green;
     case Status.pending:
-      return AppColors.darkBlue;
+      return AppColors.yellow;
     case Status.inProgress:
       return AppColors.yellow;
     case Status.completed:
+      return AppColors.green;
+    case Status.approved:
       return AppColors.green;
     case Status.rejected:
       return AppColors.red;
@@ -270,6 +272,8 @@ Color getOrderChipTextColor(Status status) {
     case Status.verified:
       return AppColors.greenText;
     case Status.suspend:
+      return AppColors.redText;
+    case Status.pending:
       return AppColors.redText;
     default:
       return AppColors.greenText;

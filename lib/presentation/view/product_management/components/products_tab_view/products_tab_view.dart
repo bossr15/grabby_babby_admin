@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grabby_babby_admin/data/models/order_model/order_model.dart';
-import 'users_table/users_table.dart';
+import 'products_table/products_table.dart';
 
-class UsersTabView extends StatelessWidget {
-  const UsersTabView({super.key, required this.tabController});
+class ProductsTabView extends StatelessWidget {
+  const ProductsTabView({super.key, required this.tabController});
   final TabController tabController;
 
   @override
@@ -11,8 +11,8 @@ class UsersTabView extends StatelessWidget {
     return TabBarView(
       controller: tabController,
       children: [
-        UsersTable(status: Status.all),
-        UsersTable(status: Status.suspend),
+        ProductsTable(status: Status.pending),
+        ProductsTable(status: Status.approved),
       ],
     );
   }
