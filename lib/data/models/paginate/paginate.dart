@@ -40,15 +40,26 @@ class Paginate<T> {
     Map<String, dynamic> json,
     T Function(Map<String, dynamic>) dataFromJson,
   ) {
-    final rawData = dataKey != null ? json['data'][dataKey] : json['data'];
-    final currentPage = json['data']["currentPage"] ?? 1;
+    int currentPage = 1;
+    int totalCount = 0;
+    int totalPages = 0;
+    final data = json['data'];
+    final rawData = dataKey != null &&
+            data is Map<String, dynamic> &&
+            data.containsKey(dataKey)
+        ? data[dataKey]
+        : data;
+    if (hasMyData(data, "currentPage")) currentPage = data["currentPage"];
+    if (hasMyData(data, "totalPages")) totalPages = data["totalPages"];
+    if (hasMyData(data, "totalCount")) totalCount = data["totalCount"];
+
     final List<T> pageItems =
         rawData is List ? parseList(rawData, dataFromJson).cast<T>() : const [];
 
     return Paginate<T>(
       data: {currentPage: pageItems},
-      totalCount: json['data']["totalCount"] ?? 0,
-      totalPages: json['data']["totalPages"] ?? 0,
+      totalCount: totalCount,
+      totalPages: totalPages,
       currentPage: currentPage,
     );
   }
@@ -145,4 +156,7 @@ class Paginate<T> {
     return 'Paginate(totalPages: $totalPages, currentPage: $currentPage, '
         'totalCount: $totalCount, cachedPages: ${data.keys.toList()})';
   }
+
+  static bool hasMyData(dynamic data, String dataKey) =>
+      data is Map<String, dynamic> && data.containsKey(dataKey);
 }
